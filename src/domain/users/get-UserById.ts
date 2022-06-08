@@ -1,3 +1,3 @@
-import {getUserById} from "../../infrastructure/usersInfrastructure"
+import {getUserById} from "../../infrastructure/users-repository"
 
-export default async ()=>getUserById()
+export default async (id:string)=>await getUserById(id)
