@@ -7,13 +7,67 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url     = env("DATABASE_URL")
-  shadowDatabaseUrl   = env("SHADOW_DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
-model teste{
-  id Int @id @default(autoincrement())
-  name String
+model User {
+  id          Int          @id @default(autoincrement())
+  username    String
+  addresses   Address[]
+  email       String       @unique
+  password    String
+  phone       String       @unique
+  orders      Order[]
+  creditCards CreditCard[]
 }
 
+model Product {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  categories  Category[]
+  photos      String[]
+  price       Decimal
+}
 
+model Category {
+  id         Int       @id @default(autoincrement())
+  level      Int
+  name       String    @unique
+  upperLevel Int
+  products   Product[]
+}
+
+model Order {
+  id           Int        @id @default(autoincrement())
+  buyDate      DateTime   @default(now())
+  sendDate     DateTime   @default(now())
+  deliveryDate DateTime   @default(now())
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  creditCard   CreditCard @relation(fields: [creditCardId], references: [id])
+  creditCardId Int
+}
+
+model Address {
+  id          Int     @id @default(autoincrement())
+  country     String
+  city        String
+  zip_code    String
+  street      String
+  houseNumber String
+  isFavorite  Boolean
+  user        User    @relation(fields: [userId], references: [id])
+  userId      Int
+}
+
+model CreditCard {
+  id         Int     @id @default(autoincrement())
+  user       User    @relation(fields: [userId], references: [id])
+  userId     Int
+  cardNumber Int
+  cvc        Int
+  expiryDate String
+  isFavorite Boolean
+  Order      Order[]
+}
