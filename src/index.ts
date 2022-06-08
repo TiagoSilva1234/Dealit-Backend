@@ -1,12 +1,13 @@
 import express,{Express,Request,Response} from "express"
-import { endpointGetUserById } from "./application"
+import { endpointGetUserById, endpointPostUser } from "./application"
 const app: Express = express()
 
 
-endpointGetUserById(app)
+endpointGetUserById(app);
+endpointPostUser(app)
 
 app.get("/",(req:Request, res:Response)=>{
-    res.send("comi o cu de quem ta lendo")
+    res.send("hello!")
 })
 
 app.listen(3220,"0.0.0.0",()=>{
