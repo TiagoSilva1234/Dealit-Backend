@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  maria_prisma_db:
+    image: postgres
+    restart: always
+    container_name: dealit_container
+    environment:
+      POSTGRES_USER: dealit_root
+      POSTGRES_PASSWORD: #Cd94vg1
+      POSTGRES_DB: dealit
+    ports:
+      - "5434:5432"
