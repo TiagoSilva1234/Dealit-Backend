@@ -1,16 +1,16 @@
 import express,{Express,Request,Response} from "express"
-import {arroz} from "./application/index"
+import { endpointGetUserById } from "./application"
 const app: Express = express()
 
 
-app.get("/",(req:Request,res:Response) => {
-    
-    res.send(arroz())
+endpointGetUserById(app)
+
+app.get("/",(req:Request, res:Response)=>{
+    res.send("comi o cu de quem ta lendo")
 })
 
-
-app.listen(3002,()=>{
-    console.log("listening :)")
-    
+app.listen(3220,"0.0.0.0",()=>{
+    console.log("listening :)") 
 })
 
+export default app
