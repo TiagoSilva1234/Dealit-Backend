@@ -31,6 +31,20 @@ export const getAllMainCategories = async ()=>{
     where:{
       level: 1
     }
+
   })
-  return main;
+
+
+ const result = Promise.all( main.map(async (e)=>{
+    const sub = await prisma.category.findMany({
+      where:{ 
+        upperLevel: e.name
+      }
+    })
+
+    return {...e,subcategories:sub}
+  })
+ )
+ 
+  return result;
 }
