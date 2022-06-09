@@ -3,16 +3,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const getUserById = async (id: string) => {
-  if (isNaN(Number(id))) {
-    throw new Error("Wrong id format");
-  }
   const user = await prisma.user.findUnique({
     where: {
       id: Number(id),
     },
   });
   if (user === null) {
-    throw new Error("User not found");
+    throw new Error("User does not exist");
   }
   return user;
 };
