@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import getProduct from "../domain/products/get-ProductById";
+import getProduct from "../domain/products/get-productById";
 import postProduct from "../domain/products/post-product";
 
 //Product endpoints logic

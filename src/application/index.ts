@@ -1,6 +1,7 @@
 import app from "../index"
 import {getUserById, postNewUser} from "./users"
 import {getProductById, postNewProduct} from "./products"
+import {getCategoryById} from "./categories"
 import {Express} from "express"
 
 //Endpoints
@@ -9,4 +10,6 @@ export const endpointPostUser = (app:Express)=> app.post("/users",postNewUser)
 
 export const endpointGetProductById = (app:Express)=> app.get("/products/:id",getProductById)
 export const endpointPostProduct = (app:Express)=> app.post("/products",postNewProduct)
+
+export const endpointGetCategoryById = (app:Express)=> app.get("/categories/:id",getCategoryById)
 

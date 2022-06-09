@@ -34,7 +34,7 @@ model Product {
 model Category {
   id         Int       @id @default(autoincrement())
   name       String    @unique
-  upperLevel String?
+  upperLevel Int?
   products   Product[]
 }
 

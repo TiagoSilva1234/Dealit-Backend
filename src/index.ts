@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import { endpointGetUserById, endpointPostUser, endpointGetProductById, endpointPostProduct  } from "./application";
+import { endpointGetUserById, endpointPostUser, endpointGetProductById, endpointPostProduct,endpointGetCategoryById } from "./application";
 const app: Express = express();
 
 
@@ -16,6 +16,8 @@ endpointPostUser(app);
 
 endpointGetProductById(app);
 endpointPostProduct(app);
+
+endpointGetCategoryById(app);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
