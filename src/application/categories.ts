@@ -7,7 +7,7 @@ import { StatusCodes } from "http-status-codes";
 export const getCategoryById = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
-    if (isNaN(Number(id)) && id !== "random") {
+    if (isNaN(Number(id))) {
       throw new Error("Invalid id format");
     }
     const product = await getCategoryId(id);
