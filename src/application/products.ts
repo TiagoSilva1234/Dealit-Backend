@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import getProduct from "../domain/products/get-productById";
 import postProduct from "../domain/products/post-product";
+import getProductsByCategory from "../domain/products/get-productsByCategoryPaginated";
 import { StatusCodes } from "http-status-codes";
 
 //Product endpoints logic
@@ -54,6 +55,20 @@ export const postNewProduct = async (req: Request, res: Response) => {
       catName,
     },
   };
-  return await postProduct(data);
+  return res.send({
+    message: "Product successfully saved to datebase!",
+    product: await postProduct(data),
+  });
 };
 
+export const getProductsByCategoryPaginated = async (
+  req: Request,
+  res: Response
+) => {
+  let category = req.params.category;
+
+  let page = Number(req.query.page) || 1;
+  let limit = Number(req.query.limit) || 6;
+
+  return res.send(getProductsByCategory(category, page, limit));
+};

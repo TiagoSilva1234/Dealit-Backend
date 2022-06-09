@@ -22,13 +22,14 @@ model User {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  category    Category @relation(fields: [categoryName], references: [name])
-  categoryName  String
-  photos      String[]
-  price       Decimal
+  id           Int      @id @default(autoincrement())
+  name         String
+  description  String
+  category     Category @relation(fields: [categoryName], references: [name])
+  categoryName String
+  photos       String[]
+  price        Decimal
+  uploadDate   DateTime @default(now())
 }
 
 model Category {

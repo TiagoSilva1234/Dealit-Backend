@@ -36,25 +36,22 @@ export const getCategoryByMainCat = async (mainCat?: string) => {
 
 export const getAllMainCategories = async () => {
   const main = await prisma.category.findMany({
+    where: {
+      level: 1,
+    },
+  });
 
-    where:{
-      level: 1
-    }
+  const result = Promise.all(
+    main.map(async (e) => {
+      const sub = await prisma.category.findMany({
+        where: {
+          upperLevel: e.name,
+        },
+      });
 
-  })
-
-
- const result = Promise.all( main.map(async (e)=>{
-    const sub = await prisma.category.findMany({
-      where:{ 
-        upperLevel: e.name
-      }
+      return { ...e, subcategories: sub };
     })
+  );
 
-    return {...e,subcategories:sub}
-  })
- )
- 
   return result;
-}
-
+};

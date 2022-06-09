@@ -68,7 +68,10 @@ export const postNewUser = async (req: Request, res: Response) => {
       },
     };
 
-    return await postUser(data);
+    return res.send({
+      message: "User successfully saved to datebase!",
+      user: await postUser(data),
+    });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {

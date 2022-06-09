@@ -23,14 +23,55 @@ export const saveProduct = async (data: any) => {
     data: {
       name: data.name,
       description: data.description,
-      category: { connect: {name: data.category.catName} },
+      category: { connect: { name: data.category.catName } },
       photos: data.photos,
       price: data.price,
+      uploadDate: data.uploadDate,
     },
   });
   return product;
 };
 
+export const getProductsByCategoryPaginated = async (
+  category: string,
+  skip: number,
+  take: number = 6
+) => {
+  console.log(skip, take);
+  const cat = await prisma.category.findUnique({
+    where: {
+      name: category,
+    },
+  });
+  if (cat !== null) {
+    if (cat.level === 2) {
+      const products = await prisma.product.findMany({
+        skip,
+        take,
+        where: {
+          categoryName: cat.name,
+        },
+      });
+      return products;
+    }
+    const cats = await prisma.category.findMany({
+      where: { 
+        upperLevel: cat.name
+      }
+    })
+    const prods =  cats.map( async e => {
+      const res = await prisma.product.findMany({
+        where: {
+          categoryName: e.name
+        }
+      })
+      return res;
+    })
+    return prods;
+  }
+};
+
+//called in get product by id
 const getRandomProduct = async () => {
   const product = await prisma.product.findMany({
     orderBy: { id: "desc" },
@@ -43,4 +84,3 @@ const getRandomProduct = async () => {
   });
   return randomProduct;
 };
-
