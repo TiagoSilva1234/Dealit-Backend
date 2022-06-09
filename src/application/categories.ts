@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import getCategoryMainCat from "../domain/categories/get-categoryById";
 import { StatusCodes } from "http-status-codes";
-
+import mainCategory from "../domain/categories/get-allMainCategories"
 
 //Categories endpoints logic
 export const getCategoryByMainCat = async (req: Request, res: Response) => {
@@ -19,3 +19,7 @@ export const getCategoryByMainCat = async (req: Request, res: Response) => {
       });
   }
 };
+export const getAllMainCategories = async (req:Request,res:Response)=>{
+  const arr = await mainCategory()
+  res.send(arr)
+}

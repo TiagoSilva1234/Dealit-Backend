@@ -1,7 +1,7 @@
 import app from "../index";
 import { getUserById, postNewUser } from "./users";
 import { getProductById, postNewProduct } from "./products";
-import { getCategoryByMainCat } from "./categories";
+import { getCategoryByMainCat,getAllMainCategories } from "./categories";
 import { Express } from "express";
 
 //EndpointsUser
@@ -19,3 +19,6 @@ export const endpointPostProduct = (app: Express) =>
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>
   app.get("/categories/:mainCat", getCategoryByMainCat);
+export const endpointGetAllMainCategories = (app:Express)=>{
+    app.get("/categories",getAllMainCategories)
+}

@@ -4,6 +4,7 @@ import { endpointGetUserById,
    endpointGetProductById, 
    endpointPostProduct,
    endpointGetCategoryByMainCat,
+   endpointGetAllMainCategories
 
   } from "./application";
 const app: Express = express();
@@ -24,12 +25,13 @@ endpointGetProductById(app);
 endpointPostProduct(app);
 
 endpointGetCategoryByMainCat(app);
+endpointGetAllMainCategories(app)
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(3220, "127.0.0.1", () => {
+app.listen(3220, "0.0.0.0", () => {
   console.log("listening :)");
 });
 
