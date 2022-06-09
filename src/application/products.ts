@@ -24,3 +24,4 @@ export const postNewProduct = async (req: Request, res: Response) => {
   };
   return await postProduct(data);
 };
+
