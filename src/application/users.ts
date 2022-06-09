@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import getUser from "../domain/users/get-userById";
+import getUser from "../domain/users/get-UserById";
 import postUser from "../domain/users/post-user";
 
 //User endpoints logic
