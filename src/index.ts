@@ -1,5 +1,11 @@
 import express, { Express, Request, Response } from "express";
-import { endpointGetUserById, endpointPostUser, endpointGetProductById, endpointPostProduct,endpointGetCategoryById } from "./application";
+import { endpointGetUserById, 
+  endpointPostUser,
+   endpointGetProductById, 
+   endpointPostProduct,
+   endpointGetCategoryById,
+
+  } from "./application";
 const app: Express = express();
 
 
@@ -26,5 +32,6 @@ app.get("/", (req: Request, res: Response) => {
 app.listen(3220, "0.0.0.0", () => {
   console.log("listening :)");
 });
+
 
 export default app;

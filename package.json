@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Dealit Backend Application",
   "main": "index.js",
+ 
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "start": "node --loader ts-node/esm src/index.ts ",
     "test": "jest",
+    "dev": "nodemon src/index.ts",
     "studio": "prisma studio",
     "dbpush": "prisma migrate dev",
     "dbreset": "prisma migrate reset",
