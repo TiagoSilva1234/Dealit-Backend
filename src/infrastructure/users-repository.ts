@@ -4,33 +4,29 @@ const prisma = new PrismaClient();
 
 export const getUserById = async (id: string) => {
   if (isNaN(Number(id))) {
-    return "Wrong id format";
+    throw new Error("Wrong id format");
   }
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-    return user === null ? "User not found" : user;
-  } catch (e) {
-    console.log(e);
+  const user = await prisma.user.findUnique({
+    where: {
+      id: Number(id),
+    },
+  });
+  if (user === null) {
+    throw new Error("User not found");
   }
+  return user;
 };
 
 export const saveUser = async (data: any) => {
-    try{
   const user = await prisma.user.create({
     data: {
       username: data.username,
-      addresses: {create: data.address},
+      addresses: { create: data.address },
       email: data.email,
       password: data.password,
       phone: data.phone,
-      creditCards: {create: data.creditCard},
+      creditCards: { create: data.creditCard },
     },
   });
-    } catch (e) {
-        console.log(e);
-    }
+  return user;
 };
