@@ -3,7 +3,7 @@ import { endpointGetUserById,
   endpointPostUser,
    endpointGetProductById, 
    endpointPostProduct,
-   endpointGetCategoryById,
+   endpointGetCategoryByMainCat,
 
   } from "./application";
 const app: Express = express();
@@ -23,13 +23,13 @@ endpointPostUser(app);
 endpointGetProductById(app);
 endpointPostProduct(app);
 
-endpointGetCategoryById(app);
+endpointGetCategoryByMainCat(app);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(3220, "0.0.0.0", () => {
+app.listen(3220, "127.0.0.1", () => {
   console.log("listening :)");
 });
 

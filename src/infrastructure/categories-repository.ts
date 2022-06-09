@@ -2,25 +2,15 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const getCategoryById = async (id?: string) => {
-  if (isNaN(Number(id))) {
-    const category = await prisma.category.findUnique({
-      where: {
-        name: id,
-      },
-    });
-    if (category === null) {
-      return category;
-    }
-    throw new Error("Category not found");
-  }
-  const category = await prisma.category.findUnique({
+export const getCategoryByMainCat = async (mainCat?: string) => {
+  const categories = await prisma.category.findMany({
     where: {
-      id: Number(id),
+      upperLevel: mainCat,
     },
   });
-  if (category === null) {
-    return category;
+  if (categories !== null) {
+    return categories;
   }
   throw new Error("Category not found");
 };
+

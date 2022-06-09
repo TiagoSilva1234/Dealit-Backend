@@ -43,7 +43,7 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const postNewProduct = async (req: Request, res: Response) => {
   const { name, description, photos, price } = req.body;
-  const { catName, upperLevel } = req.body.category;
+  const { catName } = req.body.category;
 
   const data = {
     name,
@@ -51,8 +51,7 @@ export const postNewProduct = async (req: Request, res: Response) => {
     photos,
     price,
     category: {
-      name: catName,
-      upperLevel,
+      catName,
     },
   };
   return await postProduct(data);

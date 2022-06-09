@@ -1,3 +1,3 @@
-import { getCategoryById } from "../../infrastructure/categories-repository";
+import { getCategoryByMainCat } from "../../infrastructure/categories-repository";
 
-export default async (id: string) => await getCategoryById(id);
+export default async (mainCat: string) => await getCategoryByMainCat(mainCat);

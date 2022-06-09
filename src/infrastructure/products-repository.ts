@@ -23,7 +23,7 @@ export const saveProduct = async (data: any) => {
     data: {
       name: data.name,
       description: data.description,
-      category: { create: data.category },
+      category: { connect: {name: data.category.catName} },
       photos: data.photos,
       price: data.price,
     },
