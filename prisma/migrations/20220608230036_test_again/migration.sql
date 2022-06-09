@@ -47,7 +47,7 @@ CREATE TABLE "Address" (
     "id" SERIAL NOT NULL,
     "country" TEXT NOT NULL,
     "city" TEXT NOT NULL,
-    "zip_code" TEXT NOT NULL,
+    "zipCode" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "houseNumber" TEXT NOT NULL,
     "isFavorite" BOOLEAN NOT NULL,

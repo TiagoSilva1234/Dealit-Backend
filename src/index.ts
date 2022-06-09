@@ -1,17 +1,28 @@
-import express,{Express,Request,Response} from "express"
-import { endpointGetUserById, endpointPostUser } from "./application"
-const app: Express = express()
+import express, { Express, Request, Response } from "express";
+import { endpointGetUserById, endpointPostUser, endpointGetProductById, endpointPostProduct  } from "./application";
+const app: Express = express();
 
+
+app.use(express.json());
+
+app.use((req, res, next) => {
+  res.append("Access-Control-Allow-Origin", ["*"]);
+  res.append("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 endpointGetUserById(app);
-endpointPostUser(app)
+endpointPostUser(app);
 
-app.get("/",(req:Request, res:Response)=>{
-    res.send("hello!")
-})
+endpointGetProductById(app);
+endpointPostProduct(app);
 
-app.listen(3220,"0.0.0.0",()=>{
-    console.log("listening :)") 
-})
+app.get("/", (req: Request, res: Response) => {
+  res.send("hello!");
+});
 
-export default app
+app.listen(3220, "0.0.0.0", () => {
+  console.log("listening :)");
+});
+
+export default app;

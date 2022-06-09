@@ -22,19 +22,19 @@ model User {
 }
 
 model Product {
-  id          Int        @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String
-  categories  Category[]
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
   photos      String[]
   price       Decimal
 }
 
 model Category {
   id         Int       @id @default(autoincrement())
-  level      Int
   name       String    @unique
-  upperLevel Int
+  upperLevel String?
   products   Product[]
 }
 
@@ -53,7 +53,7 @@ model Address {
   id          Int     @id @default(autoincrement())
   country     String
   city        String
-  zip_code    String
+  zipCode     String
   street      String
   houseNumber String
   isFavorite  Boolean

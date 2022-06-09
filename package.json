@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "studio": "prisma studio",
+    "dbpush": "prisma migrate dev",
+    "dbreset": "prisma migrate reset",
+    "clireload":"prisma generate"
   },
   "author": "",
   "license": "ISC",

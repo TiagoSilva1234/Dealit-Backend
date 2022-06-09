@@ -1,23 +1,30 @@
-import {Request,Response} from "express"
-import getUserId from "../domain/users/get-UserById"
-import postUser from "../domain/users/post-user"
+import { Request, Response } from "express";
+import getUser from "../domain/users/get-userById";
+import postUser from "../domain/users/post-user";
 
 //User endpoints logic
-export const getUserById = async (req:Request,res:Response) => {
-    const v = await getUserId(req.params.id)
-    res.send(v)
-}
+export const getUserById = async (req: Request, res: Response) => {
+  const user = await getUser(req.params.id);
+  res.send(user);
+};
 
 export const postNewUser = async (req: Request, res: Response) => {
-    console.log(req.body);
-    const data = {
-      username: req.body.username,
-      addresses: [req.body.address],
-      email: req.body.email,
-      password: req.body.password,
-      phone: req.body.phone,
-      creditCards: req.body.creditCard,
-    };
-    return await postUser(data);
-  };
+  const { username, email, password, phone } = req.body;
+  const { country, city, zipCode, street, houseNumber } = req.body.address;
+  const { cardNumber, cvc, expiryDate } = req.body.creditCard;
 
+  const data = {
+    username,
+    address: { country, city, zipCode, street, houseNumber, isFavorite: true },
+    email,
+    password,
+    phone,
+    creditCard: {
+      cardNumber,
+      cvc,
+      expiryDate,
+      isFavorite: true,
+    },
+  };
+  return await postUser(data);
+};
