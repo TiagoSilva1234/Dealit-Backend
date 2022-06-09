@@ -43,3 +43,4 @@ const getRandomProduct = async () => {
   });
   return randomProduct;
 };
+
