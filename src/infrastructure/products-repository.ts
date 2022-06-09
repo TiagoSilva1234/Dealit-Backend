@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Product } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -37,12 +37,13 @@ export const getProductsByCategoryPaginated = async (
   skip: number,
   take: number = 6
 ) => {
-  console.log(skip, take);
+  console.log(skip, take, category);
   const cat = await prisma.category.findUnique({
     where: {
       name: category,
     },
   });
+  console.log(cat);
   if (cat !== null) {
     if (cat.level === 2) {
       const products = await prisma.product.findMany({
@@ -55,20 +56,18 @@ export const getProductsByCategoryPaginated = async (
       return products;
     }
     const cats = await prisma.category.findMany({
-      where: { 
-        upperLevel: cat.name
-      }
-    })
-    const prods =  cats.map( async e => {
-      const res = await prisma.product.findMany({
-        where: {
-          categoryName: e.name
-        }
-      })
-      return res;
-    })
+      where: {
+        upperLevel: cat.name,
+      },
+      include: {
+        products: true,
+      },
+    });
+    const prods: Product[] = [];
+    cats.forEach((e) => e.products.forEach((prod) => prods.push(prod)));
     return prods;
   }
+  throw new Error("category not found");
 };
 
 //called in get product by id

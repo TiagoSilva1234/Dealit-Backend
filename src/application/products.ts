@@ -43,32 +43,52 @@ export const getProductById = async (req: Request, res: Response) => {
 };
 
 export const postNewProduct = async (req: Request, res: Response) => {
-  const { name, description, photos, price } = req.body;
-  const { catName } = req.body.category;
+  try {
+    const { name, description, photos, price } = req.body;
+    const { catName } = req.body.category;
 
-  const data = {
-    name,
-    description,
-    photos,
-    price,
-    category: {
-      catName,
-    },
-  };
-  return res.send({
-    message: "Product successfully saved to datebase!",
-    product: await postProduct(data),
-  });
+    const data = {
+      name,
+      description,
+      photos,
+      price,
+      category: {
+        catName,
+      },
+    };
+    return res.send({
+      message: "Product successfully saved to datebase!",
+      product: await postProduct(data),
+    });
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
 };
 
 export const getProductsByCategoryPaginated = async (
   req: Request,
   res: Response
 ) => {
-  let category = req.params.category;
+  try {
+    let category = req.params.category;
 
-  let page = Number(req.query.page) || 1;
-  let limit = Number(req.query.limit) || 6;
-
-  return res.send(getProductsByCategory(category, page, limit));
+    let page = Number(req.query.page) || 1;
+    let limit = Number(req.query.limit) || 6;
+    const ret = await getProductsByCategory(category, page, limit);
+    return res.send(ret);
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
 };
