@@ -13,9 +13,6 @@ export const getCategoryByMainCat = async (mainCat?: string) => {
       where: {
         name: mainCat,
       },
-      include: {
-        products: true,
-      },
     });
     if (main !== null && main.upperLevel !== null) {
       const actualMain = await prisma.category.findUnique({

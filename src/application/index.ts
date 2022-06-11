@@ -4,6 +4,7 @@ import {
   getProductById,
   postNewProduct,
   getProductsByCategoryPaginated,
+  getAllProductsPaginated
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
 import { Express } from "express";
@@ -21,6 +22,8 @@ export const endpointPostProduct = (app: Express) =>
   app.post("/products", postNewProduct);
 export const endpointgetProductsByCategoryPaginated = (app: Express) =>
   app.get("/products/category/:category", getProductsByCategoryPaginated);
+export const endpointgetAllProductsPaginated = (app: Express) =>
+  app.get("/products/", getAllProductsPaginated);
 
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>

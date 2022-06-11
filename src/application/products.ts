@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import getProduct from "../domain/products/get-productById";
+import getProducts from "../domain/products/get-allProductsPaginated";
 import postProduct from "../domain/products/post-product";
 import getProductsByCategory from "../domain/products/get-productsByCategoryPaginated";
 import { StatusCodes } from "http-status-codes";
@@ -81,6 +82,26 @@ export const getProductsByCategoryPaginated = async (
     let page = Number(req.query.page) || 1;
     let limit = Number(req.query.limit) || 6;
     const ret = await getProductsByCategory(category, page, limit);
+    return res.send(ret);
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};
+
+export const getAllProductsPaginated = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    let page = Number(req.query.page) || 1;
+    let limit = Number(req.query.limit) || 6;
+    const ret = await getProducts( page, limit);
     return res.send(ret);
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({

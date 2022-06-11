@@ -70,6 +70,15 @@ export const getProductsByCategoryPaginated = async (
   throw new Error("category not found");
 };
 
+export const getAllProductsPaginated = async (
+  skip: number,
+  take: number = 6
+) => {
+
+ return prisma.product.findMany({ skip, take})
+
+};
+
 //called in get product by id
 const getRandomProduct = async () => {
   const product = await prisma.product.findMany({

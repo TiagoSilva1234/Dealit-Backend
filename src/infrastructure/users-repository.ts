@@ -7,11 +7,24 @@ export const getUserById = async (id: string) => {
     where: {
       id: Number(id),
     },
+    include: {
+      orders: true,
+      addresses: true,
+      creditCards: true,
+    },
   });
   if (user === null) {
     throw new Error("User does not exist");
   }
-  return user;
+  return {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    phone: user.phone,
+    orders: user.orders,
+    addresses: user.addresses,
+    creditCards: user.creditCards,
+  };
 };
 
 export const saveUser = async (data: any) => {
