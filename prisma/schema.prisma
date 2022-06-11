@@ -13,10 +13,11 @@ datasource db {
 model User {
   id          Int          @id @default(autoincrement())
   username    String
-  addresses   Address[]
   email       String       @unique
   password    String
   phone       String       @unique
+  token       String
+  addresses   Address[]
   orders      Order[]
   creditCards CreditCard[]
 }
@@ -44,8 +45,8 @@ model Category {
 model Order {
   id           Int        @id @default(autoincrement())
   buyDate      DateTime   @default(now())
-  sendDate     DateTime   @default(now())
-  deliveryDate DateTime   @default(now())
+  sendDate     DateTime   
+  deliveryDate DateTime   
   user         User       @relation(fields: [userId], references: [id])
   userId       Int
   creditCard   CreditCard @relation(fields: [creditCardId], references: [id])

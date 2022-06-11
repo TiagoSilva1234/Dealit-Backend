@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import getUser from "../domain/users/get-userById";
-import postUser from "../domain/users/post-user";
 import { StatusCodes } from "http-status-codes";
-import bcrypt from  "bcryptjs"
 
 //User endpoints logic
 export const getUserById = async (req: Request, res: Response) => {
@@ -32,51 +30,6 @@ export const getUserById = async (req: Request, res: Response) => {
         },
       });
     }
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-      error: {
-        message: e.message,
-        cause: "Unexpected error",
-        date: new Date().toLocaleString(),
-      },
-    });
-  }
-};
-
-export const postNewUser = async (req: Request, res: Response) => {
-  try {
-    let { username, email, password, phone } = req.body;
-    const { country, city, zipCode, street, houseNumber } = req.body.address;
-    const { cardNumber, cvc, expiryDate } = req.body.creditCard;
-
-    password = bcrypt.hashSync(password, 10);
-    console.log(password);
-
-    const data = {
-      username,
-      address: {
-        country,
-        city,
-        zipCode,
-        street,
-        houseNumber,
-        isFavorite: true,
-      },
-      email,
-      password,
-      phone,
-      creditCard: {
-        cardNumber,
-        cvc,
-        expiryDate,
-        isFavorite: true,
-      },
-    };
-
-    return res.send({
-      message: "User successfully saved to datebase!",
-      user: await postUser(data),
-    });
-  } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,

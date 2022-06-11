@@ -1,15 +1,16 @@
 import express, { Express, Request, Response } from "express";
-import { endpointGetUserById, 
+import {
+  endpointGetUserById,
   endpointPostUser,
-   endpointGetProductById, 
-   endpointPostProduct,
-   endpointGetCategoryByMainCat,
-   endpointGetAllMainCategories,
-   endpointgetProductsByCategoryPaginated,
-   endpointgetAllProductsPaginated
-  } from "./application";
+  endpointPostLogin,
+  endpointGetProductById,
+  endpointPostProduct,
+  endpointGetCategoryByMainCat,
+  endpointGetAllMainCategories,
+  endpointgetProductsByCategoryPaginated,
+  endpointgetAllProductsPaginated,
+} from "./application";
 const app: Express = express();
-
 
 app.use(express.json());
 
@@ -19,24 +20,27 @@ app.use((req, res, next) => {
   next();
 });
 
+const port = Number(process.env.API_PORT) || 3000;
+
 endpointGetUserById(app);
+
 endpointPostUser(app);
+endpointPostLogin(app);
 
 endpointGetProductById(app);
 endpointPostProduct(app);
-endpointgetProductsByCategoryPaginated(app)
-endpointgetAllProductsPaginated(app)
+endpointgetProductsByCategoryPaginated(app);
+endpointgetAllProductsPaginated(app);
 
 endpointGetCategoryByMainCat(app);
-endpointGetAllMainCategories(app)
+endpointGetAllMainCategories(app);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(3220, "127.0.0.1", () => {
-  console.log("listening :)");
+app.listen(port, "127.0.0.1", () => {
+  console.log(`listening on port ${port} :)`);
 });
-
 
 export default app;
