@@ -21,11 +21,14 @@ model User {
   orders      Order[]
   creditCards CreditCard[]
   Review      Review[]
+  products    Product[]
 }
 
 model Product {
   id           Int      @id @default(autoincrement())
   name         String
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int
   description  String
   category     Category @relation(fields: [categoryName], references: [name])
   categoryName String

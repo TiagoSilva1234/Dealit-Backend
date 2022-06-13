@@ -74,9 +74,7 @@ export const getAllProductsPaginated = async (
   skip: number,
   take: number = 6
 ) => {
-
- return prisma.product.findMany({ skip, take})
-
+  return prisma.product.findMany({ skip, take });
 };
 
 //called in get product by id
@@ -91,4 +89,8 @@ const getRandomProduct = async () => {
     where: { id: randomId },
   });
   return randomProduct;
+};
+
+const getProductsByUserId = async (userId: string) => {
+  const user = await prisma.user.findUnique({ where: { id: Number(userId) }, include: {products: true} });
 };
