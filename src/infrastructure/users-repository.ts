@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
-
+import { UserWithCard } from "../types";
 const prisma = new PrismaClient();
 
 export const getUserById = async (id: string) => {
@@ -52,6 +52,7 @@ export const saveUser = async (data: any) => {
       }
     );
   }
+  if (!data.token) throw new Error("Something went wrong with JWT creation");
   if (data.creditCard) {
     const user = await prisma.user.create({
       data: {
