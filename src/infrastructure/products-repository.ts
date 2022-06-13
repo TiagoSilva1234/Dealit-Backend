@@ -89,6 +89,7 @@ export const getProductsByUserId = async (userId: number) => {
   throw new Error("User not found");
 };
 
+//////////////////////////////////////////////////////////
 //called in get product by id
 const getRandomProduct = async () => {
   const product = await prisma.product.findMany({
@@ -102,5 +103,16 @@ const getRandomProduct = async () => {
   });
   return randomProduct;
 };
+//////////////////////////////////////////////////////////
 
+export const getLatestProducts = async (skip:number,take:number )=>{
+  const prodList = await prisma.product.findMany({ 
+    orderBy:{uploadDate: "desc"},
+    skip, take,
+  })
+  if(prodList){
+ return prodList
+  }
+  return null
+}
 

@@ -10,6 +10,7 @@ import {
   endpointgetProductsByCategoryPaginated,
   endpointgetAllProductsPaginated,
   endpointgetProductsByUserId,
+  endpointGetLatestProducts
 } from "./application";
 const app: Express = express();
 
@@ -33,6 +34,7 @@ endpointPostProduct(app);
 endpointgetProductsByCategoryPaginated(app);
 endpointgetAllProductsPaginated(app);
 endpointgetProductsByUserId(app);
+endpointGetLatestProducts(app)
 
 endpointGetCategoryByMainCat(app);
 endpointGetAllMainCategories(app);

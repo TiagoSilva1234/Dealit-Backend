@@ -4,6 +4,7 @@ import getProducts from "../domain/products/get-allProductsPaginated";
 import postProduct from "../domain/products/post-product";
 import getProductsByCategory from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
+import getLatestProducts from "../domain/products/get-latestProducts";
 import { StatusCodes } from "http-status-codes";
 
 //Product endpoints logic
@@ -137,4 +138,12 @@ export const getProductsByUserId = async(req: Request, res: Response) => {
       },
     });
   }
+}
+
+export const getLateProducts= async(req:Request,res:Response)=>{
+  let page = Number(req.query.page) || 1;
+  let limit = Number(req.query.limit) || 6;
+  const ret = await getLatestProducts( page, limit);
+  return res.send(ret);
+
 }
