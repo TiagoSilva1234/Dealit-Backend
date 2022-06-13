@@ -20,6 +20,7 @@ model User {
   addresses   Address[]
   orders      Order[]
   creditCards CreditCard[]
+  Review      Review[]
 }
 
 model Product {
@@ -31,6 +32,7 @@ model Product {
   photos       String[]
   price        Decimal
   uploadDate   DateTime @default(now())
+  Review       Review[]
 }
 
 model Category {
@@ -45,8 +47,8 @@ model Category {
 model Order {
   id           Int        @id @default(autoincrement())
   buyDate      DateTime   @default(now())
-  sendDate     DateTime   
-  deliveryDate DateTime   
+  sendDate     DateTime
+  deliveryDate DateTime
   user         User       @relation(fields: [userId], references: [id])
   userId       Int
   creditCard   CreditCard @relation(fields: [creditCardId], references: [id])
@@ -74,4 +76,15 @@ model CreditCard {
   expiryDate String
   isFavorite Boolean
   Order      Order[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+  comment   String
+  photo     String
+  rating    Int
 }

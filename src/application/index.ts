@@ -25,7 +25,7 @@ export const endpointPostLogin = (app: Express) =>
 export const endpointGetProductById = (app: Express) =>
   app.get("/products/:id", getProductById);
 export const endpointPostProduct = (app: Express) =>
-  app.post("/products",postNewProduct);
+  app.post("/products", verifyToken, postNewProduct);
 export const endpointgetProductsByCategoryPaginated = (app: Express) =>
   app.get("/products/category/:category", getProductsByCategoryPaginated);
 export const endpointgetAllProductsPaginated = (app: Express) =>

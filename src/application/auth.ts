@@ -2,9 +2,6 @@ import { Request, Response } from "express";
 import postUser from "../domain/auth/post-user";
 import postLogin from "../domain/auth/post-login";
 import { StatusCodes } from "http-status-codes";
-import bcrypt from "bcryptjs";
-import jwt, { Secret } from "jsonwebtoken";
-import { login } from "../infrastructure/users-repository";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -33,18 +30,6 @@ export const registerUser = async (req: Request, res: Response) => {
       throw new Error("All inputs are required");
     }
 
-    password = bcrypt.hashSync(password, 10);
-    let secret: Secret;
-    let token;
-
-    if (process.env.TOKEN_KEY) {
-      secret = process.env.TOKEN_KEY;
-
-      token = jwt.sign({ user_id: username, email }, secret, {
-        expiresIn: "2h",
-      });
-    }
-
     const data = {
       username,
       address: {
@@ -58,7 +43,6 @@ export const registerUser = async (req: Request, res: Response) => {
       email,
       password,
       phone,
-      token,
       creditCard: {
         cardNumber,
         cvc,
