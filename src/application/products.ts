@@ -45,7 +45,7 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const postNewProduct = async (req: Request, res: Response) => {
   try {
-    const { name, description, photos, price } = req.body;
+    const { name, description, photos, price, userId } = req.body;
     const { catName } = req.body.category;
 
     const data = {
@@ -53,6 +53,7 @@ export const postNewProduct = async (req: Request, res: Response) => {
       description,
       photos,
       price,
+      userId,
       category: {
         catName,
       },
