@@ -119,6 +119,15 @@ export const userLogin = async (req: Request, res: Response) => {
 
     return res.send(await postLogin(email, password));
   } catch (e: any) {
+    if (e.message === "Invalid credentials") {
+      return res.status(StatusCodes.UNAUTHORIZED).send({
+        error: {
+          message: e.message,
+          cause: "Unauthorized",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,
