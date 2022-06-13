@@ -31,7 +31,7 @@ export const userDataIsNotValid = (
   data: UserData
 ): { check: boolean; cause: string[] } => {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const expiryDateRegex = /^\d{2}\\\d{2}/;
+  const expiryDateRegex = /^\d{2}\/\d{2}/;
   const passwordRegex =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
   const tester = { check: false, cause: Array<string>() };
