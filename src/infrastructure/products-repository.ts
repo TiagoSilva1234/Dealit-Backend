@@ -86,7 +86,7 @@ export const getProductsByUserId = async (userId: number) => {
   if (user) {
     return user.products;
   }
-  throw new Error("User not found");
+  throw new Error("User does not exist");
 };
 
 //////////////////////////////////////////////////////////

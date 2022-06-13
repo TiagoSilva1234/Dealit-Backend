@@ -130,6 +130,15 @@ export const getProductsByUserId = async(req: Request, res: Response) => {
     }
     res.send(await getProdsByUserId(Number(userId)));
   } catch (e: any) {
+    if (e.message === "User does not exist") {
+      return res.status(StatusCodes.NOT_FOUND).send({
+        error: {
+          message: e.message,
+          cause: "Not found",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,

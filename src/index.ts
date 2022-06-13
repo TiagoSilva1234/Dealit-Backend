@@ -1,16 +1,17 @@
 import express, { Express, Request, Response } from "express";
 import {
   endpointGetUserById,
+  endpointGetUserOrdersById,
   endpointPostUser,
   endpointPostLogin,
   endpointGetProductById,
   endpointPostProduct,
-  endpointGetCategoryByMainCat,
-  endpointGetAllMainCategories,
   endpointgetProductsByCategoryPaginated,
   endpointgetAllProductsPaginated,
   endpointgetProductsByUserId,
-  endpointGetLatestProducts
+  endpointGetLatestProducts,
+  endpointGetCategoryByMainCat,
+  endpointGetAllMainCategories
 } from "./application";
 const app: Express = express();
 
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 const port = Number(process.env.API_PORT) || 3000;
 
 endpointGetUserById(app);
+endpointGetUserOrdersById(app);
 
 endpointPostUser(app);
 endpointPostLogin(app);
