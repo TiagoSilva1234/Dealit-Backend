@@ -52,6 +52,21 @@ export const saveUser = async (data: any) => {
       }
     );
   }
+  if (data.creditCard) {
+    const user = await prisma.user.create({
+      data: {
+        username: data.username,
+        addresses: { create: data.address },
+        email: data.email,
+        password: data.password,
+        phone: data.phone,
+        token: data.token,
+        creditCards: { create: data.creditCard },
+      },
+    });
+    data.password = "********";
+    return data;
+  }
   const user = await prisma.user.create({
     data: {
       username: data.username,
@@ -60,7 +75,6 @@ export const saveUser = async (data: any) => {
       password: data.password,
       phone: data.phone,
       token: data.token,
-      creditCards: { create: data.creditCard },
     },
   });
   data.password = "********";
@@ -98,8 +112,8 @@ export const getUserOrdersById = async (userId: number) => {
     where: { id: userId },
     include: { orders: true },
   });
-  if (user ){
-    return user.orders
+  if (user) {
+    return user.orders;
   }
   throw new Error("User does not exist");
 };
