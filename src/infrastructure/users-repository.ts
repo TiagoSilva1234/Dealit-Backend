@@ -29,7 +29,7 @@ export const getUserById = async (id: string) => {
   };
 };
 
-export const saveUser = async (data: any) => {
+export const saveUser = async (data: UserData) => {
   const oldUser = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -62,6 +62,7 @@ export const saveUser = async (data: any) => {
         password: data.password,
         phone: data.phone,
         token: data.token,
+        // @ts-expect-error: razão
         creditCards: { create: data.creditCard },
       },
     });
