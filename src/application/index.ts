@@ -16,32 +16,32 @@ import { Express } from "express";
 
 //EndpointsUser
 export const endpointGetUserById = (app: Express) =>
-  app.get("/users/:id", getUserById);
+  app.get("dealit/api/users/:id", getUserById);
 export const endpointGetUserOrdersById = (app: Express) =>
-  app.get("/users/orders/:userId", getUserOrdersById);
+  app.get("dealit/api/orders/:userId", getUserOrdersById);
 
 //EndpointsAuth
 export const endpointPostUser = (app: Express) =>
-  app.post("/register", registerUser);
+  app.post("dealit/api/register", registerUser);
 export const endpointPostLogin = (app: Express) =>
-  app.post("/login", userLogin);
+  app.post("dealit/api/login", userLogin);
 
 //EndpointsProduct
 export const endpointGetProductById = (app: Express) =>
-  app.get("/products/:id", getProductById);
+  app.get("dealit/api/products/:id", getProductById);
 export const endpointPostProduct = (app: Express) =>
-  app.post("/products", verifyToken, postNewProduct);
+  app.post("dealit/api/products", verifyToken, postNewProduct);
 export const endpointgetProductsByCategoryPaginated = (app: Express) =>
-  app.get("/products/category/:category", getProductsByCategoryPaginated);
+  app.get("dealit/api/products/category/:category", getProductsByCategoryPaginated);
 export const endpointgetAllProductsPaginated = (app: Express) =>
-  app.get("/products/", getAllProductsPaginated);
+  app.get("dealit/api/products/", getAllProductsPaginated);
 export const endpointgetProductsByUserId = (app: Express) =>
-  app.get("/products/user/:userId", getProductsByUserId);
+  app.get("dealit/api/products/user/:userId", getProductsByUserId);
 export const endpointGetLatestProducts=(app:Express)=>{
-app.get("/latest-products",getLateProducts)
+app.get("dealit/api/latest-products",getLateProducts)
 }
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>
-  app.get("/categories/:mainCat", getCategoryByMainCat);
+  app.get("dealit/api/categories/:mainCat", getCategoryByMainCat);
 export const endpointGetAllMainCategories = (app: Express) =>
-  app.get("/categories", getAllMainCategories);
+  app.get("dealit/api/categories", getAllMainCategories);

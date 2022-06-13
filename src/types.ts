@@ -10,7 +10,7 @@ export type UserData = {
   };
   email: string;
   password: string;
-  phone: number;
+  phone: string;
   creditCard?: {
     cardNumber: string;
     cvc: string;

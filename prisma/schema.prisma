@@ -15,7 +15,7 @@ model User {
   username    String       @unique
   email       String       @unique
   password    String
-  phone       Int          @unique
+  phone       String          @unique
   token       String
   addresses   Address[]
   orders      Order[]
