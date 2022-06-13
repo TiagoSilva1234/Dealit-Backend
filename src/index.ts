@@ -9,6 +9,7 @@ import {
   endpointGetAllMainCategories,
   endpointgetProductsByCategoryPaginated,
   endpointgetAllProductsPaginated,
+  endpointgetProductsByUserId,
 } from "./application";
 const app: Express = express();
 
@@ -31,6 +32,7 @@ endpointGetProductById(app);
 endpointPostProduct(app);
 endpointgetProductsByCategoryPaginated(app);
 endpointgetAllProductsPaginated(app);
+endpointgetProductsByUserId(app);
 
 endpointGetCategoryByMainCat(app);
 endpointGetAllMainCategories(app);

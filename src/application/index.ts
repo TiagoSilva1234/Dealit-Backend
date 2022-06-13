@@ -5,7 +5,8 @@ import {
   getProductById,
   postNewProduct,
   getProductsByCategoryPaginated,
-  getAllProductsPaginated
+  getAllProductsPaginated,
+  getProductsByUserId
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
 import {verifyToken} from "../domain/auth/verifyToken"
@@ -30,6 +31,8 @@ export const endpointgetProductsByCategoryPaginated = (app: Express) =>
   app.get("/products/category/:category", getProductsByCategoryPaginated);
 export const endpointgetAllProductsPaginated = (app: Express) =>
   app.get("/products/", getAllProductsPaginated);
+export const endpointgetProductsByUserId = (app: Express) =>
+  app.get("/products/user/:id", getProductsByUserId);
 
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>

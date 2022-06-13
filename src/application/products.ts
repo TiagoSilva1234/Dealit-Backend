@@ -3,6 +3,7 @@ import getProduct from "../domain/products/get-productById";
 import getProducts from "../domain/products/get-allProductsPaginated";
 import postProduct from "../domain/products/post-product";
 import getProductsByCategory from "../domain/products/get-productsByCategoryPaginated";
+import getProdsByUserId from "../domain/products/get-productsByUserId";
 import { StatusCodes } from "http-status-codes";
 
 //Product endpoints logic
@@ -10,20 +11,17 @@ export const getProductById = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     if (isNaN(Number(id)) && id !== "random") {
-      throw new Error("Invalid id format");
-    }
-    const product = await getProduct(id);
-    res.send(product);
-  } catch (e: any) {
-    if (e.message === "Invalid id format") {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
-          message: e.message,
+          message: "Invalid id format",
           cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
     }
+    const product = await getProduct(id);
+    res.send(product);
+  } catch (e: any) {
     if (e.message === "Product does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
         error: {
@@ -114,3 +112,27 @@ export const getAllProductsPaginated = async (
     });
   }
 };
+
+export const getProductsByUserId = async(req: Request, res: Response) => {
+  try {
+    let userId = req.params.userId;
+    if (isNaN(Number(userId))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return await getProdsByUserId(Number(userId))
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+}
