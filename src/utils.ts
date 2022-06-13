@@ -54,7 +54,7 @@ export const userDataIsNotValid = (
   if (!passwordRegex.test(data.password)) {
     tester.cause.push("Password not safe enough");
   }
-  if (data.phone.toString().length !== 9) {
+  if (data.phone.toString().length !== 9 && data.phone <910000000 && data.phone >969999999) {
     tester.cause.push("Phone number not valid");
   }
   if (data.creditCard) {
