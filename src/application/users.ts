@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import getUser from "../domain/users/get-userById";
+import getUserOrders from "../domain/users/get-userOrdersById";
 import { StatusCodes } from "http-status-codes";
 import getUserOrders from "../domain/users/get-userOrdersById"
 //User endpoints logic
