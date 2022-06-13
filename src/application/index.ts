@@ -1,22 +1,24 @@
 import app from "../index";
-import { getUserById } from "./users";
-import {registerUser, userLogin } from "./auth"
+import { getUserById, getUserOrdersById } from "./users";
+import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
   postNewProduct,
   getProductsByCategoryPaginated,
   getAllProductsPaginated,
-  getProductsByUserId
+  getProductsByUserId,
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
-import {verifyToken} from "../domain/auth/verifyToken"
+import { verifyToken } from "../domain/auth/verifyToken";
 import { Express } from "express";
 
 //EndpointsUser
 export const endpointGetUserById = (app: Express) =>
   app.get("/users/:id", getUserById);
+export const endpointGetUserOrdersById = (app: Express) =>
+  app.get("/users/orders/:id", getUserOrdersById);
 
-//EndpointsAuth  
+//EndpointsAuth
 export const endpointPostUser = (app: Express) =>
   app.post("/register", registerUser);
 export const endpointPostLogin = (app: Express) =>

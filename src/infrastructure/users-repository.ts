@@ -38,17 +38,19 @@ export const saveUser = async (data: any) => {
     throw new Error("User Already Exists. Please Login");
   }
 
-
   data.password = bcrypt.hashSync(data.password, 10);
   let secret: Secret;
-  
 
   if (process.env.TOKEN_KEY) {
     secret = process.env.TOKEN_KEY;
 
-    data.token = jwt.sign({ user_id: data.username, email: data.email }, secret, {
-      expiresIn: "2h",
-    });
+    data.token = jwt.sign(
+      { user_id: data.username, email: data.email },
+      secret,
+      {
+        expiresIn: "2h",
+      }
+    );
   }
   const user = await prisma.user.create({
     data: {
@@ -89,4 +91,15 @@ export const login = async (email: string, password: string) => {
     };
   }
   throw new Error("Invalid credentials");
+};
+
+export const getUserOrdersById = async (userId: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { orders: true },
+  });
+  if (user ){
+    return user.orders
+  }
+  throw new Error("User does not exist");
 };
