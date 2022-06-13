@@ -23,7 +23,7 @@ export const productDataIsNotValid = (
     tester.cause.push("Category not defined");
   }
 
-  tester.cause.length === 0 ? (tester.check = true) : (tester.check = false);
+  tester.cause.length > 0 ? (tester.check = true) : (tester.check = false);
   return tester;
 };
 
