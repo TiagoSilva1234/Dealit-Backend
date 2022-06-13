@@ -18,7 +18,7 @@ import { Express } from "express";
 export const endpointGetUserById = (app: Express) =>
   app.get("/users/:id", getUserById);
 export const endpointGetUserOrdersById = (app: Express) =>
-  app.get("/users/orders/:id", getUserOrdersById);
+  app.get("/users/orders/:userId", getUserOrdersById);
 
 //EndpointsAuth
 export const endpointPostUser = (app: Express) =>

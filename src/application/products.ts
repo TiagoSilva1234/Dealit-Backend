@@ -94,14 +94,11 @@ export const getProductsByCategoryPaginated = async (
   }
 };
 
-export const getAllProductsPaginated = async (
-  req: Request,
-  res: Response
-) => {
+export const getAllProductsPaginated = async (req: Request, res: Response) => {
   try {
     let page = Number(req.query.page) || 1;
     let limit = Number(req.query.limit) || 6;
-    const ret = await getProducts( page, limit);
+    const ret = await getProducts(page, limit);
     return res.send(ret);
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -114,11 +111,11 @@ export const getAllProductsPaginated = async (
   }
 };
 
-export const getProductsByUserId = async(req: Request, res: Response) => {
+export const getProductsByUserId = async (req: Request, res: Response) => {
   try {
     let userId = req.params.userId;
     console.log(userId);
-    
+
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -147,12 +144,21 @@ export const getProductsByUserId = async(req: Request, res: Response) => {
       },
     });
   }
-}
+};
 
-export const getLateProducts= async(req:Request,res:Response)=>{
-  let page = Number(req.query.page) || 1;
-  let limit = Number(req.query.limit) || 6;
-  const ret = await getLatestProducts( page, limit);
-  return res.send(ret);
-
-}
+export const getLateProducts = async (req: Request, res: Response) => {
+  try {
+    let page = Number(req.query.page) || 1;
+    let limit = Number(req.query.limit) || 6;
+    const ret = await getLatestProducts(page, limit);
+    return res.send(ret);
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};
