@@ -55,6 +55,7 @@ model Order {
   deliveryDate   DateTime
   user           User             @relation(fields: [userId], references: [id])
   userId         Int
+  sellerName     String
   creditCard     CreditCard       @relation(fields: [creditCardId], references: [id])
   creditCardId   Int
   ProductsOrders ProductsOrders[]
