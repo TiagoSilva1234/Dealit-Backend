@@ -1,0 +1,30 @@
+"filename", "language", "TypeScript", "JSON with Comments", "JSON", "Prisma", "SQL", "comment", "blank", "total"
+"/Users/tiagosilva/Desktop/BackEndDealIt/package-lock.json", "JSON", 0, 0, 8202, 0, 0, 0, 1, 8203
+"/Users/tiagosilva/Desktop/BackEndDealIt/package.json", "JSON", 0, 0, 38, 0, 0, 0, 1, 39
+"/Users/tiagosilva/Desktop/BackEndDealIt/prisma/migrations/20220613120815_v3/migration.sql", "SQL", 0, 0, 0, 0, 85, 21, 29, 135
+"/Users/tiagosilva/Desktop/BackEndDealIt/prisma/schema.prisma", "Prisma", 0, 0, 0, 92, 0, 2, 12, 106
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/auth.ts", "TypeScript", 119, 0, 0, 0, 0, 0, 10, 129
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/categories.ts", "TypeScript", 23, 0, 0, 0, 0, 1, 2, 26
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/index.ts", "TypeScript", 39, 0, 0, 0, 0, 4, 5, 48
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/products.ts", "TypeScript", 154, 0, 0, 0, 0, 1, 10, 165
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/users.ts", "TypeScript", 69, 0, 0, 0, 0, 1, 3, 73
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/auth/post-login.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 2, 6
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/auth/post-user.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 3, 8
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/auth/verifyToken.ts", "TypeScript", 32, 0, 0, 0, 0, 0, 5, 37
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/categories/get-allMainCategories.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 2, 4
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/categories/get-categoryById.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 2, 4
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-allProductsPaginated.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 2, 5
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-latestProducts.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 2, 5
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-productById.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 2, 4
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-productsByCategoryPaginated.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 2, 5
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-productsByUserId.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 2, 4
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/post-product.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 2, 7
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/users/get-userById.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 2, 4
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/domain/users/get-userOrdersById.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 2, 4
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/index.ts", "TypeScript", 42, 0, 0, 0, 0, 0, 11, 53
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/categories-repository.ts", "TypeScript", 48, 0, 0, 0, 0, 0, 7, 55
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/products-repository.ts", "TypeScript", 104, 0, 0, 0, 0, 3, 12, 119
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/users-repository.ts", "TypeScript", 109, 0, 0, 0, 0, 0, 12, 121
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/types.ts", "TypeScript", 31, 0, 0, 0, 0, 0, 2, 33
+"/Users/tiagosilva/Desktop/BackEndDealIt/tsconfig.json", "JSON with Comments", 0, 10, 0, 0, 0, 86, 11, 107
+"Total", "-", 805, 10, 8240, 92, 85, 119, 158, 9509
