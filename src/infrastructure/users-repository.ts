@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
-import { UserWithCard } from "../types";
 const prisma = new PrismaClient();
 
 export const getUserById = async (id: string) => {

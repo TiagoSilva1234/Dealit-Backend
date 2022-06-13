@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import postUser from "../domain/auth/post-user";
 import postLogin from "../domain/auth/post-login";
 import { StatusCodes } from "http-status-codes";
+import { userDataIsNotValid } from "../utils";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    let { username, email, password, phone } = req.body;
+    const { username, email, password, phone } = req.body;
 
     const { country, city, zipCode, street, houseNumber } = req.body.address;
 
@@ -32,8 +33,8 @@ export const registerUser = async (req: Request, res: Response) => {
         },
       });
     }
-    let data;
 
+    let data;
     if (cardNumber) {
       data = {
         username,
@@ -72,6 +73,10 @@ export const registerUser = async (req: Request, res: Response) => {
         phone,
         token: "",
       };
+    }
+
+    if (userDataIsNotValid(data).check) {
+
     }
 
     return res.status(StatusCodes.CREATED).send({

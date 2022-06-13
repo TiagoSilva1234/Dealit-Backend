@@ -47,6 +47,25 @@ export const postNewProduct = async (req: Request, res: Response) => {
     const { name, description, photos, price, userId } = req.body;
     const { catName } = req.body.category;
 
+    if (
+      !(
+        name &&
+        description &&
+        photos &&
+        price &&
+        userId &&
+        catName 
+      )
+    ) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required data missing",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+
     const data = {
       name,
       description,
