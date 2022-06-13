@@ -10,7 +10,7 @@
     "studio": "prisma studio",
     "dbpush": "prisma migrate dev",
     "dbreset": "prisma migrate reset",
-    "clireload": "prisma generate"
+    "clireload": "prisma generate --data-proxy"
   },
   "author": "",
   "license": "ISC",

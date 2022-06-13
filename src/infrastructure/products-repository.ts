@@ -21,6 +21,7 @@ export const getProductById = async (id: string) => {
 export const saveProduct = async (data: any) => {
   const product = await prisma.product.create({
     data: {
+      user: { connect: { id: data.userId } },
       name: data.name,
       description: data.description,
       category: { connect: { name: data.category.catName } },
@@ -92,5 +93,12 @@ const getRandomProduct = async () => {
 };
 
 const getProductsByUserId = async (userId: string) => {
-  const user = await prisma.user.findUnique({ where: { id: Number(userId) }, include: {products: true} });
+  const user = await prisma.user.findUnique({
+    where: { id: Number(userId) },
+    include: { products: true },
+  });
+  if (user) {
+    return user.products;
+  }
+  throw new Error("User not found");
 };
