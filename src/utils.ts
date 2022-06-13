@@ -42,7 +42,7 @@ export const userDataIsNotValid = (
   
 
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const expiryDateRegex = /^\d{2}\\\d{2}/
+  const expiryDateRegex = /^\d{2}\\\d{2}/;
   const passwordRegex =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
   const tester = { check: false, cause: Array<string>() };
@@ -75,10 +75,11 @@ export const userDataIsNotValid = (
     if (data.creditCard.cvc.toString().length !== 3) {
       tester.cause.push("Credit card cvc not valid");
     }
-    if(!expiryDateRegex.test(data.creditCard.expiryDate)){
-        tester.cause.push("invalid expiry date format");
+    if (!expiryDateRegex.test(data.creditCard.expiryDate)) {
+      tester.cause.push("invalid expiry date format");
     }
   }
+  tester.cause.length > 0 ? (tester.check = true) : (tester.check = false);
 
   return tester;
 };
