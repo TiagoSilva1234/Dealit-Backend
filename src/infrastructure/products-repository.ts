@@ -1,4 +1,5 @@
 import { PrismaClient, Product } from "@prisma/client";
+import {ProductData} from "../types"
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,7 @@ export const getProductById = async (id: string) => {
   return product;
 };
 
-export const saveProduct = async (data: any) => {
+export const saveProduct = async (data: ProductData) => {
   const product = await prisma.product.create({
     data: {
       user: { connect: { id: data.userId } },
@@ -27,7 +28,6 @@ export const saveProduct = async (data: any) => {
       category: { connect: { name: data.category.catName } },
       photos: data.photos,
       price: data.price,
-      uploadDate: data.uploadDate,
     },
   });
   return product;

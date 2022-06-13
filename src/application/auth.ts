@@ -21,50 +21,64 @@ export const registerUser = async (req: Request, res: Response) => {
         city &&
         zipCode &&
         street &&
-        houseNumber &&
-        cardNumber &&
-        cvc &&
-        expiryDate
+        houseNumber
       )
     ) {
-      throw new Error("All inputs are required");
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required data missing",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
     }
+    let data;
 
-    const data = {
-      username,
-      address: {
-        country,
-        city,
-        zipCode,
-        street,
-        houseNumber,
-        isFavorite: true,
-      },
-      email,
-      password,
-      phone,
-      creditCard: {
-        cardNumber,
-        cvc,
-        expiryDate,
-        isFavorite: true,
-      },
-    };
+    if (cardNumber) {
+      data = {
+        username,
+        address: {
+          country,
+          city,
+          zipCode,
+          street,
+          houseNumber,
+          isFavorite: true,
+        },
+        email,
+        password,
+        phone,
+        creditCard: {
+          cardNumber,
+          cvc,
+          expiryDate,
+          isFavorite: true,
+        },
+        token: "",
+      };
+    } else {
+      data = {
+        username,
+        address: {
+          country,
+          city,
+          zipCode,
+          street,
+          houseNumber,
+          isFavorite: true,
+        },
+        email,
+        password,
+        phone,
+        token: "",
+      };
+    }
 
     return res.status(StatusCodes.CREATED).send({
       message: "User successfully saved to datebase!",
       user: await postUser(data),
     });
   } catch (e: any) {
-    if (e.message === "All inputs are required") {
-      return res.status(StatusCodes.BAD_REQUEST).send({
-        error: {
-          message: e.message,
-          cause: "Bad Request",
-          date: new Date().toLocaleString(),
-        },
-      });
-    }
     if (e.message === "User Already Exists. Please Login") {
       return res.status(StatusCodes.CONFLICT).send({
         error: {
@@ -93,7 +107,6 @@ export const userLogin = async (req: Request, res: Response) => {
     }
 
     return res.send(await postLogin(email, password));
-    
   } catch (e: any) {
     if (e.message === "All inputs are required") {
       return res.status(StatusCodes.BAD_REQUEST).send({
