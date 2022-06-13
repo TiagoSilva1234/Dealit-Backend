@@ -6,6 +6,8 @@ import getProductsByCategory from "../domain/products/get-productsByCategoryPagi
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import getLatestProducts from "../domain/products/get-latestProducts";
 import { StatusCodes } from "http-status-codes";
+import { productDataIsNotValid } from "../utils";
+
 
 //Product endpoints logic
 export const getProductById = async (req: Request, res: Response) => {
@@ -76,6 +78,17 @@ export const postNewProduct = async (req: Request, res: Response) => {
         catName,
       },
     };
+    const tester = productDataIsNotValid(data);
+
+    if (tester.check) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: tester.cause,
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
     return res.send({
       message: "Product successfully saved to datebase!",
       product: await postProduct(data),

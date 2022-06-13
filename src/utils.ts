@@ -2,7 +2,7 @@ import { UserData, ProductData } from "./types";
 
 import countries from "./countries";
 
-export const produtDataIsNotValid = (
+export const productDataIsNotValid = (
   data: ProductData
 ): { check: boolean; cause: string[] } => {
   const tester = { check: false, cause: Array<string>() };

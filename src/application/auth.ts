@@ -75,8 +75,16 @@ export const registerUser = async (req: Request, res: Response) => {
       };
     }
 
-    if (userDataIsNotValid(data).check) {
+    const tester = userDataIsNotValid(data);
 
+    if (tester.check) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: tester.cause,
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
     }
 
     return res.status(StatusCodes.CREATED).send({
@@ -119,7 +127,7 @@ export const userLogin = async (req: Request, res: Response) => {
 
     return res.send(await postLogin(email, password));
   } catch (e: any) {
-    if (e.message === "Invalid credentials") {
+    if (e.message === "Invalid credentials") {
       return res.status(StatusCodes.UNAUTHORIZED).send({
         error: {
           message: e.message,
