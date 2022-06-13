@@ -6,10 +6,10 @@ import mainCategory from "../domain/categories/get-allMainCategories"
 //Categories endpoints logic
 export const getCategoryByMainCat = async (req: Request, res: Response) => {
   try {
-    let mainCat = req.params.mainCat;
+    let mainCat : string = req.params.mainCat;
     const categories = await getCategoryMainCat(mainCat);
     res.send(categories);
-  } catch (e: any) {
+  } catch (e:any) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
         error: {
           message: e.message,

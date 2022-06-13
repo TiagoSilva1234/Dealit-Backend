@@ -116,6 +116,8 @@ export const getAllProductsPaginated = async (
 export const getProductsByUserId = async(req: Request, res: Response) => {
   try {
     let userId = req.params.userId;
+    console.log(userId);
+    
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -125,7 +127,7 @@ export const getProductsByUserId = async(req: Request, res: Response) => {
         },
       });
     }
-    return await getProdsByUserId(Number(userId))
+    res.send(await getProdsByUserId(Number(userId)));
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {

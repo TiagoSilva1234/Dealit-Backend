@@ -32,7 +32,7 @@ export const endpointgetProductsByCategoryPaginated = (app: Express) =>
 export const endpointgetAllProductsPaginated = (app: Express) =>
   app.get("/products/", getAllProductsPaginated);
 export const endpointgetProductsByUserId = (app: Express) =>
-  app.get("/products/user/:id", getProductsByUserId);
+  app.get("/products/user/:userId", getProductsByUserId);
 
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>
