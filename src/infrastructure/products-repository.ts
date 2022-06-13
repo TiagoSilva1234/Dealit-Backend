@@ -104,7 +104,7 @@ const getRandomProduct = async (num: number) => {
     });
     return randomProduct;
   }
-  const ar: any = [];
+  const ar: Product[] = [];
   while (ar.length !== num) {
     let rep = false;
     const randomId = Math.floor(Math.random() * product[0].id) + 1;
@@ -119,7 +119,9 @@ const getRandomProduct = async (num: number) => {
     const randomProduct = await prisma.product.findUnique({
       where: { id: randomId },
     });
-    ar.push(randomProduct);
+    if (randomProduct) {
+      ar.push(randomProduct);
+    }
   }
 
   return ar;

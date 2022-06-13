@@ -19,7 +19,7 @@ export const productDataIsNotValid = (
   if (!data.userId) {
     tester.cause.push("Seller not defined");
   }
-  if (!data.category.catName) {
+  if (!data.category?.catName) {
     tester.cause.push("Category not defined");
   }
 
@@ -54,7 +54,11 @@ export const userDataIsNotValid = (
   if (!passwordRegex.test(data.password)) {
     tester.cause.push("Password not safe enough");
   }
-  if (data.phone.toString().length !== 9 && data.phone <910000000 && data.phone >969999999) {
+  if (
+    data.phone.toString().length !== 9 &&
+    data.phone < 910000000 &&
+    data.phone > 969999999
+  ) {
     tester.cause.push("Phone number not valid");
   }
   if (data.creditCard) {
