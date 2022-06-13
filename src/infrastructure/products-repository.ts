@@ -1,11 +1,11 @@
 import { PrismaClient, Product } from "@prisma/client";
-import {ProductData} from "../types"
+import { ProductData } from "../types";
 
 const prisma = new PrismaClient();
 
-export const getProductById = async (id: string) => {
+export const getProductById = async (id: string, num: number) => {
   if (id === "random") {
-    return getRandomProduct();
+    return getRandomProduct(num);
   }
 
   const product = await prisma.product.findUnique({
@@ -91,28 +91,49 @@ export const getProductsByUserId = async (userId: number) => {
 
 //////////////////////////////////////////////////////////
 //called in get product by id
-const getRandomProduct = async () => {
+const getRandomProduct = async (num: number) => {
   const product = await prisma.product.findMany({
     orderBy: { id: "desc" },
     take: 1,
   });
 
-  const randomId = Math.floor(Math.random() * product[0].id) + 1;
-  const randomProduct = await prisma.product.findUnique({
-    where: { id: randomId },
-  });
-  return randomProduct;
+  if (num === 1) {
+    const randomId = Math.floor(Math.random() * product[0].id) + 1;
+    const randomProduct = await prisma.product.findUnique({
+      where: { id: randomId },
+    });
+    return randomProduct;
+  }
+  const ar: any = [];
+  while (ar.length !== num) {
+    let rep = false;
+    const randomId = Math.floor(Math.random() * product[0].id) + 1;
+    for (let i = 0; i < ar.length; i++) {
+      if (randomId === ar[i].id) {
+        rep = true;
+      }
+    }
+    if (rep === true) {
+      continue;
+    }
+    const randomProduct = await prisma.product.findUnique({
+      where: { id: randomId },
+    });
+    ar.push(randomProduct);
+  }
+
+  return ar;
 };
 //////////////////////////////////////////////////////////
 
-export const getLatestProducts = async (skip:number,take:number )=>{
-  const prodList = await prisma.product.findMany({ 
-    orderBy:{uploadDate: "desc"},
-    skip, take,
-  })
-  if(prodList){
- return prodList
+export const getLatestProducts = async (skip: number, take: number) => {
+  const prodList = await prisma.product.findMany({
+    orderBy: { uploadDate: "desc" },
+    skip,
+    take,
+  });
+  if (prodList) {
+    return prodList;
   }
-  return null
-}
-
+  return null;
+};

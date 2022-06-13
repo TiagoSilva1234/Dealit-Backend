@@ -13,7 +13,8 @@ import { productDataIsNotValid } from "../utils";
 export const getProductById = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
-    if (isNaN(Number(id)) && id !== "random") {
+    let num = Number(req.query.size) || 1
+    if (isNaN(Number(id)) && id !== "random"&& num >10) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
@@ -22,7 +23,8 @@ export const getProductById = async (req: Request, res: Response) => {
         },
       });
     }
-    const product = await getProduct(id);
+ 
+    const product = await getProduct(id,num);
     res.send(product);
   } catch (e: any) {
     if (e.message === "Product does not exist") {
