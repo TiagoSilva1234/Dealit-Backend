@@ -1,4 +1,4 @@
-export type UserWithCard = {
+export type UserData = {
   username: string;
   address: {
     country: string;

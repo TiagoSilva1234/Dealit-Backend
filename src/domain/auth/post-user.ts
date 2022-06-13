@@ -1,7 +1,7 @@
 import { saveUser } from "../../infrastructure/users-repository";
-import {UserWithCard} from "../../types"
+import {UserData} from "../../types"
 
 
-export default async (data: UserWithCard) => {
+export default async (data: UserData) => {
   return saveUser(data);
 };
