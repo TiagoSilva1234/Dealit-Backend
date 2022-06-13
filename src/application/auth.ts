@@ -108,20 +108,17 @@ export const userLogin = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     if (!(email && password)) {
-      throw new Error("All inputs are required");
-    }
-
-    return res.send(await postLogin(email, password));
-  } catch (e: any) {
-    if (e.message === "All inputs are required") {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
-          message: e.message,
+          message: "All inputs are required",
           cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
     }
+
+    return res.send(await postLogin(email, password));
+  } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,

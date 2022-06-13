@@ -12,10 +12,10 @@ datasource db {
 
 model User {
   id          Int          @id @default(autoincrement())
-  username    String
+  username    String       @unique
   email       String       @unique
   password    String
-  phone       String       @unique
+  phone       Int          @unique
   token       String
   addresses   Address[]
   orders      Order[]

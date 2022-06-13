@@ -10,11 +10,11 @@ export type UserData = {
   };
   email: string;
   password: string;
-  phone: string;
+  phone: number;
   creditCard?: {
     cardNumber: string;
     cvc: string;
-    expiryDate: Date;
+    expiryDate: string;
     isFavorite: boolean;
   };
   token?: string;
