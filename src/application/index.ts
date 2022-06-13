@@ -18,7 +18,7 @@ import { Express } from "express";
 export const endpointGetUserById = (app: Express) =>
   app.get("/users/:id", getUserById);
 export const endpointGetUserOrdersById = (app: Express) =>
-  app.get("/users/orders/:id", getUserOrdersById);
+  app.get("/users/orders/:userId", getUserOrdersById);
 
 //EndpointsAuth
 export const endpointPostUser = (app: Express) =>
@@ -38,7 +38,7 @@ export const endpointgetAllProductsPaginated = (app: Express) =>
 export const endpointgetProductsByUserId = (app: Express) =>
   app.get("/products/user/:userId", getProductsByUserId);
 export const endpointGetLatestProducts=(app:Express)=>{
-app.get("/products/latest",getLateProducts)
+app.get("/latest-products",getLateProducts)
 }
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>

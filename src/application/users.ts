@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import getUser from "../domain/users/get-userById";
 import { StatusCodes } from "http-status-codes";
-
+import getUserOrders from "../domain/users/get-userOrdersById"
 //User endpoints logic
 export const getUserById = async (req: Request, res: Response) => {
   try {
@@ -48,7 +48,9 @@ export const getUserOrdersById = async (req: Request, res: Response) => {
           date: new Date().toLocaleString(),
         },
       });
+  
     }
+    res.send(await getUserOrders(Number(userId)))
   } catch (e: any) {
     if (e.message === "User does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
