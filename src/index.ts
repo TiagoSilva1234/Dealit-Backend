@@ -18,6 +18,7 @@ import {
   endpointPostReviews,
   endpointPostOrders,
   endpointPatchProducts
+
 } from "./application";
 const app: Express = express();
 
@@ -30,8 +31,6 @@ app.use((req, res, next) => {
 });
 
 const port = Number(process.env.API_PORT) || 3000;
-
-
 
 //Endpoints user
 endpointGetUserById(app);
@@ -59,14 +58,12 @@ endpointPostReviews(app);
 
 //Endpoints orders
 endpointGetOrdersByUserId(app);
-endpointPostOrders(app)
+endpointPostOrders(app);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(port, "0.0.0.0", () => {
-  console.log(`listening on port ${port} :)`);
-});
+app.listen(port, "0.0.0.0", () => console.log(`listening on port ${port} :)`));
 
 export default app;
