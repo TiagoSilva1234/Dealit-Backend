@@ -6,6 +6,8 @@ import postOrders from "../domain/orders/post-order";
 import { Order, Product } from "@prisma/client";
 export const getOrdersByUserId = async (req: Request, res: Response) => {
   try {
+    console.log("yo")
+    console.log("yo")
     let userId = req.params.userId;
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({

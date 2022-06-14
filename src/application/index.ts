@@ -55,7 +55,7 @@ export const endpointGetAllMainCategories = (app: Express) =>
 
 //EndpointsOrders
 export const endpointGetOrdersByUserId = (app: Express) =>
-  app.get("/dealit/api/orders/:userId", getOrdersByUserId);
+  app.get("/dealit/api/orders/user/:userId", getOrdersByUserId);
 
   export const endpointPostOrders = (app:Express)=>
-  app.get(",  ",postOrder);
+  app.post("/dealit/api/orders",postOrder);
