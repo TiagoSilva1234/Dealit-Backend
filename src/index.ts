@@ -18,7 +18,6 @@ import {
   endpointPostReviews,
   endpointPostOrders,
   endpointPatchProducts
-
 } from "./application";
 const app: Express = express();
 
