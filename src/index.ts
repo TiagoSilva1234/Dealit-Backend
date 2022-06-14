@@ -12,6 +12,10 @@ import {
   endpointGetLatestProducts,
   endpointGetCategoryByMainCat,
   endpointGetAllMainCategories,
+  endpointGetReviewsByUserId,
+  endpointGetReviewsByProductId,
+  endpointGetReviewsByReviewer,
+  endpointPostReviews,
   endpointPostOrders
 } from "./application";
 const app: Express = express();
@@ -45,9 +49,16 @@ endpointGetLatestProducts(app);
 endpointGetCategoryByMainCat(app);
 endpointGetAllMainCategories(app);
 
+//Endpoints reviews
+endpointGetReviewsByUserId(app);
+endpointGetReviewsByProductId(app);
+endpointGetReviewsByReviewer(app);
+endpointPostReviews(app);
+
 //Endpoints orders
 endpointGetOrdersByUserId(app);
 endpointPostOrders(app)
+
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
