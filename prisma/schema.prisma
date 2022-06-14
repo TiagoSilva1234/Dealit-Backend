@@ -15,12 +15,12 @@ model User {
   username    String       @unique
   email       String       @unique
   password    String
-  phone       String          @unique
+  phone       String       @unique
   token       String
   addresses   Address[]
   orders      Order[]
   creditCards CreditCard[]
-  Review      Review[]
+  reviews      Review[]
   products    Product[]
 }
 
@@ -93,6 +93,7 @@ model Review {
   comment   String
   photo     String
   rating    Int
+  reviewer  String
 }
 
 model ProductsOrders {
