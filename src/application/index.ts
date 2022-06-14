@@ -1,10 +1,11 @@
 import app from "../index";
-import { getUserById, getUserOrdersById } from "./users";
+import { getUserById } from "./users";
+import { getOrdersByUserId } from "./orders";
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
   postNewProduct,
-  getProductsByCategoryPaginated,
+  getProductsByCategory,
   getAllProductsPaginated,
   getProductsByUserId,
   getLateProducts,
@@ -16,9 +17,6 @@ import { Express } from "express";
 //EndpointsUser
 export const endpointGetUserById = (app: Express) =>
   app.get("dealit/api/users/:id", getUserById);
-
-export const endpointGetUserOrdersById = (app: Express) =>
-  app.get("dealit/api/orders/:userId", getUserOrdersById);
 
 //EndpointsAuth
 export const endpointPostUser = (app: Express) =>
@@ -33,21 +31,28 @@ export const endpointGetProductById = (app: Express) =>
 
 export const endpointPostProduct = (app: Express) =>
   app.post("dealit/api/products", verifyToken, postNewProduct);
-  
+
 export const endpointgetProductsByCategoryPaginated = (app: Express) =>
   app.get(
     "dealit/api/products/category/:category",
-    getProductsByCategoryPaginated
+    getProductsByCategory
   );
+
 export const endpointgetAllProductsPaginated = (app: Express) =>
   app.get("dealit/api/products/", getAllProductsPaginated);
+
 export const endpointgetProductsByUserId = (app: Express) =>
   app.get("dealit/api/products/user/:userId", getProductsByUserId);
-export const endpointGetLatestProducts = (app: Express) => {
+
+export const endpointGetLatestProducts = (app: Express) =>
   app.get("dealit/api/latest-products", getLateProducts);
-};
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>
   app.get("dealit/api/categories/:mainCat", getCategoryByMainCat);
+
 export const endpointGetAllMainCategories = (app: Express) =>
   app.get("dealit/api/categories", getAllMainCategories);
+
+//EndpointsOrders
+export const endpointGetOrdersByUserId = (app: Express) =>
+  app.get("dealit/api/orders/:userId", getOrdersByUserId);

@@ -2,11 +2,10 @@ import { Request, Response } from "express";
 import getProduct from "../domain/products/get-productById";
 import getProducts from "../domain/products/get-allProductsPaginated";
 import postProduct from "../domain/products/post-product";
-import getProductsByCategory from "../domain/products/get-productsByCategoryPaginated";
+import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import getLatestProducts from "../domain/products/get-latestProducts";
 import { StatusCodes } from "http-status-codes";
-import { productDataIsNotValid } from "../utils";
 
 
 //Product endpoints logic
@@ -105,7 +104,7 @@ export const postNewProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductsByCategoryPaginated = async (
+export const getProductsByCategory = async (
   req: Request,
   res: Response
 ) => {
@@ -114,7 +113,7 @@ export const getProductsByCategoryPaginated = async (
 
     let page = Number(req.query.page) || 1;
     let limit = Number(req.query.limit) || 6;
-    const ret = await getProductsByCategory(category, page, limit);
+    const ret = await getProductsByCat(category, page, limit);
     return res.send(ret);
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({

@@ -108,14 +108,3 @@ export const login = async (email: string, password: string) => {
   }
   throw new Error("Invalid credentials");
 };
-
-export const getUserOrdersById = async (userId: number) => {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    include: { orders: true },
-  });
-  if (user) {
-    return user.orders;
-  }
-  throw new Error("User does not exist");
-};
