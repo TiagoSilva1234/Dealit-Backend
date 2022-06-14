@@ -68,11 +68,11 @@ export const endpointGetReviewsByUserId = (app: Express) =>
   app.get("/dealit/api/reviews/user/:userId", getReviewsByUserId);
 
 export const endpointGetReviewsByProductId = (app: Express) =>
-  app.get("/dealit/api/reviews/user/:userId", getReviewsByProductId);
+  app.get("/dealit/api/reviews/product/:productId", getReviewsByProductId);
 
 export const endpointGetReviewsByReviewer = (app: Express) =>
   app.get("/dealit/api/reviews/rev/:reviewer", getReviewsByReviewer);
 
 export const endpointPostReviews = (app: Express) =>
-  app.get("/dealit/api/reviews/", postReview);
+  app.post("/dealit/api/reviews/", postReview);
 

@@ -8,7 +8,18 @@ export const getReviewsByUserId = async (userId: number) => {
     include: { reviews: true },
   });
   if (user) {
-    return user.reviews;
+    console.log(user.reviews[0]);
+    let revs = user.reviews.map((r) => {
+      return {
+        id: r.id,
+        userId: r.userId,
+        comment: r.comment,
+        photo: r.photo,
+        rating: r.rating,
+        reviewer: r.reviewer,
+      };
+    });
+    return revs
   }
   throw new Error("User does not exist");
 };
@@ -19,7 +30,17 @@ export const getReviewsByProductId = async (productId: number) => {
     include: { reviews: true },
   });
   if (product) {
-    return product.reviews;
+    let revs = product.reviews.map((r) => {
+      return {
+        id: r.id,
+        userId: r.userId,
+        comment: r.comment,
+        photo: r.photo,
+        rating: r.rating,
+        reviewer: r.reviewer,
+      };
+    });
+    return revs
   }
   throw new Error("Product does not exist");
 };
@@ -47,16 +68,16 @@ export const saveReview = async (data: Review) => {
       },
     });
   }
-  if (data.productId){
-  return await prisma.review.create({
-    data: {
-      product: { connect: { id: data.productId } },
-      comment: data.comment,
-      photo:
-        "https://images.squarespace-cdn.com/content/v1/59157e4617bffce271a68dfd/1588030909250-LM8122T4NRKS7CO5W5FK/HeresSomethingGood-Logo-FINAL.jpg?format=1000w",
-      rating: data.rating,
-      reviewer: data.reviewer,
-    },
-  });
-}
+  if (data.productId) {
+    return await prisma.review.create({
+      data: {
+        product: { connect: { id: data.productId } },
+        comment: data.comment,
+        photo:
+          "https://images.squarespace-cdn.com/content/v1/59157e4617bffce271a68dfd/1588030909250-LM8122T4NRKS7CO5W5FK/HeresSomethingGood-Logo-FINAL.jpg?format=1000w",
+        rating: data.rating,
+        reviewer: data.reviewer,
+      },
+    });
+  }
 };
