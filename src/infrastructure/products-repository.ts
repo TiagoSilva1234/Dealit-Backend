@@ -20,7 +20,7 @@ export const getProductById = async (id: string, num: number) => {
 };
 
 export const saveProduct = async (data: ProductData) => {
-  const product = await prisma.product.create({
+  return await prisma.product.create({
     data: {
       user: { connect: { id: data.userId } },
       name: data.name,
@@ -30,7 +30,6 @@ export const saveProduct = async (data: ProductData) => {
       price: data.price,
     },
   });
-  return product;
 };
 
 export const getProductsByCategoryPaginated = async (

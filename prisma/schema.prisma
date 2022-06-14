@@ -35,7 +35,7 @@ model Product {
   photos         String[]
   price          Decimal
   uploadDate     DateTime         @default(now())
-  Review         Review[]
+  reviews         Review[]
   ProductsOrders ProductsOrders[]
 }
 
@@ -91,7 +91,7 @@ model Review {
   product   Product? @relation(fields: [productId], references: [id])
   productId Int?
   comment   String
-  photo     String
+  photo     String  @default("")
   rating    Int
   reviewer  String
 }
