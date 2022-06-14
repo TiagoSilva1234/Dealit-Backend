@@ -51,5 +51,13 @@ export const postOrder = async (req: Request, res: Response) => {
       });
     }
     res.send(await postOrders(data, prod));
-  } catch (e: any) {}
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
 };

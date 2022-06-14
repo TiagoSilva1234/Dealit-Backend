@@ -51,7 +51,7 @@ export const getReviewsByReviewer = async (reviewerName: string) => {
   if (reviews.length>0) {
     return reviews;
   }
-  throw new Error("Reviewer has no reviews");
+  throw new Error("Reviewer not found");
 };
 
 export const saveReview = async (data: Review) => {
