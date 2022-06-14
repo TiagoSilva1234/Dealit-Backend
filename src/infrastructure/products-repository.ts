@@ -43,7 +43,6 @@ export const getProductsByCategoryPaginated = async (
       name: category,
     },
   });
-  console.log(cat);
   if (cat !== null) {
     if (cat.level === 2) {
       const products = await prisma.product.findMany({
@@ -63,8 +62,9 @@ export const getProductsByCategoryPaginated = async (
         products: true,
       },
     });
-    const prods: Product[] = [];
+    let prods: Product[] = [];
     cats.forEach((e) => e.products.forEach((prod) => prods.push(prod)));
+    prods = prods.slice(skip, skip+take);
     return prods;
   }
   throw new Error("category not found");

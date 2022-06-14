@@ -1,6 +1,6 @@
 import app from "../index";
 import { getUserById } from "./users";
-import { getOrdersByUserId } from "./orders";
+import { getOrdersByUserId, postOrder } from "./orders";
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
@@ -60,6 +60,9 @@ export const endpointGetAllMainCategories = (app: Express) =>
 export const endpointGetOrdersByUserId = (app: Express) =>
   app.get("/dealit/api/orders/:userId", getOrdersByUserId);
 
+  export const endpointPostOrders = (app:Express)=>
+  app.post("/dealit/api/orders",postOrder);
+
 //EndpointsReviews
 export const endpointGetReviewsByUserId = (app: Express) =>
   app.get("/dealit/api/reviews/user/:userId", getReviewsByUserId);
@@ -72,3 +75,4 @@ export const endpointGetReviewsByReviewer = (app: Express) =>
 
 export const endpointPostReviews = (app: Express) =>
   app.get("/dealit/api/reviews/", postReview);
+
