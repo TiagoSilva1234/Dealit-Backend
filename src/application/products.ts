@@ -201,12 +201,18 @@ export const patchProduct= async (req: Request, res: Response) => {
 try{
 
   if(isNaN(Number(req.params.id))){
-    return res.send("not a number")
+    return res.send("Invalid id format")
   }
   res.send(await patchProducts(Number(req.params.id),req.body))
   
 }catch(e:any){
-
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+    error: {
+      message: e.message,
+      cause: "Unexpected error",
+      date: new Date().toLocaleString(),
+    },
+  });
 }
 
 

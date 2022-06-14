@@ -53,6 +53,7 @@ export const endpointGetLatestProducts = (app: Express) =>
 
   export const endpointPatchProducts = (app:Express)=>
   app.patch("/dealit/api/products/:id",patchProduct);
+  
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>
   app.get("/dealit/api/categories/:mainCat", getCategoryByMainCat);
