@@ -138,3 +138,36 @@ export const getLatestProducts = async (skip: number, take: number) => {
   }
   return null;
 };
+
+
+
+export const patchProducts = async (id:number,obj:any) => {
+const before = await prisma.product.findUnique({
+  where:{id:id}
+})
+if(!before){
+  return "user not found"
+}
+try{
+  const user = await prisma.product.update({
+    where:{ id:id,},
+    data:{
+      name: !obj.name ? before.name : obj.name,
+      description: !obj.description ? before.description : obj.description,
+      photos: !obj.photos ? before.photos : obj.photos,
+      price: !obj.price ? before.price : obj.price,
+      user:{ connect: { id: !obj.userId ? before.userId : obj.userId } },
+      category: {
+          connect:{ 
+            name: !obj.category.catName ? before.categoryName : obj.category.catName, },     
+      },
+
+    },
+  })
+  return user
+}catch(e: any){
+  console.log(e)
+}
+
+
+}

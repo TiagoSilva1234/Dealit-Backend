@@ -33,7 +33,7 @@ export const getReviewsByProductId = async (productId: number) => {
     let revs = product.reviews.map((r) => {
       return {
         id: r.id,
-        userId: r.userId,
+        productId: r.productId,
         comment: r.comment,
         photo: r.photo,
         rating: r.rating,

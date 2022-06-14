@@ -16,7 +16,8 @@ import {
   endpointGetReviewsByProductId,
   endpointGetReviewsByReviewer,
   endpointPostReviews,
-  endpointPostOrders
+  endpointPostOrders,
+  endpointPatchProducts
 } from "./application";
 const app: Express = express();
 
@@ -44,6 +45,7 @@ endpointgetProductsByCategoryPaginated(app);
 endpointgetAllProductsPaginated(app);
 endpointgetProductsByUserId(app);
 endpointGetLatestProducts(app);
+endpointPatchProducts(app)
 
 //Endpoints categories
 endpointGetCategoryByMainCat(app);

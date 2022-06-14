@@ -5,6 +5,7 @@ import postProduct from "../domain/products/post-product";
 import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import getLatestProducts from "../domain/products/get-latestProducts";
+import patchProducts from "../domain/products/patch-products"
 import { StatusCodes } from "http-status-codes";
 
 
@@ -194,3 +195,19 @@ export const getLateProducts = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+export const patchProduct= async (req: Request, res: Response) => {
+try{
+
+  if(isNaN(Number(req.params.id))){
+    return res.send("not a number")
+  }
+  res.send(await patchProducts(Number(req.params.id),req.body))
+  
+}catch(e:any){
+
+}
+
+
+}
