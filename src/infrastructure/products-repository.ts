@@ -146,9 +146,9 @@ const before = await prisma.product.findUnique({
   where:{id:id}
 })
 if(!before){
-  return "user not found"
+ throw new Error("User not found");
 }
-try{
+
   const user = await prisma.product.update({
     where:{ id:id,},
     data:{
@@ -165,9 +165,7 @@ try{
     },
   })
   return user
-}catch(e: any){
-  console.log(e)
-}
+
 
 
 }

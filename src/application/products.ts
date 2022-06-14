@@ -201,12 +201,35 @@ export const patchProduct= async (req: Request, res: Response) => {
 try{
 
   if(isNaN(Number(req.params.id))){
-    return res.send("not a number")
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      error: {
+        message: "Invalid id format",
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
   }
   res.send(await patchProducts(Number(req.params.id),req.body))
-  
-}catch(e:any){
 
+}catch(e:any){
+if(e.message === "User not found"){
+  return res.status(StatusCodes.NOT_FOUND).send({
+    error: {
+      message: e.message,
+      cause: "Unexpected error",
+      date: new Date().toLocaleString(),
+    },
+  });
+}
+if(e.message.slice(10,33) === "prisma.product.update()")
+return res.status(StatusCodes.BAD_REQUEST).send({
+  error: {
+    message:`${e.message.slice(10,33)} failed`,
+    cause: "Invalid data format",
+    date: new Date().toLocaleString(),
+  },
+});
+return res.send(e.message)
 }
 
 
