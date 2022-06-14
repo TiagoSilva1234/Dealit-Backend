@@ -1,6 +1,6 @@
 import app from "../index";
 import { getUserById } from "./users";
-import { getOrdersByUserId } from "./orders";
+import { getOrdersByUserId,postOrder } from "./orders";
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
@@ -56,3 +56,6 @@ export const endpointGetAllMainCategories = (app: Express) =>
 //EndpointsOrders
 export const endpointGetOrdersByUserId = (app: Express) =>
   app.get("/dealit/api/orders/:userId", getOrdersByUserId);
+
+  export const endpointPostOrders = (app:Express)=>
+  app.get(",  ",postOrder);

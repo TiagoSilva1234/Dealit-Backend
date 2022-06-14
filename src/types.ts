@@ -31,3 +31,11 @@ export type ProductData = {
     };
   };
   
+export type OrderData ={
+  buyDate: Date,
+  sendDate: Date,
+  deliveryDate: Date, 
+  userId: number,
+  sellerName: string, 
+  creditCardId: number, 
+}

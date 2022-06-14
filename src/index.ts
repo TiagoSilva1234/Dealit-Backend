@@ -12,6 +12,7 @@ import {
   endpointGetLatestProducts,
   endpointGetCategoryByMainCat,
   endpointGetAllMainCategories,
+  endpointPostOrders
 } from "./application";
 const app: Express = express();
 
@@ -25,12 +26,14 @@ app.use((req, res, next) => {
 
 const port = Number(process.env.API_PORT) || 3000;
 
-endpointGetUserById(app);
-endpointGetOrdersByUserId(app);
 
+
+//Endpoints user
+endpointGetUserById(app);
 endpointPostUser(app);
 endpointPostLogin(app);
 
+//Endpoints products
 endpointGetProductById(app);
 endpointPostProduct(app);
 endpointgetProductsByCategoryPaginated(app);
@@ -38,9 +41,13 @@ endpointgetAllProductsPaginated(app);
 endpointgetProductsByUserId(app);
 endpointGetLatestProducts(app);
 
+//Endpoints categories
 endpointGetCategoryByMainCat(app);
 endpointGetAllMainCategories(app);
 
+//Endpoints orders
+endpointGetOrdersByUserId(app);
+endpointPostOrders(app)
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });

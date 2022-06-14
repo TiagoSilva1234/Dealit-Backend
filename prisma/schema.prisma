@@ -35,7 +35,7 @@ model Product {
   photos         String[]
   price          Decimal
   uploadDate     DateTime         @default(now())
-  Review         Review[]
+  reviews         Review[]
   ProductsOrders ProductsOrders[]
 }
 
