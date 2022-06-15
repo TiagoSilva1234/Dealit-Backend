@@ -40,3 +40,19 @@ arr.map(async e=>{
 return user
 
   }
+
+
+  export const patchOrderSendDate = async (id: number, data:{sendDate: Date})=>{
+    const order = await prisma.order.update({
+      where:{
+        id:id
+      },
+      data:{
+        sendDate: data.sendDate,
+      }
+    })
+
+   return order
+  
+
+  }

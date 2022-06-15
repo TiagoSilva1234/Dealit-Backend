@@ -1,3 +1,6 @@
+
+
+
 export type UserData = {
   username: string;
   address: {
@@ -33,6 +36,7 @@ export type ProductData = {
     catName: string;
   };
 };
+
 
 export type OrderData = {
   buyDate: Date;

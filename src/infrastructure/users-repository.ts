@@ -62,7 +62,7 @@ export const saveUser = async (data: UserData) => {
         password: data.password,
         phone: data.phone,
         token: data.token,
-        //@ts-ignore
+    //@ts-ignore
         creditCards: { create: data.creditCard },
       },
     });
