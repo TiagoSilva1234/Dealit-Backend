@@ -22,7 +22,7 @@ model User {
   creditCards CreditCard[]
   reviews     Review[]
   products    Product[]
-  photo       String    @default("https://toppng.com/uploads/preview/file-svg-profile-icon-vector-11562942678pprjdh47a8.png")
+  photo       String       @default("https://toppng.com/uploads/preview/file-svg-profile-icon-vector-11562942678pprjdh47a8.png")
 }
 
 model Product {
@@ -34,7 +34,7 @@ model Product {
   category       Category         @relation(fields: [categoryName], references: [name])
   categoryName   String
   photos         String[]
-  price          Decimal
+  price          Decimal          @db.Decimal(4, 2)
   uploadDate     DateTime         @default(now())
   reviews        Review[]
   ProductsOrders ProductsOrders[]
@@ -43,7 +43,7 @@ model Product {
 model Category {
   id         Int       @id @default(autoincrement())
   name       String    @unique
-  level      Int       
+  level      Int
   upperLevel String?
   image      String?
   products   Product[]

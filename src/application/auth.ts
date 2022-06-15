@@ -132,7 +132,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 
     return res.status(StatusCodes.CREATED).send({
-      message: "User successfully saved to datebase!",
+      message: "User successfully saved to database!",
       user: await postUser(data),
     });
   } catch (e: any) {
