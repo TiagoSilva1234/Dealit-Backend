@@ -21,7 +21,7 @@ import {
   postReview,
 } from "./reviews";
 import {postAddress} from "./addresses"
-import {postCreditCard} from "./creditCards"
+import {postCreditCard, setFavoriteCreditCard} from "./creditCards"
 
 //EndpointsUser
 export const endpointGetUserById = (app: Express) =>
@@ -92,12 +92,17 @@ export const endpointGetReviewsByReviewer = (app: Express) =>
 
 export const endpointPostReviews = (app: Express) =>
   app.post("/dealit/api/reviews/", postReview);
-
+  
   export const endpointPostCreditCard = (app: Express) => {
-    app.post("/dealit/api/creditcards", postCreditCard)
+    app.post("/dealit/api/credit-cards", postCreditCard)
   }
   export const endpointPostAddress = (app: Express) => {
-    app.post("/dealit/api/addresses", postCreditCard)
+    app.post("/dealit/api/addresses", postAddress)
   }
+  export const endpointSetFavoriteCreditCard = (app: Express) => {
+    app.post("/dealit/api/credit-cards", setFavoriteCreditCard)
+  }
+
+
 
   
