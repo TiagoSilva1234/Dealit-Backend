@@ -169,7 +169,10 @@ export const userLogin = async (req: Request, res: Response) => {
       });
     }
 
-    return res.send(await postLogin(email, password));
+    return res.send({
+      message: "Login successfully completed",
+      res: await postLogin(email, password),
+    });
   } catch (e: any) {
     if (e.message === "Invalid credentials") {
       return res.status(StatusCodes.UNAUTHORIZED).send({
