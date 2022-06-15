@@ -2,7 +2,12 @@ import { verifyToken } from "../verifyToken";
 import { Express } from "express";
 
 import { getUserById, patchUser } from "./users";
-import { getOrdersByUserId, postOrder,patchOrderSend, patchOrderDelivery} from "./orders";
+import {
+  getOrdersByUserId,
+  postOrder,
+  patchOrderSend,
+  patchOrderDelivery,
+} from "./orders";
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
@@ -11,7 +16,7 @@ import {
   getAllProductsPaginated,
   getProductsByUserId,
   getLateProducts,
-  patchProduct
+  patchProduct,
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
 import {
@@ -20,8 +25,9 @@ import {
   getReviewsByReviewer,
   postReview,
 } from "./reviews";
-import {postAddress,setFavoriteAddress} from "./addresses"
-import {postCreditCard, setFavoriteCreditCard} from "./creditCards"
+import { postAddress, setFavoriteAddress } from "./addresses";
+import { postCreditCard, setFavoriteCreditCard } from "./creditCards";
+import {GetTextCompletion} from "./completion";
 
 //EndpointsUser
 export const endpointGetUserById = (app: Express) =>
@@ -48,7 +54,7 @@ export const endpointgetProductsByCategoryPaginated = (app: Express) =>
   app.get("/dealit/api/products/category/:category", getProductsByCategory);
 
 export const endpointgetAllProductsPaginated = (app: Express) =>
-  app.get("/dealit/api/products/", getAllProductsPaginated);
+  app.get("/dealit/api/products", getAllProductsPaginated);
 
 export const endpointgetProductsByUserId = (app: Express) =>
   app.get("/dealit/api/products/user/:userId", getProductsByUserId);
@@ -56,9 +62,9 @@ export const endpointgetProductsByUserId = (app: Express) =>
 export const endpointGetLatestProducts = (app: Express) =>
   app.get("/dealit/api/latest-products", getLateProducts);
 
-  export const endpointPatchProducts = (app:Express)=>
-  app.patch("/dealit/api/products/:id",patchProduct);
-  
+export const endpointPatchProducts = (app: Express) =>
+  app.patch("/dealit/api/products/:id", patchProduct);
+
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express) =>
   app.get("/dealit/api/categories/:mainCat", getCategoryByMainCat);
@@ -70,15 +76,14 @@ export const endpointGetAllMainCategories = (app: Express) =>
 export const endpointGetOrdersByUserId = (app: Express) =>
   app.get("/dealit/api/orders/user/:userId", getOrdersByUserId);
 
-  export const endpointPostOrders = (app:Express)=>
-  app.post("/dealit/api/orders",postOrder);
+export const endpointPostOrders = (app: Express) =>
+  app.post("/dealit/api/orders", postOrder);
 
-  export const endpointPatchOrdersSendDate = (app:Express)=>
-  app.patch("/dealit/api/orders/sendDate/:id",patchOrderSend)
+export const endpointPatchOrdersSendDate = (app: Express) =>
+  app.patch("/dealit/api/orders/sendDate/:id", patchOrderSend);
 
-  export const endpointPatchOrdersDeliveryDate = (app:Express)=>
-  app.patch("/dealit/api/orders/deliveryDate/:id",patchOrderDelivery)
-
+export const endpointPatchOrdersDeliveryDate = (app: Express) =>
+  app.patch("/dealit/api/orders/deliveryDate/:id", patchOrderDelivery);
 
 //EndpointsReviews
 export const endpointGetReviewsByUserId = (app: Express) =>
@@ -91,27 +96,27 @@ export const endpointGetReviewsByReviewer = (app: Express) =>
   app.get("/dealit/api/reviews/rev/:reviewer", getReviewsByReviewer);
 
 export const endpointPostReviews = (app: Express) =>
-  app.post("/dealit/api/reviews/", postReview);
-  
-  export const endpointPostCreditCard = (app: Express) => {
-    app.post("/dealit/api/credit-cards", postCreditCard)
-  }
+  app.post("/dealit/api/reviews", postReview);
+
+export const endpointPostCreditCard = (app: Express) => {
+  app.post("/dealit/api/credit-cards", postCreditCard);
+};
 
 //Endpoints CreditCard
 export const endpointSetFavoriteCreditCard = (app: Express) => {
-  app.patch("/dealit/api/credit-cards/:id", setFavoriteCreditCard)
-}
+  app.patch("/dealit/api/credit-cards/:id", setFavoriteCreditCard);
+};
 
 //Endpoints Adress
-  export const endpointPostAddress = (app: Express) => {
-    app.post("/dealit/api/addresses", postAddress)
-  }
+export const endpointPostAddress = (app: Express) => {
+  app.post("/dealit/api/addresses", postAddress);
+};
 
-export const endpointPatchAddressFavorite=(app:Express) => {
-  app.patch("/dealit/api/addresses/:id",setFavoriteAddress)
-}
-  
+export const endpointPatchAddressFavorite = (app: Express) => {
+  app.patch("/dealit/api/addresses/:id", setFavoriteAddress);
+};
 
-
-
-  
+//Endpoint Completion
+export const endpointCompletion = (app: Express) => {
+  app.get("/dealit/api/completion", GetTextCompletion);
+};

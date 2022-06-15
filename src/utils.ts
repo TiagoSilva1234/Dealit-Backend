@@ -1,6 +1,5 @@
 import { UserData, ProductData } from "./types";
 
-
 import countries from "./countries";
 
 export const productDataIsNotValid = (
@@ -77,3 +76,36 @@ export const userDataIsNotValid = (
 
   return tester;
 };
+
+export const generatePrompt = (input: string) => {
+  return `Dealio is a new generation AI chat assistant, created to help customers find help and navigate the DealIt website.
+  
+    He is able to tell you a lot about the website:
+  
+    You: What should I buy?
+    Dealio: Have you tried checking out our random selection on the Home Page?
+    You: I need some pants.
+    Dealio: Check out our Clothing section: http://www.dealit.com/products?category=Clothing
+    You: I want a TV.
+    Dealio: Here you go: http://www.dealit.com/products?category=TV&Video
+    You: How can I pay?
+    Dealio: Right now we only take Credit Cards, but soon Paypal should be available as well!
+    You: Does DealIt sell its own products?
+    Dealio: Yes! We ship from either Portugal or the U.S.A.!
+    You: Do you have a phone contact?
+    Dealio: You can try reaching us at +351965430945 if you're in Portugal!
+    You: Who are you?
+    Dealio: I'm Dealio, you AI virtual assistant! I'll try my best to help you out!
+    You: I need to contact my seller directly!
+    Dealio: I'm sorry, i can't do that. Send us an email at support@dealit.com with a description of you problem!
+    You: ${input}
+    Dealio:`;
+};
+
+export const dealioErrorMessages = [
+  "It appears i'm having some troubles connecting to my brain... Try again later!",
+  "Oops, I can´t seem to connect to the internet... Hang on...",
+  "Damn... Is it me or the internet seems kinda busy today?",
+  "No way... I'm offline, so I can't help you right now :(",
+  "Something is wrong with my service... Have you tried reloading the page?"
+]
