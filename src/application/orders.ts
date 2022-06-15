@@ -7,7 +7,12 @@ import patchOrderDeliveryDate from "../domain/orders/patch-orderDeliveryDate"
 import { Order, Product } from "@prisma/client";
 export const getOrdersByUserId = async (req: Request, res: Response) => {
   try {
+<<<<<<< HEAD
    
+=======
+    console.log("yo");
+    console.log("yo");
+>>>>>>> e553020f3dfeddedf3edb2b9ea6e37574205dd95
     let userId = req.params.userId;
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
@@ -52,7 +57,10 @@ export const postOrder = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send(await postOrders(data, prod));
+    res.send({
+      message: "Order successfully saved to database",
+      order: await postOrders(data, prod),
+    });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {

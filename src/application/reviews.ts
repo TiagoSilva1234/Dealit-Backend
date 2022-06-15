@@ -98,51 +98,47 @@ export const getReviewsByReviewer = async (req: Request, res: Response) => {
 };
 
 export const postReview = async (req: Request, res: Response) => {
-    try {
-        const {userId, productId, comment, photo, rating, reviewer} = req.body;
-        if (!(userId || productId) ||
-            !(
-                comment &&
-                photo &&
-                rating &&
-                reviewer 
-            )
-          ) {
-            return res.status(StatusCodes.BAD_REQUEST).send({
-              error: {
-                message: "Required data missing",
-                cause: "Bad Request",
-                date: new Date().toLocaleString(),
-              },
-            });
-          }
-          if (userId) {
-              const data: any = {
-                  userId,
-                  comment,
-                  photo,
-                  rating,
-                  reviewer
-              }
-              return res.send(await postRev(data))
-          }
-          if(productId){
-            const data: any = {
-                productId,
-                comment,
-                photo,
-                rating,
-                reviewer
-            }
-            return res.send(await postRev(data))
-          }
-    } catch(e: any) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-            error: {
-              message: e.message,
-              cause: "Unexpected error",
-              date: new Date().toLocaleString(),
-            },
-          });
+  try {
+    const { userId, productId, comment, photo, rating, reviewer } = req.body;
+    if (!(userId || productId) || !(comment && photo && rating && reviewer)) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required data missing",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
     }
-}
+    if (userId) {
+      const data: any = {
+        userId,
+        comment,
+        photo,
+        rating,
+        reviewer,
+      };
+      return res.send({
+        message: "Review successfully saved to datebase!",
+        review: await postRev(data),
+      });
+    }
+    if (productId) {
+      const data: any = {
+        productId,
+        comment,
+        photo,
+        rating,
+        reviewer,
+      };
+      return res.send(await postRev(data));
+    }
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};
