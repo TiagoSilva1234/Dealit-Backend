@@ -100,7 +100,7 @@ export const endpointPostReviews = (app: Express) =>
     app.post("/dealit/api/addresses", postAddress)
   }
   export const endpointSetFavoriteCreditCard = (app: Express) => {
-    app.post("/dealit/api/credit-cards", setFavoriteCreditCard)
+    app.patch("/dealit/api/credit-cards", setFavoriteCreditCard)
   }
 
 
