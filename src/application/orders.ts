@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import getUserOrders from "../domain/orders/get-ordersByUserId";
 import { StatusCodes } from "http-status-codes";
+import { Order } from "@prisma/client";
+import getUserOrders from "../domain/orders/get-ordersByUserId";
 import postOrders from "../domain/orders/post-order";
 import patchOrderSendDate from "../domain/orders/patch-orderSendDate";
 import patchOrderDeliveryDate from "../domain/orders/patch-orderDeliveryDate"
-import { Order, Product } from "@prisma/client";
 export const getOrdersByUserId = async (req: Request, res: Response) => {
   try {
     let userId = req.params.userId;

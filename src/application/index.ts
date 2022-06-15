@@ -1,4 +1,6 @@
-import app from "../index";
+import { verifyToken } from "../verifyToken";
+import { Express } from "express";
+
 import { getUserById, patchUser } from "./users";
 import { getOrdersByUserId, postOrder,patchOrderSend, patchOrderDelivery} from "./orders";
 import { registerUser, userLogin } from "./auth";
@@ -18,8 +20,8 @@ import {
   getReviewsByReviewer,
   postReview,
 } from "./reviews";
-import { verifyToken } from "../verifyToken";
-import { Express } from "express";
+import {postAddress} from "./addresses"
+import {postCreditCard} from "./creditCards"
 
 //EndpointsUser
 export const endpointGetUserById = (app: Express) =>
@@ -89,7 +91,13 @@ export const endpointGetReviewsByReviewer = (app: Express) =>
   app.get("/dealit/api/reviews/rev/:reviewer", getReviewsByReviewer);
 
 export const endpointPostReviews = (app: Express) =>
-
   app.post("/dealit/api/reviews/", postReview);
+
+  export const endpointPostCreditCard = (app: Express) => {
+    app.post("/dealit/api/creditcards", postCreditCard)
+  }
+  export const endpointPostAddress = (app: Express) => {
+    app.post("/dealit/api/addresses", postCreditCard)
+  }
 
   

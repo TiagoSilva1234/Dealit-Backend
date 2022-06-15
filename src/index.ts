@@ -20,7 +20,9 @@ import {
   endpointPostOrders,
   endpointPatchProducts,
   endpointPatchOrdersSendDate,
-  endpointPatchOrdersDeliveryDate
+  endpointPatchOrdersDeliveryDate,
+  endpointPostCreditCard,
+  endpointPostAddress
 } from "./application";
 const app: Express = express();
 
@@ -64,6 +66,14 @@ endpointGetOrdersByUserId(app);
 endpointPostOrders(app);
 endpointPatchOrdersSendDate(app);
 endpointPatchOrdersDeliveryDate(app);
+
+//Endpoints addresses
+endpointPostAddress(app);
+
+//Endpoints credit cards
+endpointPostCreditCard(app);
+
+
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });

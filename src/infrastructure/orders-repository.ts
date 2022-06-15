@@ -14,7 +14,7 @@ export const getUserOrdersById = async (userId: number) => {
 };
 
 export const postOrder = async (data: Order, arr: number[]) => {
-  const user = await prisma.order.create({
+  const order = await prisma.order.create({
     data: {
       buyDate: data.buyDate,
       sendDate: data.sendDate,
@@ -28,12 +28,12 @@ export const postOrder = async (data: Order, arr: number[]) => {
     await prisma.productsOrders.create({
       data: {
         productId: e,
-        orderId: user.id,
+        orderId: order.id,
       },
     });
   });
 
-  return user;
+  return order;
 };
 
 export const patchOrderSendDate = async (
