@@ -44,7 +44,7 @@ export const setFavoriteCreditCard = async (req: Request, res: Response) => {
       });
     }
     res.send({
-      message: "Credit card successfully favorited",
+      message: "Favorite credit card successfully updated",
       creditCard: await setFav(Number(id)),
     });
   } catch (e: any) {

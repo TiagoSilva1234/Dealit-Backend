@@ -29,14 +29,8 @@ export const setCreditCardFavorite = async (id: number) => {
   if (card) {
     await prisma.creditCard.updateMany({
       where: {
-        AND: [
-          {
-            id: id,
-          },
-          {
-            isFavorite: true,
-          },
-        ],
+        isFavorite: true,
+        userId: card.userId,
       },
       data: {
         isFavorite: false,
