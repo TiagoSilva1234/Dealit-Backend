@@ -97,7 +97,10 @@ export const endpointPostReviews = (app: Express) =>
     app.post("/dealit/api/credit-cards", postCreditCard)
   }
 
-
+//Endpoints CreditCard
+export const endpointSetFavoriteCreditCard = (app: Express) => {
+  app.patch("/dealit/api/credit-cards", setFavoriteCreditCard)
+}
 
 
 
@@ -105,9 +108,7 @@ export const endpointPostReviews = (app: Express) =>
   export const endpointPostAddress = (app: Express) => {
     app.post("/dealit/api/addresses", postAddress)
   }
-  export const endpointSetFavoriteCreditCard = (app: Express) => {
-    app.patch("/dealit/api/credit-cards", setFavoriteCreditCard)
-  }
+
 export const endpointPatchAddressFavorite=(app:Express) => {
   app.patch("/dealit/api/addresses/:id",setFavoriteAddress)
 }

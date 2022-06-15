@@ -31,6 +31,7 @@ export const postAddress = async (req: Request, res: Response) => {
   };
   export const setFavoriteAddress = async(req:Request, res: Response)=>{
 const id = Number(req.params.id);
-    res.send(await setAddressIsFavorite(id))
+    res.send({message:"Favorite address successfully updated",
+    address: await setAddressIsFavorite(id)})
 
   }

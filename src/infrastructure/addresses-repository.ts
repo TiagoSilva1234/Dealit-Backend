@@ -29,14 +29,21 @@ export const postAddress = async (data: Address) => {
 
 export const setAdressFavorite = async(addressId:number)=>{
  
+  const adres = await prisma.address.findUnique({
+    where : {
+      id : addressId
+    }
+  })
+  if(adres){
    const cards = await prisma.address.updateMany({
 where:{
-   isFavorite:true
+   isFavorite:true,
+   userId:adres.userId,
 },
 data:{isFavorite: false}
 
    });
-
+  }
    const updated = await prisma.address.update({
      where:{ 
        id:addressId,
@@ -44,5 +51,6 @@ data:{isFavorite: false}
      data:{isFavorite:true}
    })
 
-
+  return updated
+ 
 }
