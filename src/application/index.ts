@@ -1,6 +1,6 @@
 import app from "../index";
 import { getUserById, patchUser } from "./users";
-import { getOrdersByUserId, postOrder } from "./orders";
+import { getOrdersByUserId, postOrder,patchOrderSend, patchOrderDelivery} from "./orders";
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
@@ -70,6 +70,13 @@ export const endpointGetOrdersByUserId = (app: Express) =>
 
   export const endpointPostOrders = (app:Express)=>
   app.post("/dealit/api/orders",postOrder);
+
+  export const endpointPatchOrdersSendDate = (app:Express)=>
+  app.patch("/dealit/api/orders/sendDate/:id",patchOrderSend)
+
+  export const endpointPatchOrdersDeliveryDate = (app:Express)=>
+  app.patch("/dealit/api/orders/deliveryDate/:id",patchOrderDelivery)
+
 
 //EndpointsReviews
 export const endpointGetReviewsByUserId = (app: Express) =>

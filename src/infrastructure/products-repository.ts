@@ -37,7 +37,7 @@ export const getProductsByCategoryPaginated = async (
   skip: number,
   take: number = 6
 ) => {
-  console.log(skip, take, category);
+
   const cat = await prisma.category.findUnique({
     where: {
       name: category,

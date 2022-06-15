@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import getUserOrders from "../domain/orders/get-ordersByUserId";
 import { StatusCodes } from "http-status-codes";
 import postOrders from "../domain/orders/post-order";
-
+import patchOrderSendDate from "../domain/orders/patch-orderSendDate";
+import patchOrderDeliveryDate from "../domain/orders/patch-orderDeliveryDate"
 import { Order, Product } from "@prisma/client";
 export const getOrdersByUserId = async (req: Request, res: Response) => {
   try {
-    console.log("yo")
-    console.log("yo")
+   
     let userId = req.params.userId;
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
@@ -63,3 +63,32 @@ export const postOrder = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const patchOrderSend = async (req:Request,res:Response)=>{
+  if(isNaN(Number(req.params.id))){
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      error: {
+        message: "Wrong id type",
+        cause: "Uri format",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+  const id = Number(req.params.id)
+
+  return res.send(await patchOrderSendDate(id,req.body))
+}
+
+export const patchOrderDelivery = async (req:Request,res:Response)=>{
+  if(isNaN(Number(req.params.id))){
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      error: {
+        message: "Wrong id type",
+        cause: "Uri format",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+  const id = Number(req.params.id)
+  return res.send(await patchOrderDeliveryDate(id,req.body))
+}

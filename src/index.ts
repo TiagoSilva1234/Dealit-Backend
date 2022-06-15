@@ -18,7 +18,9 @@ import {
   endpointGetReviewsByReviewer,
   endpointPostReviews,
   endpointPostOrders,
-  endpointPatchProducts
+  endpointPatchProducts,
+  endpointPatchOrdersSendDate,
+  endpointPatchOrdersDeliveryDate
 } from "./application";
 const app: Express = express();
 
@@ -60,7 +62,8 @@ endpointPostReviews(app);
 //Endpoints orders
 endpointGetOrdersByUserId(app);
 endpointPostOrders(app);
-
+endpointPatchOrdersSendDate(app);
+endpointPatchOrdersDeliveryDate(app);
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
