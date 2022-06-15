@@ -20,7 +20,7 @@ import {
   getReviewsByReviewer,
   postReview,
 } from "./reviews";
-import {postAddress} from "./addresses"
+import {postAddress,setFavoriteAddress} from "./addresses"
 import {postCreditCard} from "./creditCards"
 
 //EndpointsUser
@@ -96,8 +96,18 @@ export const endpointPostReviews = (app: Express) =>
   export const endpointPostCreditCard = (app: Express) => {
     app.post("/dealit/api/creditcards", postCreditCard)
   }
+
+
+
+
+
+//Endpoints Adress
   export const endpointPostAddress = (app: Express) => {
     app.post("/dealit/api/addresses", postCreditCard)
   }
+export const endpointPatchAddressFavorite=(app:Express) => {
+  app.patch("/dealit/api/addresses/:id",setFavoriteAddress)
+}
+  
 
   

@@ -26,3 +26,23 @@ export const postAddress = async (data: Address) => {
   });
   return order;
 };
+
+export const setAdressFavorite = async(addressId:number)=>{
+ 
+   const cards = await prisma.address.updateMany({
+where:{
+   isFavorite:true
+},
+data:{isFavorite: false}
+
+   });
+
+   const updated = await prisma.address.update({
+     where:{ 
+       id:addressId,
+     },
+     data:{isFavorite:true}
+   })
+
+
+}

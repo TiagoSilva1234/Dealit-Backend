@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { Address } from "@prisma/client";
 import postAdd from "../domain/addresses/post-address"
-
+import setAddressIsFavorite from "../domain/addresses/patch-adressIsFavorite"
 export const postAddress = async (req: Request, res: Response) => {
     try {
       const data: Address = req.body.order;
@@ -29,3 +29,8 @@ export const postAddress = async (req: Request, res: Response) => {
       });
     }
   };
+  export const setFavoriteAddress = async(req:Request, res: Response)=>{
+const id = Number(req.params.id);
+    res.send(await setAddressIsFavorite(id))
+
+  }

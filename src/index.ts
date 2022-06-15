@@ -22,7 +22,8 @@ import {
   endpointPatchOrdersSendDate,
   endpointPatchOrdersDeliveryDate,
   endpointPostCreditCard,
-  endpointPostAddress
+  endpointPostAddress,
+  endpointPatchAddressFavorite
 } from "./application";
 const app: Express = express();
 
@@ -69,7 +70,7 @@ endpointPatchOrdersDeliveryDate(app);
 
 //Endpoints addresses
 endpointPostAddress(app);
-
+endpointPatchAddressFavorite(app)
 //Endpoints credit cards
 endpointPostCreditCard(app);
 
