@@ -6,7 +6,7 @@ import { userDataIsNotValid } from "../utils";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { username, email, password, phone } = req.body;
+    const { username, email, password, phone, photo } = req.body;
 
     const { country, city, zipCode, street, houseNumber } = req.body.address;
 
@@ -35,44 +35,88 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 
     let data;
-    if (cardNumber) {
-      data = {
-        username,
-        address: {
-          country,
-          city,
-          zipCode,
-          street,
-          houseNumber,
-          isFavorite: true,
-        },
-        email,
-        password,
-        phone,
-        creditCard: {
-          cardNumber,
-          cvc,
-          expiryDate,
-          isFavorite: true,
-        },
-        token: "",
-      };
+    if (photo) {
+      if (cardNumber) {
+        data = {
+          username,
+          address: {
+            country,
+            city,
+            zipCode,
+            street,
+            houseNumber,
+            isFavorite: true,
+          },
+          photo,
+          email,
+          password,
+          phone,
+          creditCard: {
+            cardNumber,
+            cvc,
+            expiryDate,
+            isFavorite: true,
+          },
+          token: "",
+        };
+      } else {
+        data = {
+          username,
+          address: {
+            country,
+            city,
+            zipCode,
+            street,
+            houseNumber,
+            isFavorite: true,
+          },
+          photo,
+          email,
+          password,
+          phone,
+          token: "",
+        };
+      }
     } else {
-      data = {
-        username,
-        address: {
-          country,
-          city,
-          zipCode,
-          street,
-          houseNumber,
-          isFavorite: true,
-        },
-        email,
-        password,
-        phone,
-        token: "",
-      };
+      if (cardNumber) {
+        data = {
+          username,
+          address: {
+            country,
+            city,
+            zipCode,
+            street,
+            houseNumber,
+            isFavorite: true,
+          },
+          email,
+          password,
+          phone,
+          creditCard: {
+            cardNumber,
+            cvc,
+            expiryDate,
+            isFavorite: true,
+          },
+          token: "",
+        };
+      } else {
+        data = {
+          username,
+          address: {
+            country,
+            city,
+            zipCode,
+            street,
+            houseNumber,
+            isFavorite: true,
+          },
+          email,
+          password,
+          phone,
+          token: "",
+        };
+      }
     }
 
     const tester = userDataIsNotValid(data);

@@ -1,5 +1,5 @@
 import app from "../index";
-import { getUserById } from "./users";
+import { getUserById, patchUser } from "./users";
 import { getOrdersByUserId, postOrder } from "./orders";
 import { registerUser, userLogin } from "./auth";
 import {
@@ -18,12 +18,15 @@ import {
   getReviewsByReviewer,
   postReview,
 } from "./reviews";
-import { verifyToken } from "../domain/auth/verifyToken";
+import { verifyToken } from "../verifyToken";
 import { Express } from "express";
 
 //EndpointsUser
 export const endpointGetUserById = (app: Express) =>
   app.get("/dealit/api/users/:id", getUserById);
+
+export const endpointPatchUser = (app: Express) =>
+  app.patch("/dealit/api/users/:id", patchUser);
 
 //EndpointsAuth
 export const endpointPostUser = (app: Express) =>

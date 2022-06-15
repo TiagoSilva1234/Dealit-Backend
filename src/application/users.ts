@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import getUser from "../domain/users/get-userById";
 import { StatusCodes } from "http-status-codes";
+import patchUsr from "../domain/users/patch-user"
 //User endpoints logic
 export const getUserById = async (req: Request, res: Response) => {
   try {
@@ -36,3 +37,45 @@ export const getUserById = async (req: Request, res: Response) => {
   }
 };
 
+export const patchUser = async (req: Request, res: Response) => {
+  try {
+    if (isNaN(Number(req.params.id))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    res.send({
+      message: "User successfully patched",
+      user: await patchUsr(Number(req.params.id), req.body)
+    });
+  } catch (e: any) {
+    if (e.message === "User not found") {
+      return res.status(StatusCodes.NOT_FOUND).send({
+        error: {
+          message: e.message,
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    if (e.message.slice(10, 33) === "prisma.user.update()")
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: `${e.message.slice(10, 33)} failed`,
+          cause: "Invalid data format",
+          date: new Date().toLocaleString(),
+        },
+      });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};

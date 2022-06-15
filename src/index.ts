@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import {
   endpointGetUserById,
+  endpointPatchUser,
   endpointGetOrdersByUserId,
   endpointPostUser,
   endpointPostLogin,
@@ -33,6 +34,7 @@ const port = Number(process.env.API_PORT) || 3000;
 
 //Endpoints user
 endpointGetUserById(app);
+endpointPatchUser(app);
 endpointPostUser(app);
 endpointPostLogin(app);
 

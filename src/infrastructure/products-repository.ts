@@ -64,7 +64,7 @@ export const getProductsByCategoryPaginated = async (
     });
     let prods: Product[] = [];
     cats.forEach((e) => e.products.forEach((prod) => prods.push(prod)));
-    prods = prods.slice(skip, skip+take);
+    prods = prods.slice(skip, skip + take);
     return prods;
   }
   throw new Error("category not found");
@@ -139,33 +139,29 @@ export const getLatestProducts = async (skip: number, take: number) => {
   return null;
 };
 
+export const patchProduct = async (id: number, obj: any) => {
+  const before = await prisma.product.findUnique({
+    where: { id: id },
+  });
+  if (!before) {
+    throw new Error("Product not found");
+  }
 
-
-export const patchProducts = async (id:number,obj:any) => {
-const before = await prisma.product.findUnique({
-  where:{id:id}
-})
-if(!before){
- throw new Error("User not found");
-}
-
-  const user = await prisma.product.update({
-    where:{ id:id,},
-    data:{
+  return await prisma.product.update({
+    where: { id: id },
+    data: {
       name: !obj.name ? before.name : obj.name,
       description: !obj.description ? before.description : obj.description,
       photos: !obj.photos ? before.photos : obj.photos,
       price: !obj.price ? before.price : obj.price,
-      user:{ connect: { id: !obj.userId ? before.userId : obj.userId } },
+      user: { connect: { id: !obj.userId ? before.userId : obj.userId } },
       category: {
-          connect:{ 
-            name: !obj.category.catName ? before.categoryName : obj.category.catName, },     
+        connect: {
+          name: !obj.category.catName
+            ? before.categoryName
+            : obj.category.catName,
+        },
       },
-
     },
-  })
-  return user
-
-
-
-}
+  });
+};

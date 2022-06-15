@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
-import {UserData} from "../types"
+import { UserData } from "../types";
 const prisma = new PrismaClient();
 
 export const getUserById = async (id: string) => {
@@ -53,7 +53,7 @@ export const saveUser = async (data: UserData) => {
     );
   }
   if (!data.token) throw new Error("Something went wrong with JWT creation");
-  if (data.creditCard) {
+  if (data.creditCard && data.creditCard?.isFavorite) {
     const user = await prisma.user.create({
       data: {
         username: data.username,
@@ -62,7 +62,7 @@ export const saveUser = async (data: UserData) => {
         password: data.password,
         phone: data.phone,
         token: data.token,
-        // @ts-expect-error: razão
+        //@ts-ignore
         creditCards: { create: data.creditCard },
       },
     });
@@ -93,9 +93,13 @@ export const login = async (email: string, password: string) => {
     if (process.env.TOKEN_KEY) {
       secret = process.env.TOKEN_KEY;
 
-      token = jwt.sign({ user_id: user.username, email }, secret, {
-        expiresIn: "2h",
-      });
+      token = jwt.sign(
+        { userID: user.id, username: user.username, email },
+        secret,
+        {
+          expiresIn: "2h",
+        }
+      );
       user.token = token;
     }
     return {
@@ -107,4 +111,28 @@ export const login = async (email: string, password: string) => {
     };
   }
   throw new Error("Invalid credentials");
+};
+
+export const patchUser = async (id: number, obj: any) => {
+  const before = await prisma.user.findUnique({
+    where: { id: id },
+  });
+  if (!before) {
+    throw new Error("User not found");
+  }
+  if (obj.oldPassword && obj.newPassword) {
+    if (bcrypt.compareSync(obj.oldPassword, before.password)) {
+      obj.pasword = bcrypt.hashSync(obj.newPassword);
+    }
+    throw new Error("Old passwords do not match");
+  }
+  return await prisma.user.update({
+    where: { id: id },
+    data: {
+      username: !obj.username ? before.username : obj.username,
+      email: !obj.email ? before.email : obj.email,
+      phone: !obj.phone ? before.phone : obj.phone,
+      password: !obj.password ? before.password : obj.password,
+    },
+  });
 };

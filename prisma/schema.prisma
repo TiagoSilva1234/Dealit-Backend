@@ -20,8 +20,9 @@ model User {
   addresses   Address[]
   orders      Order[]
   creditCards CreditCard[]
-  reviews      Review[]
+  reviews     Review[]
   products    Product[]
+  photo       String    @default("https://toppng.com/uploads/preview/file-svg-profile-icon-vector-11562942678pprjdh47a8.png")
 }
 
 model Product {
@@ -35,14 +36,14 @@ model Product {
   photos         String[]
   price          Decimal
   uploadDate     DateTime         @default(now())
-  reviews         Review[]
+  reviews        Review[]
   ProductsOrders ProductsOrders[]
 }
 
 model Category {
   id         Int       @id @default(autoincrement())
   name       String    @unique
-  level      Int
+  level      Int       
   upperLevel String?
   image      String?
   products   Product[]
@@ -91,7 +92,7 @@ model Review {
   product   Product? @relation(fields: [productId], references: [id])
   productId Int?
   comment   String
-  photo     String  @default("")
+  photo     String   @default("")
   rating    Int
   reviewer  String
 }
