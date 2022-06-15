@@ -23,7 +23,10 @@ import {
   endpointPatchOrdersDeliveryDate,
   endpointPostCreditCard,
   endpointPostAddress,
-  endpointPatchAddressFavorite
+
+  endpointPatchAddressFavorite,
+
+  endpointSetFavoriteCreditCard
 } from "./application";
 const app: Express = express();
 
@@ -72,7 +75,9 @@ endpointPatchOrdersDeliveryDate(app);
 endpointPostAddress(app);
 endpointPatchAddressFavorite(app)
 //Endpoints credit cards
+
 endpointPostCreditCard(app);
+endpointSetFavoriteCreditCard(app)
 
 
 app.get("/", (req: Request, res: Response) => {

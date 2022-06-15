@@ -7,11 +7,11 @@ export const postCreditCard = async (data: CreditCard) => {
     await prisma.creditCard.updateMany({
       where: { userId: data.userId },
       data: {
-          isFavorite: false,
+        isFavorite: false,
       },
     });
   }
-  const order = await prisma.creditCard.create({
+  const creditCard = await prisma.creditCard.create({
     data: {
       cardNumber: data.cardNumber,
       cvc: data.cvc,
@@ -20,5 +20,34 @@ export const postCreditCard = async (data: CreditCard) => {
       userId: data.userId,
     },
   });
-  return order;
+  return creditCard;
+};
+
+export const setCreditCardFavorite = async (id: number) => {
+  const card = await prisma.creditCard.findUnique({ where: { id: id } });
+
+  if (card) {
+    await prisma.creditCard.updateMany({
+      where: {
+        AND: [
+          {
+            id: id,
+          },
+          {
+            isFavorite: true,
+          },
+        ],
+      },
+      data: {
+        isFavorite: false,
+      },
+    });
+  }
+  const creditCard = await prisma.creditCard.update({
+    where: { id: id },
+    data: {
+      isFavorite: true,
+    },
+  });
+  return creditCard;
 };
