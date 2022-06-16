@@ -4,7 +4,7 @@ import getRevsByProductId from "../domain/reviews/get-reviewsByProductId";
 import getRevsByReviewer from "../domain/reviews/get-reviewsByReviewer";
 import postRev from "../domain/reviews/post-review";
 import { StatusCodes } from "http-status-codes";
-import { ReviewData } from "../types";
+import { ReviewData } from "../utils/types";
 
 export const getReviewsByUserId = async (
   req: Request,

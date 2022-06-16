@@ -2,9 +2,8 @@ import { Request, Response } from "express";
 import getUser from "../domain/users/get-userById";
 import { StatusCodes } from "http-status-codes";
 
-import patchUsr from "../domain/users/patch-user"
-import getAllUsers from "../domain/users/get-allUsers"
-
+import patchUsr from "../domain/users/patch-user";
+import getAllUsers from "../domain/users/get-allUsers";
 
 //User endpoints logic
 export const getUserById = async (
@@ -43,11 +42,11 @@ export const getUserById = async (
     });
   }
 };
-export const getEveryUser = async(req: Request, res: Response)=>{
-  const data = await getAllUsers()
-  res.send(data)
-   return  data
-}
+export const getEveryUser = async (req: Request, res: Response) => {
+  const data = await getAllUsers();
+  res.send(data);
+  return data;
+};
 
 export const patchUser = async (
   req: Request,
@@ -94,5 +93,3 @@ export const patchUser = async (
     });
   }
 };
-
-

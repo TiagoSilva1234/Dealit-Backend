@@ -1,5 +1,5 @@
 import OpenAI from "openai-api";
-import { dealioErrorMessages, generatePrompt } from "../utils";
+import { dealioErrorMessages, generatePrompt } from "../utils/utils";
 
 const apiKey = process.env.OPENAI_API_KEY;
 

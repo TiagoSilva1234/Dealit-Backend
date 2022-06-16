@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import getCompletion from "../domain/completion/get-textCompletion";
 import { StatusCodes } from "http-status-codes";
-import { dealioErrorMessages } from "../utils";
+import { dealioErrorMessages } from "../utils/utils";
 
 export const GetTextCompletion = async (req: Request, res: Response) => {
   try {
