@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import getUser from "../domain/users/get-userById";
+import getUser from "../domain/users/get-UserById";
 import { StatusCodes } from "http-status-codes";
-<<<<<<< HEAD
+
 import patchUsr from "../domain/users/patch-user"
 import getAllUsers from "../domain/users/get-allUsers"
-=======
-import patchUsr from "../domain/users/patch-user";
->>>>>>> 5e477b89345f7dee0bfe7e2fa245689a56f807bb
+
+
 //User endpoints logic
 export const getUserById = async (
   req: Request,

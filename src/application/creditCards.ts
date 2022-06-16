@@ -6,8 +6,11 @@ import setFav from "../domain/creditCards/patch-setFavorite";
 
 export const postCreditCard = async (req: Request, res: Response) => {
   try {
-    const data: CreditCard = req.body.creditCard;
-    if (!(data.cardNumber && data.cvc && data.expiryDate && data.userId)) {
+
+    const data: CreditCard = req.body;
+
+    if (!(data.cardNumber && data.cvc && data.expiryDate && data.userId !== undefined)) {
+   
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required inputs missing",

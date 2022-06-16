@@ -10,7 +10,9 @@ export const postCreditCard = async (data: CreditCard): Promise<CreditCard> => {
         isFavorite: false,
       },
     });
+  
   }
+
   const creditCard = await prisma.creditCard.create({
     data: {
       cardNumber: data.cardNumber,

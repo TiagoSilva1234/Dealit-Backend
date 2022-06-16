@@ -1,18 +1,15 @@
 import { verifyToken } from "../verifyToken";
 import { Express } from "express";
 
-<<<<<<< HEAD
+
 import { getUserById, patchUser,getEveryUser } from "./users";
-import { getOrdersByUserId, postOrder,patchOrderSend, patchOrderDelivery} from "./orders";
-=======
-import { getUserById, patchUser } from "./users";
 import {
   getOrdersByUserId,
   postOrder,
   patchOrderSend,
   patchOrderDelivery,
 } from "./orders";
->>>>>>> 5e477b89345f7dee0bfe7e2fa245689a56f807bb
+
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
@@ -114,13 +111,12 @@ export const endpointPostReviews = (app: Express): void => {
   app.post("/dealit/api/reviews", postReview);
 }
 
-export const endpointPostCreditCard = (app: Express): void => {
-  app.post("/dealit/api/credit-cards", postCreditCard);
-}
-
 //Endpoints CreditCard
 export const endpointSetFavoriteCreditCard = (app: Express): void => {
   app.patch("/dealit/api/credit-cards/:id", setFavoriteCreditCard);
+}
+export const endpointPostCreditCard = (app: Express): void => {
+  app.post("/dealit/api/credit-cards", postCreditCard);
 }
 
 //Endpoints Adress
