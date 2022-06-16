@@ -4,7 +4,7 @@ import postLogin from "../domain/auth/post-login";
 import { StatusCodes } from "http-status-codes";
 import { userDataIsNotValid } from "../utils";
 
-export const registerUser = async (req: Request, res: Response) => {
+export const registerUser = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
   try {
     const { username, email, password, phone, photo } = req.body;
 
@@ -132,7 +132,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 
     return res.status(StatusCodes.CREATED).send({
-      message: "User successfully saved to datebase!",
+      message: "User successfully saved to database!",
       user: await postUser(data),
     });
   } catch (e: any) {
@@ -155,7 +155,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-export const userLogin = async (req: Request, res: Response) => {
+export const userLogin = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
   try {
     const { email, password } = req.body;
 

@@ -1,10 +1,20 @@
-import { PrismaClient } from "@prisma/client";
+import { Address, CreditCard, Order, PrismaClient, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
-import { UserData } from "../types";
+import { UserData, UserUpdateData } from "../types";
 const prisma = new PrismaClient();
 
-export const getUserById = async (id: string) => {
+export const getUserById = async (
+  id: string
+): Promise<{
+  id: number;
+  username: string;
+  email: string;
+  phone: string;
+  orders: Order[];
+  addresses: Address[];
+  creditCards: CreditCard[];
+}> => {
   const user = await prisma.user.findUnique({
     where: {
       id: Number(id),
@@ -36,7 +46,7 @@ export const getAllUsers = async ()=>{
   return users
 }
 
-export const saveUser = async (data: UserData) => {
+export const saveUser = async (data: UserData): Promise<UserData> => {
   const oldUser = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -69,7 +79,7 @@ export const saveUser = async (data: UserData) => {
         password: data.password,
         phone: data.phone,
         token: data.token,
-    //@ts-ignore
+        //@ts-ignore
         creditCards: { create: data.creditCard },
       },
     });
@@ -90,7 +100,16 @@ export const saveUser = async (data: UserData) => {
   return data;
 };
 
-export const login = async (email: string, password: string) => {
+export const login = async (
+  email: string,
+  password: string
+): Promise<{
+  id: number;
+  username: string;
+  email: string;
+  phone: string;
+  token: string;
+}> => {
   const user = await prisma.user.findUnique({ where: { email: email } });
 
   if (user && bcrypt.compareSync(password, user.password)) {
@@ -120,7 +139,10 @@ export const login = async (email: string, password: string) => {
   throw new Error("Invalid credentials");
 };
 
-export const patchUser = async (id: number, obj: any) => {
+export const patchUser = async (
+  id: number,
+  obj: UserUpdateData
+): Promise<User> => {
   const before = await prisma.user.findUnique({
     where: { id: id },
   });
@@ -129,7 +151,7 @@ export const patchUser = async (id: number, obj: any) => {
   }
   if (obj.oldPassword && obj.newPassword) {
     if (bcrypt.compareSync(obj.oldPassword, before.password)) {
-      obj.pasword = bcrypt.hashSync(obj.newPassword);
+      obj.password = bcrypt.hashSync(obj.newPassword);
     }
     throw new Error("Old passwords do not match");
   }

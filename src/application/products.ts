@@ -9,7 +9,10 @@ import patchProd from "../domain/products/patch-product";
 import { StatusCodes } from "http-status-codes";
 
 //Product endpoints logic
-export const getProductById = async (req: Request, res: Response) => {
+export const getProductById = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     let id = req.params.id;
     let num = Number(req.query.size) || 1;
@@ -24,7 +27,7 @@ export const getProductById = async (req: Request, res: Response) => {
     }
 
     const product = await getProduct(id, num);
-    res.send(product);
+    return res.send(product);
   } catch (e: any) {
     if (e.message === "Product does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
@@ -45,7 +48,10 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-export const postNewProduct = async (req: Request, res: Response) => {
+export const postNewProduct = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const { name, description, photos, price, userId } = req.body;
     const { catName } = req.body.category;
@@ -98,7 +104,10 @@ export const postNewProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductsByCategory = async (req: Request, res: Response) => {
+export const getProductsByCategory = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     let category = req.params.category;
 
@@ -117,7 +126,10 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllProductsPaginated = async (req: Request, res: Response) => {
+export const getAllProductsPaginated = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;
@@ -134,7 +146,10 @@ export const getAllProductsPaginated = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductsByUserId = async (req: Request, res: Response) => {
+export const getProductsByUserId = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const userId = req.params.userId;
     console.log(userId);
@@ -148,7 +163,7 @@ export const getProductsByUserId = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send(await getProdsByUserId(Number(userId)));
+    return res.send(await getProdsByUserId(Number(userId)));
   } catch (e: any) {
     if (e.message === "User does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
@@ -169,7 +184,10 @@ export const getProductsByUserId = async (req: Request, res: Response) => {
   }
 };
 
-export const getLateProducts = async (req: Request, res: Response) => {
+export const getLateProducts = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     let page = Number(req.query.page) || 1;
     let limit = Number(req.query.limit) || 6;
@@ -186,7 +204,10 @@ export const getLateProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const patchProduct = async (req: Request, res: Response) => {
+export const patchProduct = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     if (isNaN(Number(req.params.id))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
@@ -197,7 +218,7 @@ export const patchProduct = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send({
+    return res.send({
       message: "User successfully patched",
       user: await patchProd(Number(req.params.id), req.body),
     });

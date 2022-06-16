@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { Order, Product } from "@prisma/client";
 
-export const getUserOrdersById = async (userId: number) => {
+export const getUserOrdersById = async (userId: number): Promise<Order[]> => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: { orders: true },
@@ -13,15 +13,15 @@ export const getUserOrdersById = async (userId: number) => {
   throw new Error("User does not exist");
 };
 
-export const postOrder = async (data: Order, arr: number[]) => {
+export const postOrder = async (data: Order, arr: number[]): Promise<Order> => {
   const order = await prisma.order.create({
     data: {
       buyDate: data.buyDate,
       sendDate: data.sendDate,
       deliveryDate: data.deliveryDate,
-      userId: data.userId,
+      user: { connect: { id: data.userId } },
       sellerName: data.sellerName,
-      creditCardId: data.creditCardId,
+      creditCard: { connect: { id: data.creditCardId } },
     },
   });
   arr.map(async (e) => {
@@ -39,7 +39,7 @@ export const postOrder = async (data: Order, arr: number[]) => {
 export const patchOrderSendDate = async (
   id: number,
   data: { sendDate: Date }
-) => {
+): Promise<Order> => {
   const order = await prisma.order.update({
     where: {
       id: id,
@@ -48,12 +48,13 @@ export const patchOrderSendDate = async (
       sendDate: data.sendDate,
     },
   });
+  return order;
 };
 
 export const patchOrderDeliveryDate = async (
   id: number,
   data: { deliveryDate: Date }
-) => {
+): Promise<Order> => {
   const order = await prisma.order.update({
     where: {
       id: id,
@@ -62,6 +63,5 @@ export const patchOrderDeliveryDate = async (
       deliveryDate: data.deliveryDate,
     },
   });
-
   return order;
 };

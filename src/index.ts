@@ -23,11 +23,11 @@ import {
   endpointPatchOrdersDeliveryDate,
   endpointPostCreditCard,
   endpointPostAddress,
-
   endpointPatchAddressFavorite,
-
   endpointSetFavoriteCreditCard,
-  endpointGetAllUsers
+  endpointGetAllUsers,
+  endpointCompletion
+
 } from "./application";
 const app: Express = express();
 
@@ -54,7 +54,7 @@ endpointgetProductsByCategoryPaginated(app);
 endpointgetAllProductsPaginated(app);
 endpointgetProductsByUserId(app);
 endpointGetLatestProducts(app);
-endpointPatchProducts(app)
+endpointPatchProducts(app);
 
 //Endpoints categories
 endpointGetCategoryByMainCat(app);
@@ -74,13 +74,14 @@ endpointPatchOrdersDeliveryDate(app);
 
 //Endpoints addresses
 endpointPostAddress(app);
-endpointPatchAddressFavorite(app)
+endpointPatchAddressFavorite(app);
+
 //Endpoints credit cards
-
 endpointPostCreditCard(app);
-endpointSetFavoriteCreditCard(app)
+endpointSetFavoriteCreditCard(app);
 
-
+//Endpoint Completion
+endpointCompletion(app);
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });

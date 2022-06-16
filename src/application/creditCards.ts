@@ -6,7 +6,7 @@ import setFav from "../domain/creditCards/patch-setFavorite";
 
 export const postCreditCard = async (req: Request, res: Response) => {
   try {
-    const data: CreditCard = req.body.order;
+    const data: CreditCard = req.body.creditCard;
     if (!(data.cardNumber && data.cvc && data.expiryDate && data.userId)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -44,7 +44,7 @@ export const setFavoriteCreditCard = async (req: Request, res: Response) => {
       });
     }
     res.send({
-      message: "Credit card successfully favorited",
+      message: "Favorite credit card successfully updated",
       creditCard: await setFav(Number(id)),
     });
   } catch (e: any) {

@@ -2,7 +2,7 @@ import { CreditCard, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const postCreditCard = async (data: CreditCard) => {
+export const postCreditCard = async (data: CreditCard): Promise<CreditCard> => {
   if (data.isFavorite) {
     await prisma.creditCard.updateMany({
       where: { userId: data.userId },
@@ -16,27 +16,23 @@ export const postCreditCard = async (data: CreditCard) => {
       cardNumber: data.cardNumber,
       cvc: data.cvc,
       expiryDate: data.expiryDate,
-      isFavorite: data.isFavorite,
-      userId: data.userId,
+      isFavorite: data.isFavorite || false,
+      user: { connect: { id: data.userId } },
     },
   });
   return creditCard;
 };
 
-export const setCreditCardFavorite = async (id: number) => {
+export const setCreditCardFavorite = async (
+  id: number
+): Promise<CreditCard> => {
   const card = await prisma.creditCard.findUnique({ where: { id: id } });
 
   if (card) {
     await prisma.creditCard.updateMany({
       where: {
-        AND: [
-          {
-            id: id,
-          },
-          {
-            isFavorite: true,
-          },
-        ],
+        isFavorite: true,
+        userId: card.userId,
       },
       data: {
         isFavorite: false,

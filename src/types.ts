@@ -1,6 +1,3 @@
-
-
-
 export type UserData = {
   username: string;
   address: {
@@ -15,16 +12,16 @@ export type UserData = {
   email: string;
   password: string;
   phone: string;
-  creditCard?: CreditCard
+  creditCard?: CreditCard;
   token?: string;
 };
 
 export type CreditCard = {
-    cardNumber: string;
-    cvc: string;
-    expiryDate: string;
-    isFavorite: boolean;
-}
+  cardNumber: string;
+  cvc: string;
+  expiryDate: string;
+  isFavorite: boolean;
+};
 
 export type ProductData = {
   name: string;
@@ -37,7 +34,6 @@ export type ProductData = {
   };
 };
 
-
 export type OrderData = {
   buyDate: Date;
   sendDate: Date;
@@ -45,4 +41,33 @@ export type OrderData = {
   userId: number;
   sellerName: string;
   creditCardId: number;
+};
+
+export type ReviewData = {
+  userId?: number;
+  productId?: number;
+  comment: string;
+  photo: string;
+  rating: number;
+  reviewer: string;
+};
+
+export type ProdUpdateData = {
+  name?: string;
+  description?: string;
+  photos?: string[];
+  price?: number;
+  userId?: number;
+  category?: {
+    catName: string;
+  };
+};
+
+export type UserUpdateData = {
+  username?: string;
+  email?: string;
+  phone?: string;
+  oldPassword?: string;
+  newPassword?: string;
+  password?: string;
 };

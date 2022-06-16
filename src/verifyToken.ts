@@ -2,7 +2,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import { Request, Response } from "express";
 import StatusCodes from "http-status-codes";
 
-export const verifyToken = (req: Request, res: Response, next: () => void) => {
+export const verifyToken = (req: Request, res: Response, next: () => void): void | Response<any, Record<string, any>> => {
   const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
 
