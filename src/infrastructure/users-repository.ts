@@ -139,14 +139,14 @@ export const patchUser = async (
   const before = await prisma.user.findUnique({
     where: { id: id },
   });
-  if (!before) {
-    throw new Error("User not found");
-  }
+  if (!before) throw new Error("User not found");
+
   if (obj.oldPassword && obj.newPassword) {
     if (bcrypt.compareSync(obj.oldPassword, before.password)) {
-      obj.password = bcrypt.hashSync(obj.newPassword);
+      obj.password = bcrypt.hashSync(obj.newPassword, 10);
+    } else {
+      throw new Error("Old passwords do not match");
     }
-    throw new Error("Old passwords do not match");
   }
   return await prisma.user.update({
     where: { id: id },

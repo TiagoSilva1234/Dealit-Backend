@@ -1,5 +1,5 @@
 import { PrismaClient, Review } from "@prisma/client";
-import { ReviewData} from "../types";
+import { ReviewData } from "../types";
 
 const prisma = new PrismaClient();
 
@@ -67,7 +67,9 @@ export const getReviewsByProductId = async (
   throw new Error("Product does not exist");
 };
 
-export const getReviewsByReviewer = async (reviewerName: string): Promise<Review[]> => {
+export const getReviewsByReviewer = async (
+  reviewerName: string
+): Promise<Review[]> => {
   const reviews = await prisma.review.findMany({
     where: { reviewer: reviewerName },
   });
@@ -78,7 +80,7 @@ export const getReviewsByReviewer = async (reviewerName: string): Promise<Review
 };
 
 export const saveReview = async (data: ReviewData): Promise<Review> => {
-  if (data.userId) {
+  if (data.userId !== undefined) {
     return await prisma.review.create({
       data: {
         user: { connect: { id: data.userId } },
@@ -94,12 +96,11 @@ export const saveReview = async (data: ReviewData): Promise<Review> => {
       data: {
         product: { connect: { id: data.productId } },
         comment: data.comment,
-        photo:
-          "https://images.squarespace-cdn.com/content/v1/59157e4617bffce271a68dfd/1588030909250-LM8122T4NRKS7CO5W5FK/HeresSomethingGood-Logo-FINAL.jpg?format=1000w",
+        photo: data.photo,
         rating: data.rating,
         reviewer: data.reviewer,
       },
     });
   }
-  throw new Error("Could not find an id for either product or user")
+  throw new Error("Could not find an id for either product or user");
 };

@@ -112,7 +112,8 @@ export const postReview = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const { userId, productId, comment, photo, rating, reviewer } = req.body;
-    if (!(userId || productId) || !(comment && photo && rating && reviewer)) {
+    console.log(userId, productId)
+    if (!(comment && photo && rating && reviewer)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required data missing",
@@ -121,7 +122,7 @@ export const postReview = async (
         },
       });
     }
-    if (userId) {
+    if (userId !== undefined) {
       const data: ReviewData = {
         userId: Number(userId),
         comment,
@@ -133,7 +134,7 @@ export const postReview = async (
         message: "Review successfully saved to datebase!",
         review: await postRev(data),
       });
-    } else {
+    } else if (productId) {
       const data: ReviewData = {
         productId: Number(productId),
         comment,
@@ -143,6 +144,13 @@ export const postReview = async (
       };
       return res.send(await postRev(data));
     }
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      error: {
+        message: "Could not find an id for product or user",
+        cause: "Bad Request",
+        date: new Date().toLocaleString(),
+      },
+    });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {

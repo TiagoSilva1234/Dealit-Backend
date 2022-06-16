@@ -9,7 +9,7 @@ export const postAddress = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const data: Address = req.body.order;
+    const data: Address = req.body;
     if (
       !(
         data.country &&
