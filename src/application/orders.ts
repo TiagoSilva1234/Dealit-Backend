@@ -11,7 +11,7 @@ export const getOrdersByUserId = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let userId = req.params.userId;
+    const userId = req.params.userId;
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {

@@ -14,8 +14,8 @@ export const getProductById = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let id = req.params.id;
-    let num = Number(req.query.size) || 1;
+    const id = req.params.id;
+    const num = Number(req.query.size) || 1;
     if (isNaN(Number(id)) && id !== "random" && num > 10) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -109,7 +109,7 @@ export const getProductsByCategory = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let category = req.params.category;
+    const category = req.params.category;
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;
@@ -189,8 +189,8 @@ export const getLateProducts = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let page = Number(req.query.page) || 1;
-    let limit = Number(req.query.limit) || 6;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
     const ret = await getLatestProducts(page, limit);
     return res.send(ret);
   } catch (e: any) {

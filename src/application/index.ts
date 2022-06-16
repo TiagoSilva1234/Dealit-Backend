@@ -66,7 +66,7 @@ export const endpointGetLatestProducts = (app: Express): Express =>
   app.get("/dealit/api/latest-products", getLateProducts);
 
 export const endpointPatchProducts = (app: Express): Express =>
-  app.patch("/dealit/api/products/:id", patchProduct);
+  app.patch("/dealit/api/products/:id", verifyToken, patchProduct);
 
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express): void => {
@@ -83,15 +83,15 @@ export const endpointGetOrdersByUserId = (app: Express): void => {
 };
 
 export const endpointPostOrders = (app: Express): void => {
-  app.post("/dealit/api/orders", postOrder);
+  app.post("/dealit/api/orders", verifyToken, postOrder);
 };
 
 export const endpointPatchOrdersSendDate = (app: Express): void => {
-  app.patch("/dealit/api/orders/sendDate/:id", patchOrderSend);
+  app.patch("/dealit/api/orders/sendDate/:id", verifyToken, patchOrderSend);
 };
 
 export const endpointPatchOrdersDeliveryDate = (app: Express): void => {
-  app.patch("/dealit/api/orders/deliveryDate/:id", patchOrderDelivery);
+  app.patch("/dealit/api/orders/deliveryDate/:id", verifyToken, patchOrderDelivery);
 };
 
 //EndpointsReviews
@@ -108,24 +108,24 @@ export const endpointGetReviewsByReviewer = (app: Express): void => {
 };
 
 export const endpointPostReviews = (app: Express): void => {
-  app.post("/dealit/api/reviews", postReview);
+  app.post("/dealit/api/reviews", verifyToken, postReview);
 };
 
 //Endpoints CreditCard
 export const endpointSetFavoriteCreditCard = (app: Express): void => {
-  app.patch("/dealit/api/credit-cards/:id", setFavoriteCreditCard);
+  app.patch("/dealit/api/credit-cards/:id", verifyToken, setFavoriteCreditCard);
 };
 export const endpointPostCreditCard = (app: Express): void => {
-  app.post("/dealit/api/credit-cards", postCreditCard);
+  app.post("/dealit/api/credit-cards", verifyToken, postCreditCard);
 };
 
 //Endpoints Adress
 export const endpointPostAddress = (app: Express): void => {
-  app.post("/dealit/api/addresses", postAddress);
+  app.post("/dealit/api/addresses", verifyToken, postAddress);
 };
 
 export const endpointPatchAddressFavorite = (app: Express): void => {
-  app.patch("/dealit/api/addresses/:id", setFavoriteAddress);
+  app.patch("/dealit/api/addresses/:id", verifyToken, setFavoriteAddress);
 };
 
 //Endpoint Completion

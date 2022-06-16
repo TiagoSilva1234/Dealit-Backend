@@ -20,7 +20,7 @@ export const getReviewsByUserId = async (
     include: { reviews: true },
   });
   if (user) {
-    let revs = user.reviews.map((r) => {
+    const revs = user.reviews.map((r) => {
       return {
         id: r.id,
         userId: r.userId,
@@ -52,7 +52,7 @@ export const getReviewsByProductId = async (
     include: { reviews: true },
   });
   if (product) {
-    let revs = product.reviews.map((r) => {
+    const revs = product.reviews.map((r) => {
       return {
         id: r.id,
         productId: r.productId,

@@ -6,7 +6,7 @@ import mainCategory from "../domain/categories/get-allMainCategories"
 //Categories endpoints logic
 export const getCategoryByMainCat = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
   try {
-    let mainCat : string = req.params.mainCat;
+    const mainCat : string = req.params.mainCat;
     const categories = await getCategoryMainCat(mainCat);
     return res.send(categories);
   } catch (e:any) {

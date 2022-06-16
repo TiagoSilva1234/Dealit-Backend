@@ -14,7 +14,7 @@ export const getCategoryByMainCat = async (
       subcategories: Category[];
     }
 > => {
-  let main = await prisma.category.findUnique({
+  const main = await prisma.category.findUnique({
     where: {
       name: mainCat,
     },

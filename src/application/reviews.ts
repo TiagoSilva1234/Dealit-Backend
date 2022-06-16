@@ -11,7 +11,7 @@ export const getReviewsByUserId = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let userId = req.params.userId;
+    const userId = req.params.userId;
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -47,7 +47,7 @@ export const getReviewsByProductId = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let productId = req.params.productId;
+    const productId = req.params.productId;
     if (isNaN(Number(productId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -83,7 +83,7 @@ export const getReviewsByReviewer = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let reviewer = req.params.reviewer;
+    const reviewer = req.params.reviewer;
 
     return res.send(await getRevsByReviewer(reviewer));
   } catch (e: any) {
