@@ -26,7 +26,8 @@ import {
 
   endpointPatchAddressFavorite,
 
-  endpointSetFavoriteCreditCard
+  endpointSetFavoriteCreditCard,
+  endpointGetAllUsers
 } from "./application";
 const app: Express = express();
 
@@ -45,7 +46,7 @@ endpointGetUserById(app);
 endpointPatchUser(app);
 endpointPostUser(app);
 endpointPostLogin(app);
-
+endpointGetAllUsers(app)
 //Endpoints products
 endpointGetProductById(app);
 endpointPostProduct(app);

@@ -1,7 +1,7 @@
 import { verifyToken } from "../verifyToken";
 import { Express } from "express";
 
-import { getUserById, patchUser } from "./users";
+import { getUserById, patchUser,getEveryUser } from "./users";
 import { getOrdersByUserId, postOrder,patchOrderSend, patchOrderDelivery} from "./orders";
 import { registerUser, userLogin } from "./auth";
 import {
@@ -30,6 +30,7 @@ export const endpointGetUserById = (app: Express) =>
 export const endpointPatchUser = (app: Express) =>
   app.patch("/dealit/api/users/:id", patchUser);
 
+  export const endpointGetAllUsers = (app:Express)=> app.get("/dealit/api/users",getEveryUser)
 //EndpointsAuth
 export const endpointPostUser = (app: Express) =>
   app.post("/dealit/api/register", registerUser);

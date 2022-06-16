@@ -28,6 +28,13 @@ export const getUserById = async (id: string) => {
     creditCards: user.creditCards,
   };
 };
+export const getAllUsers = async ()=>{
+  const users = await prisma.user.findMany({
+    orderBy:{id: "asc"}
+  });
+
+  return users
+}
 
 export const saveUser = async (data: UserData) => {
   const oldUser = await prisma.user.findUnique({

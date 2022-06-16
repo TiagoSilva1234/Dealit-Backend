@@ -6,6 +6,7 @@ CREATE TABLE "User" (
     "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "token" TEXT NOT NULL,
+    "photo" TEXT NOT NULL DEFAULT E'https://toppng.com/uploads/preview/file-svg-profile-icon-vector-11562942678pprjdh47a8.png',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -80,8 +81,9 @@ CREATE TABLE "Review" (
     "userId" INTEGER,
     "productId" INTEGER,
     "comment" TEXT NOT NULL,
-    "photo" TEXT NOT NULL,
+    "photo" TEXT NOT NULL DEFAULT E'',
     "rating" INTEGER NOT NULL,
+    "reviewer" TEXT NOT NULL,
 
     CONSTRAINT "Review_pkey" PRIMARY KEY ("id")
 );
@@ -93,6 +95,9 @@ CREATE TABLE "ProductsOrders" (
 
     CONSTRAINT "ProductsOrders_pkey" PRIMARY KEY ("productId","orderId")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
