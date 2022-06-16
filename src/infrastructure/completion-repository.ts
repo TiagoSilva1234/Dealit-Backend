@@ -1,11 +1,13 @@
 import OpenAI from "openai-api";
-import { generatePrompt } from "../utils";
+import { dealioErrorMessages, generatePrompt } from "../utils";
 
 const apiKey = process.env.OPENAI_API_KEY;
 
 const openai = new OpenAI(apiKey!);
 
-export const createCompletion = async (input: string): Promise<any> => {
+export const createCompletion = async (
+  input: string
+): Promise<{ response: string }> => {
   const response = await openai.complete({
     engine: "curie",
     prompt: generatePrompt(input),
@@ -22,4 +24,8 @@ export const createCompletion = async (input: string): Promise<any> => {
   if (response) {
     return { response: response.data.choices[0].text };
   }
+  return {
+    response:
+      dealioErrorMessages[Math.random() * dealioErrorMessages.length + 1],
+  };
 };

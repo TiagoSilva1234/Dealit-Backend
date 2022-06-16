@@ -4,9 +4,12 @@ import getRevsByProductId from "../domain/reviews/get-reviewsByProductId";
 import getRevsByReviewer from "../domain/reviews/get-reviewsByReviewer";
 import postRev from "../domain/reviews/post-review";
 import { StatusCodes } from "http-status-codes";
-import { Review } from "@prisma/client";
+import { ReviewData } from "../types";
 
-export const getReviewsByUserId = async (req: Request, res: Response) => {
+export const getReviewsByUserId = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     let userId = req.params.userId;
     if (isNaN(Number(userId))) {
@@ -18,7 +21,7 @@ export const getReviewsByUserId = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send(await getRevsByUserId(Number(userId)));
+    return res.send(await getRevsByUserId(Number(userId)));
   } catch (e: any) {
     if (e.message === "User does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
@@ -39,7 +42,10 @@ export const getReviewsByUserId = async (req: Request, res: Response) => {
   }
 };
 
-export const getReviewsByProductId = async (req: Request, res: Response) => {
+export const getReviewsByProductId = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     let productId = req.params.productId;
     if (isNaN(Number(productId))) {
@@ -51,7 +57,7 @@ export const getReviewsByProductId = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send(await getRevsByProductId(Number(productId)));
+    return res.send(await getRevsByProductId(Number(productId)));
   } catch (e: any) {
     if (e.message === "Product does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
@@ -72,11 +78,14 @@ export const getReviewsByProductId = async (req: Request, res: Response) => {
   }
 };
 
-export const getReviewsByReviewer = async (req: Request, res: Response) => {
+export const getReviewsByReviewer = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     let reviewer = req.params.reviewer;
 
-    res.send(await getRevsByReviewer(reviewer));
+    return res.send(await getRevsByReviewer(reviewer));
   } catch (e: any) {
     if (e.message === "Reviewer does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
@@ -97,7 +106,10 @@ export const getReviewsByReviewer = async (req: Request, res: Response) => {
   }
 };
 
-export const postReview = async (req: Request, res: Response) => {
+export const postReview = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const { userId, productId, comment, photo, rating, reviewer } = req.body;
     if (!(userId || productId) || !(comment && photo && rating && reviewer)) {
@@ -110,24 +122,23 @@ export const postReview = async (req: Request, res: Response) => {
       });
     }
     if (userId) {
-      const data: any = {
-        userId,
+      const data: ReviewData = {
+        userId: Number(userId),
         comment,
         photo,
-        rating,
+        rating: Number(rating),
         reviewer,
       };
       return res.send({
         message: "Review successfully saved to datebase!",
         review: await postRev(data),
       });
-    }
-    if (productId) {
-      const data: any = {
-        productId,
+    } else {
+      const data: ReviewData = {
+        productId: Number(productId),
         comment,
         photo,
-        rating,
+        rating: Number(rating),
         reviewer,
       };
       return res.send(await postRev(data));

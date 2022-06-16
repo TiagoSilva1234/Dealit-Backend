@@ -1,8 +1,20 @@
 import { PrismaClient, Review } from "@prisma/client";
+import { ReviewData} from "../types";
 
 const prisma = new PrismaClient();
 
-export const getReviewsByUserId = async (userId: number) => {
+export const getReviewsByUserId = async (
+  userId: number
+): Promise<
+  {
+    id: number;
+    userId: number | null;
+    comment: string;
+    photo: string;
+    rating: number;
+    reviewer: string;
+  }[]
+> => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: { reviews: true },
@@ -23,7 +35,18 @@ export const getReviewsByUserId = async (userId: number) => {
   throw new Error("User does not exist");
 };
 
-export const getReviewsByProductId = async (productId: number) => {
+export const getReviewsByProductId = async (
+  productId: number
+): Promise<
+  {
+    id: number;
+    productId: number | null;
+    comment: string;
+    photo: string;
+    rating: number;
+    reviewer: string;
+  }[]
+> => {
   const product = await prisma.product.findUnique({
     where: { id: productId },
     include: { reviews: true },
@@ -44,17 +67,17 @@ export const getReviewsByProductId = async (productId: number) => {
   throw new Error("Product does not exist");
 };
 
-export const getReviewsByReviewer = async (reviewerName: string) => {
+export const getReviewsByReviewer = async (reviewerName: string): Promise<Review[]> => {
   const reviews = await prisma.review.findMany({
     where: { reviewer: reviewerName },
   });
-  if (reviews.length>0) {
+  if (reviews.length > 0) {
     return reviews;
   }
   throw new Error("Reviewer not found");
 };
 
-export const saveReview = async (data: Review) => {
+export const saveReview = async (data: ReviewData): Promise<Review> => {
   if (data.userId) {
     return await prisma.review.create({
       data: {
@@ -78,4 +101,5 @@ export const saveReview = async (data: Review) => {
       },
     });
   }
+  throw new Error("Could not find an id for either product or user")
 };

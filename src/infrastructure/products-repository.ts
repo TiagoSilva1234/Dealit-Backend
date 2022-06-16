@@ -1,5 +1,5 @@
 import { PrismaClient, Product } from "@prisma/client";
-import { ProductData } from "../types";
+import { ProductData, ProdUpdateData } from "../types";
 
 const prisma = new PrismaClient();
 
@@ -19,7 +19,7 @@ export const getProductById = async (id: string, num: number) => {
   return product;
 };
 
-export const saveProduct = async (data: ProductData) => {
+export const saveProduct = async (data: ProductData): Promise<Product> => {
   return await prisma.product.create({
     data: {
       user: { connect: { id: data.userId } },
@@ -36,8 +36,7 @@ export const getProductsByCategoryPaginated = async (
   category: string,
   skip: number,
   take: number = 6
-) => {
-
+): Promise<Product[]> => {
   const cat = await prisma.category.findUnique({
     where: {
       name: category,
@@ -73,11 +72,13 @@ export const getProductsByCategoryPaginated = async (
 export const getAllProductsPaginated = async (
   skip: number,
   take: number = 6
-) => {
+): Promise<Product[]> => {
   return prisma.product.findMany({ skip, take });
 };
 
-export const getProductsByUserId = async (userId: number) => {
+export const getProductsByUserId = async (
+  userId: number
+): Promise<Product[]> => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: { products: true },
@@ -90,7 +91,7 @@ export const getProductsByUserId = async (userId: number) => {
 
 //////////////////////////////////////////////////////////
 //called in get product by id
-const getRandomProduct = async (num: number) => {
+const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
   const product = await prisma.product.findMany({
     orderBy: { id: "desc" },
     take: 1,
@@ -101,7 +102,10 @@ const getRandomProduct = async (num: number) => {
     const randomProduct = await prisma.product.findUnique({
       where: { id: randomId },
     });
-    return randomProduct;
+    if (randomProduct) {
+      return randomProduct;
+    }
+    return product;
   }
   const ar: Product[] = [];
   while (ar.length !== num) {
@@ -127,19 +131,25 @@ const getRandomProduct = async (num: number) => {
 };
 //////////////////////////////////////////////////////////
 
-export const getLatestProducts = async (skip: number, take: number) => {
+export const getLatestProducts = async (
+  skip: number,
+  take: number
+): Promise<Product[]> => {
   const prodList = await prisma.product.findMany({
-    orderBy: { uploadDate: "desc" },
     skip,
     take,
+    orderBy: { uploadDate: "desc" },
   });
   if (prodList) {
     return prodList;
   }
-  return null;
+  throw new Error("Something went wrong with database products fetch");
 };
 
-export const patchProduct = async (id: number, obj: any) => {
+export const patchProduct = async (
+  id: number,
+  obj: ProdUpdateData
+): Promise<Product> => {
   const before = await prisma.product.findUnique({
     where: { id: id },
   });
@@ -157,9 +167,7 @@ export const patchProduct = async (id: number, obj: any) => {
       user: { connect: { id: !obj.userId ? before.userId : obj.userId } },
       category: {
         connect: {
-          name: !obj.category.catName
-            ? before.categoryName
-            : obj.category.catName,
+          name: !obj.category ? before.categoryName : obj.category.catName,
         },
       },
     },

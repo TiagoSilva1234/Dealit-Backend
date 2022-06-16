@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import getUser from "../domain/users/get-userById";
 import { StatusCodes } from "http-status-codes";
-import patchUsr from "../domain/users/patch-user"
+import patchUsr from "../domain/users/patch-user";
 //User endpoints logic
-export const getUserById = async (req: Request, res: Response) => {
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     let id = req.params.id;
     if (isNaN(Number(id))) {
@@ -16,7 +19,7 @@ export const getUserById = async (req: Request, res: Response) => {
       });
     }
     const user = await getUser(id);
-    res.send(user);
+    return res.send(user);
   } catch (e: any) {
     if (e.message === "User does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
@@ -37,7 +40,10 @@ export const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-export const patchUser = async (req: Request, res: Response) => {
+export const patchUser = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     if (isNaN(Number(req.params.id))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
@@ -48,9 +54,9 @@ export const patchUser = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send({
+    return res.send({
       message: "User successfully patched",
-      user: await patchUsr(Number(req.params.id), req.body)
+      user: await patchUsr(Number(req.params.id), req.body),
     });
   } catch (e: any) {
     if (e.message === "User not found") {

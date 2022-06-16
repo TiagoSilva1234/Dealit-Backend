@@ -1,37 +1,52 @@
-import { PrismaClient } from "@prisma/client";
+import { Category, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const getCategoryByMainCat = async (mainCat?: string) => {
+export const getCategoryByMainCat = async (
+  mainCat: string
+): Promise<
+  | {
+      main: Category;
+      subcategory: Category;
+    }
+  | {
+      main: Category;
+      subcategories: Category[];
+    }
+> => {
   let main = await prisma.category.findUnique({
     where: {
       name: mainCat,
     },
   });
-  if (main !== null && main.level === 2 && main.upperLevel !== null) {
-    main = await prisma.category.findUnique({
+  if (main && main.level === 2 && main.upperLevel !== null) {
+    const actualMain = await prisma.category.findUnique({
       where: {
-        name: mainCat,
+        name: main.upperLevel,
       },
     });
-    if (main !== null && main.upperLevel !== null) {
-      const actualMain = await prisma.category.findUnique({
-        where: {
-          name: main.upperLevel,
-        },
-      });
-      return { main: actualMain, subcategory: main };
-    }
+    if (actualMain) return { main: actualMain, subcategory: main };
+    throw new Error("Something went wrong with database connection");
   }
   const subcategories = await prisma.category.findMany({
     where: {
       upperLevel: mainCat,
     },
   });
-  return { main: main, subcategories };
+  if (main) return { main: main, subcategories };
+  throw new Error("Something went wrong with database connection");
 };
 
-export const getAllMainCategories = async () => {
+export const getAllMainCategories = async (): Promise<
+  {
+    subcategories: Category[];
+    id: number;
+    name: string;
+    level: number;
+    upperLevel: string | null;
+    image: string | null;
+  }[]
+> => {
   const main = await prisma.category.findMany({
     where: {
       level: 1,
@@ -45,10 +60,8 @@ export const getAllMainCategories = async () => {
           upperLevel: e.name,
         },
       });
-
       return { ...e, subcategories: sub };
     })
   );
-
   return result;
 };
