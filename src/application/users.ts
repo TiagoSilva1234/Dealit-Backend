@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import getUser from "../domain/users/get-UserById";
+import getUser from "../domain/users/get-userById";
 import { StatusCodes } from "http-status-codes";
 
 import patchUsr from "../domain/users/patch-user"

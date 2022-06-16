@@ -219,7 +219,7 @@ export const patchProduct = async (
       });
     }
     return res.send({
-      message: "User successfully patched",
+      message: "Product successfully patched",
       user: await patchProd(Number(req.params.id), req.body),
     });
   } catch (e: any) {
