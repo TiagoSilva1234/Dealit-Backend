@@ -86,6 +86,6 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(process.env.PORT||3220,() => console.log(`listening on port ${port} :)`));
+app.listen(process.env.PORT||80,() => console.log(`listening on port ${port} :)`));
 
 export default app;
