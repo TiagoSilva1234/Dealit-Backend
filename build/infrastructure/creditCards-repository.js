@@ -9,9 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setCreditCardFavorite = exports.postCreditCard = void 0;
+exports.setCreditCardFavorite = exports.postCreditCard = exports.getCreditCardsByUserId = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
+const getCreditCardsByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma.user.findUnique({
+        where: { id: userId },
+        include: { creditCards: true },
+    });
+    if (user) {
+        return user.creditCards;
+    }
+    throw new Error("User does not exist");
+});
+exports.getCreditCardsByUserId = getCreditCardsByUserId;
 const postCreditCard = (data) => __awaiter(void 0, void 0, void 0, function* () {
     if (data.isFavorite) {
         yield prisma.creditCard.updateMany({

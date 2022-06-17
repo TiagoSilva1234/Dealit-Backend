@@ -20,10 +20,12 @@ import {
   endpointPatchProducts,
   endpointPatchOrdersSendDate,
   endpointPatchOrdersDeliveryDate,
-  endpointPostCreditCard,
   endpointPostAddress,
   endpointPatchAddressFavorite,
+  endpointGetAddressesByUserId,
+  endpointPostCreditCard,
   endpointSetFavoriteCreditCard,
+  endpointGetCreditCardsByUserId,
   endpointGetAllUsers,
   endpointCompletion,
 } from "./application";
@@ -72,10 +74,12 @@ endpointPatchOrdersDeliveryDate(app);
 //Endpoints addresses
 endpointPostAddress(app);
 endpointPatchAddressFavorite(app);
+endpointGetAddressesByUserId(app)
 
 //Endpoints credit cards
 endpointPostCreditCard(app);
 endpointSetFavoriteCreditCard(app);
+endpointGetCreditCardsByUserId(app)
 
 //Endpoint Completion
 endpointCompletion(app);

@@ -2,6 +2,19 @@ import { CreditCard, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export const getCreditCardsByUserId = async (
+  userId: number
+): Promise<CreditCard[]> => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { creditCards: true },
+  });
+  if (user) {
+    return user.creditCards;
+  }
+  throw new Error("User does not exist");
+};
+
 export const postCreditCard = async (data: CreditCard): Promise<CreditCard> => {
   if (data.isFavorite) {
     await prisma.creditCard.updateMany({
@@ -10,7 +23,6 @@ export const postCreditCard = async (data: CreditCard): Promise<CreditCard> => {
         isFavorite: false,
       },
     });
-  
   }
 
   const creditCard = await prisma.creditCard.create({

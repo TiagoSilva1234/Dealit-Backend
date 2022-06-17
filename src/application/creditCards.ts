@@ -3,6 +3,43 @@ import { StatusCodes } from "http-status-codes";
 import { CreditCard } from "@prisma/client";
 import postCC from "../domain/creditCards/post-creditCard";
 import setFav from "../domain/creditCards/patch-setFavorite";
+import getCardsByUserId from "../domain/creditCards/get-creditCardsByUserId";
+
+export const getCreditCardsByUserId = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const userId = req.params.userId;
+    if (isNaN(Number(userId))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.send(await getCardsByUserId(Number(userId)));
+  } catch (e: any) {
+    if (e.message === "User does not exist") {
+      return res.status(StatusCodes.NOT_FOUND).send({
+        error: {
+          message: e.message,
+          cause: "Not found",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};
 
 export const postCreditCard = async (req: Request, res: Response) => {
   try {

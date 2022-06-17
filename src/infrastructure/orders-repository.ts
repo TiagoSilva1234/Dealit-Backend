@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { Order, Product } from "@prisma/client";
 
-export const getUserOrdersById = async (userId: number): Promise<Order[]> => {
+export const getOrdersByUserId = async (userId: number): Promise<Order[]> => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: { orders: true },

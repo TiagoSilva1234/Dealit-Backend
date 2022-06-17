@@ -42,9 +42,11 @@ const port = Number(process.env.API_PORT) || 3000;
 //Endpoints addresses
 (0, application_1.endpointPostAddress)(app);
 (0, application_1.endpointPatchAddressFavorite)(app);
+(0, application_1.endpointGetAddressesByUserId)(app);
 //Endpoints credit cards
 (0, application_1.endpointPostCreditCard)(app);
 (0, application_1.endpointSetFavoriteCreditCard)(app);
+(0, application_1.endpointGetCreditCardsByUserId)(app);
 //Endpoint Completion
 (0, application_1.endpointCompletion)(app);
 app.get("/", (req, res) => {

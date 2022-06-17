@@ -12,10 +12,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setFavoriteCreditCard = exports.postCreditCard = void 0;
+exports.setFavoriteCreditCard = exports.postCreditCard = exports.getCreditCardsByUserId = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const post_creditCard_1 = __importDefault(require("../domain/creditCards/post-creditCard"));
 const patch_setFavorite_1 = __importDefault(require("../domain/creditCards/patch-setFavorite"));
+const get_creditCardsByUserId_1 = __importDefault(require("../domain/creditCards/get-creditCardsByUserId"));
+const getCreditCardsByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        if (isNaN(Number(userId))) {
+            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
+                error: {
+                    message: "Invalid id format",
+                    cause: "Bad Request",
+                    date: new Date().toLocaleString(),
+                },
+            });
+        }
+        return res.send(yield (0, get_creditCardsByUserId_1.default)(Number(userId)));
+    }
+    catch (e) {
+        if (e.message === "User does not exist") {
+            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).send({
+                error: {
+                    message: e.message,
+                    cause: "Not found",
+                    date: new Date().toLocaleString(),
+                },
+            });
+        }
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).send({
+            error: {
+                message: e.message,
+                cause: "Unexpected error",
+                date: new Date().toLocaleString(),
+            },
+        });
+    }
+});
+exports.getCreditCardsByUserId = getCreditCardsByUserId;
 const postCreditCard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
