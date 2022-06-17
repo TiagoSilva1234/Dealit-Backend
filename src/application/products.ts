@@ -4,7 +4,6 @@ import getProducts from "../domain/products/get-allProductsPaginated";
 import postProduct from "../domain/products/post-product";
 import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
-import getLatestProducts from "../domain/products/get-latestProducts";
 import patchProd from "../domain/products/patch-product";
 import { StatusCodes } from "http-status-codes";
 
@@ -15,8 +14,9 @@ export const getProductById = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const id = req.params.id;
-    const limit = Number(req.query.limit) || 1;
-    if (isNaN(Number(id)) && id !== "random" && limit > 10) {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 3;
+    if (isNaN(Number(id)) && id !== "random" && id !== "latest" && limit > 10) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
@@ -25,9 +25,9 @@ export const getProductById = async (
         },
       });
     }
-    const product = await getProduct(id, limit);
-    return res.send(product);
+    return res.send(await getProduct(id, page, limit));
   } catch (e: any) {
+    console.log(e.message);
     if (e.message === "Product does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
         error: {
@@ -53,7 +53,6 @@ export const postNewProduct = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const { name, description, photos, price, userId, category } = req.body;
-
 
     if (!(name && description && photos && price && userId && category)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
@@ -180,33 +179,13 @@ export const getProductsByUserId = async (
   }
 };
 
-export const getLateProducts = async (
-  req: Request,
-  res: Response
-): Promise<Response<any, Record<string, any>>> => {
-  try {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 6;
-    const ret = await getLatestProducts(page, limit);
-    return res.send(ret);
-  } catch (e: any) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-      error: {
-        message: e.message,
-        cause: "Unexpected error",
-        date: new Date().toLocaleString(),
-      },
-    });
-  }
-};
-
 export const patchProduct = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const id = req.params.id;
-     const data = req.body;
+    const data = req.body;
     if (isNaN(Number(id))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {

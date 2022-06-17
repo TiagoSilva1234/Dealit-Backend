@@ -10,4 +10,4 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const products_repository_1 = require("../../infrastructure/products-repository");
-exports.default = (id, num) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, products_repository_1.getProductById)(id, num); });
+exports.default = (id, skip, take) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, products_repository_1.getProductById)(id, skip, take); });

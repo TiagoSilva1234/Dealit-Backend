@@ -12,7 +12,7 @@ export const createCompletion = async (
     engine: "curie",
     prompt: generatePrompt(input),
     maxTokens: 500,
-    temperature: 0.3,
+    temperature: 0.7,
     topP: 1,
     presencePenalty: 0,
     frequencyPenalty: 0,

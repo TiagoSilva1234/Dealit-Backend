@@ -9,12 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchProduct = exports.getLatestProducts = exports.getProductsByUserId = exports.getAllProductsPaginated = exports.getProductsByCategoryPaginated = exports.saveProduct = exports.getProductById = void 0;
+exports.patchProduct = exports.getProductsByUserId = exports.getAllProductsPaginated = exports.getProductsByCategoryPaginated = exports.saveProduct = exports.getProductById = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-const getProductById = (id, num) => __awaiter(void 0, void 0, void 0, function* () {
+const getProductById = (id, skip, take) => __awaiter(void 0, void 0, void 0, function* () {
     if (id === "random") {
-        return getRandomProduct(num);
+        return getRandomProduct(take);
+    }
+    if (id === "latest") {
+        return getLatestProducts(skip, take);
     }
     const product = yield prisma.product.findUnique({
         where: {
@@ -138,7 +141,6 @@ const getLatestProducts = (skip, take) => __awaiter(void 0, void 0, void 0, func
     }
     throw new Error("Something went wrong with database products fetch");
 });
-exports.getLatestProducts = getLatestProducts;
 const patchProduct = (id, obj) => __awaiter(void 0, void 0, void 0, function* () {
     const before = yield prisma.product.findUnique({
         where: { id: id },

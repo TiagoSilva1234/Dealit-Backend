@@ -11,16 +11,14 @@ export const getUserById = async (
   username: string;
   email: string;
   phone: string;
-  orders: Order[];
-  addresses: Address[];
-  creditCards: CreditCard[];
+  address: Address;
+  creditCard: CreditCard;
 }> => {
   const user = await prisma.user.findUnique({
     where: {
       id: Number(id),
     },
     include: {
-      orders: true,
       addresses: true,
       creditCards: true,
     },
@@ -33,17 +31,27 @@ export const getUserById = async (
     username: user.username,
     email: user.email,
     phone: user.phone,
-    orders: user.orders,
-    addresses: user.addresses,
-    creditCards: user.creditCards,
+    address: user.addresses.filter((e) => e.isFavorite)[0],
+    creditCard: user.creditCards.filter((e) => e.isFavorite)[0],
   };
 };
 export const getAllUsers = async () => {
   const users = await prisma.user.findMany({
     orderBy: { id: "asc" },
+    include: {
+      addresses: true,
+      creditCards: true,
+    },
   });
 
-  return users;
+  return users.map((user) => ({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    phone: user.phone,
+    address: user.addresses.filter((e) => e.isFavorite)[0],
+    creditCard: user.creditCards.filter((e) => e.isFavorite)[0],
+  }));
 };
 
 export const saveUser = async (data: UserData): Promise<UserData> => {
@@ -109,6 +117,7 @@ export const login = async (
   email: string;
   phone: string;
   token: string;
+  photo: string;
 }> => {
   const user = await prisma.user.findUnique({ where: { email: email } });
 
@@ -132,8 +141,10 @@ export const login = async (
         email: newUser.email,
         phone: newUser.phone,
         token: newUser.token,
+        photo: newUser.photo,
       };
     }
+    throw new Error("token secret not found");
   }
   throw new Error("Invalid credentials");
 };

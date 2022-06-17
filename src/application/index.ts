@@ -16,7 +16,6 @@ import {
   getProductsByCategory,
   getAllProductsPaginated,
   getProductsByUserId,
-  getLateProducts,
   patchProduct,
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
@@ -61,9 +60,6 @@ export const endpointgetAllProductsPaginated = (app: Express): Express =>
 
 export const endpointgetProductsByUserId = (app: Express): Express =>
   app.get("/dealit/api/products/user/:userId", getProductsByUserId);
-
-export const endpointGetLatestProducts = (app: Express): Express =>
-  app.get("/dealit/api/latest-products", getLateProducts);
 
 export const endpointPatchProducts = (app: Express): Express =>
   app.patch("/dealit/api/products/:id", verifyToken, patchProduct);

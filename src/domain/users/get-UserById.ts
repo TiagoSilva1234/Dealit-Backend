@@ -1,4 +1,4 @@
-import { Address, CreditCard, Order } from "@prisma/client";
+import { Address, CreditCard } from "@prisma/client";
 import { getUserById } from "../../infrastructure/users-repository";
 
 export default async (
@@ -8,7 +8,6 @@ export default async (
   username: string;
   email: string;
   phone: string;
-  orders: Order[];
-  addresses: Address[];
-  creditCards: CreditCard[];
+  address: Address;
+  creditCard: CreditCard;
 }> => await getUserById(id);

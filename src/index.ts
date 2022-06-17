@@ -10,7 +10,6 @@ import {
   endpointgetProductsByCategoryPaginated,
   endpointgetAllProductsPaginated,
   endpointgetProductsByUserId,
-  endpointGetLatestProducts,
   endpointGetCategoryByMainCat,
   endpointGetAllMainCategories,
   endpointGetReviewsByUserId,
@@ -26,8 +25,7 @@ import {
   endpointPatchAddressFavorite,
   endpointSetFavoriteCreditCard,
   endpointGetAllUsers,
-  endpointCompletion
-
+  endpointCompletion,
 } from "./application";
 const app: Express = express();
 
@@ -46,14 +44,13 @@ endpointGetUserById(app);
 endpointPatchUser(app);
 endpointPostUser(app);
 endpointPostLogin(app);
-endpointGetAllUsers(app)
+endpointGetAllUsers(app);
 //Endpoints products
 endpointGetProductById(app);
 endpointPostProduct(app);
 endpointgetProductsByCategoryPaginated(app);
 endpointgetAllProductsPaginated(app);
 endpointgetProductsByUserId(app);
-endpointGetLatestProducts(app);
 endpointPatchProducts(app);
 
 //Endpoints categories
@@ -86,6 +83,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(process.env.PORT || 8080,() => console.log(`listening on port ${port} :)`));
+app.listen(process.env.PORT || 3220, () =>
+  console.log(`listening on port ${port} :)`)
+);
 
 export default app;

@@ -25,7 +25,6 @@ const port = Number(process.env.API_PORT) || 3000;
 (0, application_1.endpointgetProductsByCategoryPaginated)(app);
 (0, application_1.endpointgetAllProductsPaginated)(app);
 (0, application_1.endpointgetProductsByUserId)(app);
-(0, application_1.endpointGetLatestProducts)(app);
 (0, application_1.endpointPatchProducts)(app);
 //Endpoints categories
 (0, application_1.endpointGetCategoryByMainCat)(app);
@@ -51,5 +50,5 @@ const port = Number(process.env.API_PORT) || 3000;
 app.get("/", (req, res) => {
     res.send("hello!");
 });
-app.listen(process.env.PORT || 8080, () => console.log(`listening on port ${port} :)`));
+app.listen(process.env.PORT || 3220, () => console.log(`listening on port ${port} :)`));
 exports.default = app;
