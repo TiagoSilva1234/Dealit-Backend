@@ -13,8 +13,6 @@ export const registerUser = async (
 
     const { country, city, zipCode, street, houseNumber } = req.body.address;
 
-    const { cardNumber, cvc, expiryDate } = req.body.creditCard;
-
     if (
       !(
         email &&
@@ -39,7 +37,8 @@ export const registerUser = async (
 
     let data;
     if (photo) {
-      if (cardNumber) {
+      if (req.body.creditCard) {
+        const { cardNumber, cvc, expiryDate } = req.body.creditCard;
         data = {
           username,
           address: {
@@ -81,7 +80,8 @@ export const registerUser = async (
         };
       }
     } else {
-      if (cardNumber) {
+      if (req.body.creditCard) {
+        const { cardNumber, cvc, expiryDate } = req.body.creditCard;
         data = {
           username,
           address: {
