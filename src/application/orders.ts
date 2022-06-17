@@ -48,8 +48,17 @@ export const postOrder = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const data: Order = req.body.order;
-    const prod: number[] = req.body.prods;
-    if (prod.length === 0) {
+    const prodIds: number[] = req.body.prodIdss;
+    if (!data || !prodIds) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required inputs missing",
+          cause: "Bad request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    if (prodIds.length === 0) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Order requires products",
@@ -60,7 +69,7 @@ export const postOrder = async (
     }
     return res.send({
       message: "Order successfully saved to database",
-      order: await postOrders(data, prod),
+      order: await postOrders(data, prodIds),
     });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -77,33 +86,80 @@ export const patchOrderSend = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
-  if (isNaN(Number(req.params.id))) {
-    return res.status(StatusCodes.BAD_REQUEST).send({
+  try {
+    const id = Number(req.params.id);
+    const data = req.body;
+
+    if (isNaN(Number(id))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    if (!data) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required inputs missing",
+          cause: "Bad request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.send({
+      message: "Send date successfully updated",
+      order: await patchOrderSendDate(id, data),
+    });
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
-        message: "Wrong id type",
-        cause: "Uri format",
+        message: e.message,
+        cause: "Unexpected error",
         date: new Date().toLocaleString(),
       },
     });
   }
-  const id = Number(req.params.id);
-
-  return res.send(await patchOrderSendDate(id, req.body));
 };
 
 export const patchOrderDelivery = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
-  if (isNaN(Number(req.params.id))) {
-    return res.status(StatusCodes.BAD_REQUEST).send({
+  try {
+    const id = req.params.id;
+    const data = req.body;
+
+    if (isNaN(Number(id))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    if (!data) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required inputs missing",
+          cause: "Bad request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.send({
+      message: "Delivery date successfully updated",
+      order: await patchOrderDeliveryDate(Number(id), data),
+    });
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
-        message: "Wrong id type",
-        cause: "Uri format",
+        message: e.message,
+        cause: "Unexpected error",
         date: new Date().toLocaleString(),
       },
     });
   }
-  const id = Number(req.params.id);
-  return res.send(await patchOrderDeliveryDate(id, req.body));
 };

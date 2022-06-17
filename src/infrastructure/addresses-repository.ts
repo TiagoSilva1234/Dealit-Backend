@@ -35,7 +35,7 @@ export const setAdressFavorite = async (
     },
   });
   if (address) {
-    const cards = await prisma.address.updateMany({
+    await prisma.address.updateMany({
       where: {
         isFavorite: true,
         userId: address.userId,

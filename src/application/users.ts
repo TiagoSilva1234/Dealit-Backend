@@ -53,25 +53,36 @@ export const patchUser = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    if (isNaN(Number(req.params.id))) {
+    const id = req.params.id;
+    const data = req.body;
+    if (isNaN(Number(id))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
-          cause: "Unexpected error",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    if (!data) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required inputs missing",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
     }
     return res.send({
       message: "User successfully patched",
-      user: await patchUsr(Number(req.params.id), req.body),
+      user: await patchUsr(Number(id), data),
     });
   } catch (e: any) {
     if (e.message === "User not found") {
       return res.status(StatusCodes.NOT_FOUND).send({
         error: {
           message: e.message,
-          cause: "Unexpected error",
+          cause: "Not Found",
           date: new Date().toLocaleString(),
         },
       });
@@ -80,7 +91,7 @@ export const patchUser = async (
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: `${e.message.slice(10, 33)} failed`,
-          cause: "Invalid data format",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });

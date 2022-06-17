@@ -47,6 +47,15 @@ export const setFavoriteAddress = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   const id = Number(req.params.id);
+  if (isNaN(Number(id))) {
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      error: {
+        message: "Invalid id format",
+        cause: "Bad Request",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
   return res.send({
     message: "Favorite address successfully updated",
     address: await setAddressIsFavorite(id),

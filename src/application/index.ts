@@ -91,7 +91,11 @@ export const endpointPatchOrdersSendDate = (app: Express): void => {
 };
 
 export const endpointPatchOrdersDeliveryDate = (app: Express): void => {
-  app.patch("/dealit/api/orders/deliveryDate/:id", verifyToken, patchOrderDelivery);
+  app.patch(
+    "/dealit/api/orders/deliveryDate/:id",
+    verifyToken,
+    patchOrderDelivery
+  );
 };
 
 //EndpointsReviews

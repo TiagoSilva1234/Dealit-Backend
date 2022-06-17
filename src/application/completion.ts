@@ -9,8 +9,8 @@ export const GetTextCompletion = async (req: Request, res: Response) => {
     if (!input) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
-          message: "No input in body",
-          cause: "Bad Request",
+          message: "Required inputs missing",
+          cause: "Bad request",
           date: new Date().toLocaleString(),
         },
       });

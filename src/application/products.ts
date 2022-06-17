@@ -15,8 +15,8 @@ export const getProductById = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const id = req.params.id;
-    const num = Number(req.query.size) || 1;
-    if (isNaN(Number(id)) && id !== "random" && num > 10) {
+    const limit = Number(req.query.limit) || 1;
+    if (isNaN(Number(id)) && id !== "random" && limit > 10) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
@@ -25,8 +25,7 @@ export const getProductById = async (
         },
       });
     }
-
-    const product = await getProduct(id, num);
+    const product = await getProduct(id, limit);
     return res.send(product);
   } catch (e: any) {
     if (e.message === "Product does not exist") {
@@ -53,10 +52,10 @@ export const postNewProduct = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const { name, description, photos, price, userId } = req.body;
-    const { catName } = req.body.category;
+    const { name, description, photos, price, userId, category } = req.body;
 
-    if (!(name && description && photos && price && userId && catName)) {
+
+    if (!(name && description && photos && price && userId && category)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required data missing",
@@ -72,9 +71,7 @@ export const postNewProduct = async (
       photos,
       price,
       userId,
-      category: {
-        catName,
-      },
+      category,
     };
 
     return res.send({
@@ -209,18 +206,29 @@ export const patchProduct = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    if (isNaN(Number(req.params.id))) {
+    const id = req.params.id;
+     const data = req.body;
+    if (isNaN(Number(id))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
-          cause: "Unexpected error",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    if (!data) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Required inputs missing",
+          cause: "Bad Requ∆est",
           date: new Date().toLocaleString(),
         },
       });
     }
     return res.send({
       message: "Product successfully patched",
-      user: await patchProd(Number(req.params.id), req.body),
+      user: await patchProd(Number(id), data),
     });
   } catch (e: any) {
     if (e.message === "Product not found") {

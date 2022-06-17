@@ -17,7 +17,7 @@ export const productDataIsNotValid = (
   if (!data.userId) {
     tester.cause.push("Seller not defined");
   }
-  if (!data.category?.catName) {
+  if (!data.category) {
     tester.cause.push("Category not defined");
   }
 

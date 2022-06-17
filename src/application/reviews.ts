@@ -112,7 +112,7 @@ export const postReview = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const { userId, productId, comment, photo, rating, reviewer } = req.body;
-    console.log(userId, productId)
+    console.log(userId, productId);
     if (!(comment && photo && rating && reviewer)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -134,7 +134,7 @@ export const postReview = async (
         message: "Review successfully saved to datebase!",
         review: await postRev(data),
       });
-    } else if (productId) {
+    } else if (productId !== undefined) {
       const data: ReviewData = {
         productId: Number(productId),
         comment,

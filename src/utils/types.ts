@@ -29,9 +29,7 @@ export type ProductData = {
   photos: string[];
   price: number;
   userId: number;
-  category: {
-    catName: string;
-  };
+  category: string;
 };
 
 export type OrderData = {
@@ -58,9 +56,7 @@ export type ProdUpdateData = {
   photos?: string[];
   price?: number;
   userId?: number;
-  category?: {
-    catName: string;
-  };
+  category?: string;
 };
 
 export type UserUpdateData = {
