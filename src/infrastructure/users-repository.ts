@@ -62,7 +62,7 @@ export const saveUser = async (data: UserData): Promise<UserData> => {
     secret = process.env.TOKEN_KEY;
 
     data.token = jwt.sign(
-      { user_id: data.username, email: data.email },
+      { username: data.username, email: data.email },
       secret,
       {
         expiresIn: "2h",
@@ -120,7 +120,7 @@ export const login = async (
       secret = process.env.TOKEN_KEY;
 
       token = jwt.sign(
-        { userID: user.id, username: user.username, email },
+        { username: user.username, email },
         secret,
         {
           expiresIn: "2h",
@@ -150,7 +150,7 @@ export const patchUser = async (
 
   if (obj.oldPassword && obj.newPassword) {
     if (bcrypt.compareSync(obj.oldPassword, before.password)) {
-      obj.password = bcrypt.hashSync(obj.newPassword, 10);
+      obj.pws = bcrypt.hashSync(obj.newPassword, 10);
     } else {
       throw new Error("Old passwords do not match");
     }
@@ -161,7 +161,7 @@ export const patchUser = async (
       username: !obj.username ? before.username : obj.username,
       email: !obj.email ? before.email : obj.email,
       phone: !obj.phone ? before.phone : obj.phone,
-      password: !obj.password ? before.password : obj.password,
+      password: !obj.pws ? before.password : obj.pws,
     },
   });
 };

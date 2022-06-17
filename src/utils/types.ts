@@ -65,5 +65,5 @@ export type UserUpdateData = {
   phone?: string;
   oldPassword?: string;
   newPassword?: string;
-  password?: string;
+  pws?: string;
 };
