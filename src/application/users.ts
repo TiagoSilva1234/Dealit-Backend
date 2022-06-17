@@ -42,10 +42,22 @@ export const getUserById = async (
     });
   }
 };
-export const getEveryUser = async (req: Request, res: Response) => {
-  const data = await getAllUsers();
-  res.send(data);
-  return data;
+
+export const getEveryUser = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    return res.send(await getAllUsers());
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
 };
 
 export const patchUser = async (
@@ -59,15 +71,6 @@ export const patchUser = async (
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
-          cause: "Bad Request",
-          date: new Date().toLocaleString(),
-        },
-      });
-    }
-    if (!data) {
-      return res.status(StatusCodes.BAD_REQUEST).send({
-        error: {
-          message: "Required inputs missing",
           cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
