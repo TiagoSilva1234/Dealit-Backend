@@ -61,7 +61,7 @@ const saveUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
     let secret;
     if (process.env.TOKEN_KEY) {
         secret = process.env.TOKEN_KEY;
-        data.token = jsonwebtoken_1.default.sign({ user_id: data.username, email: data.email }, secret, {
+        data.token = jsonwebtoken_1.default.sign({ username: data.username, email: data.email }, secret, {
             expiresIn: "2h",
         });
     }
@@ -104,18 +104,21 @@ const login = (email, password) => __awaiter(void 0, void 0, void 0, function* (
         let token;
         if (process.env.TOKEN_KEY) {
             secret = process.env.TOKEN_KEY;
-            token = jsonwebtoken_1.default.sign({ userID: user.id, username: user.username, email }, secret, {
+            token = jsonwebtoken_1.default.sign({ username: user.username, email }, secret, {
                 expiresIn: "2h",
             });
-            user.token = token;
+            const newUser = yield prisma.user.update({
+                where: { id: user.id },
+                data: { token: token },
+            });
+            return {
+                id: newUser.id,
+                username: newUser.username,
+                email: newUser.email,
+                phone: newUser.phone,
+                token: newUser.token,
+            };
         }
-        return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            phone: user.phone,
-            token: user.token,
-        };
     }
     throw new Error("Invalid credentials");
 });
@@ -128,7 +131,7 @@ const patchUser = (id, obj) => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error("User not found");
     if (obj.oldPassword && obj.newPassword) {
         if (bcryptjs_1.default.compareSync(obj.oldPassword, before.password)) {
-            obj.password = bcryptjs_1.default.hashSync(obj.newPassword, 10);
+            obj.pws = bcryptjs_1.default.hashSync(obj.newPassword, 10);
         }
         else {
             throw new Error("Old passwords do not match");
@@ -140,7 +143,7 @@ const patchUser = (id, obj) => __awaiter(void 0, void 0, void 0, function* () {
             username: !obj.username ? before.username : obj.username,
             email: !obj.email ? before.email : obj.email,
             phone: !obj.phone ? before.phone : obj.phone,
-            password: !obj.password ? before.password : obj.password,
+            password: !obj.pws ? before.password : obj.pws,
         },
     });
 });

@@ -149,7 +149,6 @@ export const getProductsByUserId = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const userId = req.params.userId;
-    console.log(userId);
 
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({

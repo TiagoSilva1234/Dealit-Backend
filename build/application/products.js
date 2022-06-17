@@ -144,7 +144,6 @@ exports.getAllProductsPaginated = getAllProductsPaginated;
 const getProductsByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.params.userId;
-        console.log(userId);
         if (isNaN(Number(userId))) {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
                 error: {

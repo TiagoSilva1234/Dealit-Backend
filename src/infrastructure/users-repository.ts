@@ -119,22 +119,21 @@ export const login = async (
     if (process.env.TOKEN_KEY) {
       secret = process.env.TOKEN_KEY;
 
-      token = jwt.sign(
-        { username: user.username, email },
-        secret,
-        {
-          expiresIn: "2h",
-        }
-      );
-      user.token = token;
+      token = jwt.sign({ username: user.username, email }, secret, {
+        expiresIn: "2h",
+      });
+      const newUser = await prisma.user.update({
+        where: { id: user.id },
+        data: { token: token },
+      });
+      return {
+        id: newUser.id,
+        username: newUser.username,
+        email: newUser.email,
+        phone: newUser.phone,
+        token: newUser.token,
+      };
     }
-    return {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      phone: user.phone,
-      token: user.token,
-    };
   }
   throw new Error("Invalid credentials");
 };

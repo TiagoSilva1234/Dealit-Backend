@@ -114,7 +114,6 @@ exports.getReviewsByReviewer = getReviewsByReviewer;
 const postReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, productId, comment, photo, rating, reviewer } = req.body;
-        console.log(userId, productId);
         if (!(comment && photo && rating && reviewer)) {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
                 error: {

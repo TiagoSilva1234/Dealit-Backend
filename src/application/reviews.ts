@@ -112,7 +112,6 @@ export const postReview = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const { userId, productId, comment, photo, rating, reviewer } = req.body;
-    console.log(userId, productId);
     if (!(comment && photo && rating && reviewer)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
