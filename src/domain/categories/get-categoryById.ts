@@ -2,7 +2,7 @@ import { Category } from "@prisma/client";
 import { getCategoryByMainCat } from "../../infrastructure/categories-repository";
 
 export default async (
-  mainCat: string
+  cat: string
 ): Promise<
   | {
       main: Category;
@@ -12,4 +12,4 @@ export default async (
       main: Category;
       subcategories: Category[];
     }
-> => await getCategoryByMainCat(mainCat);
+> => await getCategoryByMainCat(cat);
