@@ -4,7 +4,7 @@
   "description": "Dealit Backend Application",
   "main": "index.js",
   "scripts": {
-    "start": "node --loader ts-node/esm src/index.ts ",
+    "start": "web: node --loader ts-node/esm src/index.ts ",
     "test": "jest -i --coverage",
     "dev": "nodemon src/index.ts",
     "studio": "DATABASE_URL=postgres://qaevniyqxdscsi:a4550c4ab39faed03321e502429476ac54ac290d936f067571ed55372dedd492@ec2-54-227-248-71.compute-1.amazonaws.com:5432/db6716npdpqkei prisma studio",
