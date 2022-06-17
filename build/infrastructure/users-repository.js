@@ -99,6 +99,7 @@ const saveUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
 exports.saveUser = saveUser;
 const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield prisma.user.findUnique({ where: { email: email } });
+    console.log(user && bcryptjs_1.default.compareSync(password, user.password));
     if (user && bcryptjs_1.default.compareSync(password, user.password)) {
         let secret;
         let token;
