@@ -24,7 +24,7 @@ export const postCreditCard = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send({
+    res.status(StatusCodes.CREATED).send({
       message: "Credit Card successfully saved to database",
       order: await postCC(data),
     });

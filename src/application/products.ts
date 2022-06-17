@@ -74,7 +74,7 @@ export const postNewProduct = async (
       category,
     };
 
-    return res.send({
+    return res.status(StatusCodes.CREATED).send({
       message: "Product successfully saved to datebase!",
       product: await postProduct(data),
     });

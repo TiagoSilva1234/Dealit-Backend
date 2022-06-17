@@ -67,7 +67,7 @@ export const postOrder = async (
         },
       });
     }
-    return res.send({
+    return res.status(StatusCodes.CREATED).send({
       message: "Order successfully saved to database",
       order: await postOrders(data, prodIds),
     });

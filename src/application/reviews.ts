@@ -130,7 +130,7 @@ export const postReview = async (
         rating: Number(rating),
         reviewer,
       };
-      return res.send({
+      return res.status(StatusCodes.CREATED).send({
         message: "Review successfully saved to datebase!",
         review: await postRev(data),
       });
@@ -142,7 +142,10 @@ export const postReview = async (
         rating: Number(rating),
         reviewer,
       };
-      return res.send(await postRev(data));
+      return res.status(StatusCodes.CREATED).send({
+        message: "Review successfully saved to datebase!",
+        review: await postRev(data),
+      });
     }
     return res.status(StatusCodes.BAD_REQUEST).send({
       error: {

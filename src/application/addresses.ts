@@ -27,7 +27,7 @@ export const postAddress = async (
         },
       });
     }
-    return res.send({
+    return res.status(StatusCodes.CREATED).send({
       message: "Address successfully saved to database",
       order: await postAdd(data),
     });
