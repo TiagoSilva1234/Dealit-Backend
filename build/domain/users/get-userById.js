@@ -9,9 +9,5 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const categories_repository_1 = require("../../infrastructure/categories-repository");
-<<<<<<< HEAD
-exports.default = (mainCat) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, categories_repository_1.getCategoryByMainCat)(mainCat); });
-=======
-exports.default = (cat) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, categories_repository_1.getCategoryByMainCat)(cat); });
->>>>>>> 8f5970bf5c384bc5c08901bc38d3b0490acf379d
+const users_repository_1 = require("../../infrastructure/users-repository");
+exports.default = (id) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, users_repository_1.getUserById)(id); });

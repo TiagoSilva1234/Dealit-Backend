@@ -29,12 +29,14 @@ export const getCategoryByMainCat = async (
     if (actualMain) return { main: actualMain, subcategory: main };
     throw new Error("Something went wrong with database connection");
   }
-  const subcategories = await prisma.category.findMany({
-    where: {
-      upperLevel: cat,
-    },
-  });
-  if (main) return { main: main, subcategories };
+  if (main) {
+    const subcategories = await prisma.category.findMany({
+      where: {
+        upperLevel: main.name,
+      },
+    });
+    return { main: main, subcategories };
+  }
   throw new Error("Something went wrong with database connection");
 };
 

@@ -18,7 +18,10 @@ const getCategoryByMainCat = (cat) => __awaiter(void 0, void 0, void 0, function
             name: cat,
         },
     });
+<<<<<<< HEAD
     console.log(cat);
+=======
+>>>>>>> 8f5970bf5c384bc5c08901bc38d3b0490acf379d
     if (main && main.level === 2 && main.upperLevel !== null) {
         const actualMain = yield prisma.category.findUnique({
             where: {
@@ -29,6 +32,7 @@ const getCategoryByMainCat = (cat) => __awaiter(void 0, void 0, void 0, function
             return { main: actualMain, subcategory: main };
         throw new Error("Something went wrong with database connection");
     }
+<<<<<<< HEAD
     const subcategories = yield prisma.category.findMany({
         where: {
             upperLevel: cat,
@@ -36,6 +40,16 @@ const getCategoryByMainCat = (cat) => __awaiter(void 0, void 0, void 0, function
     });
     if (main)
         return { main: main, subcategories };
+=======
+    if (main) {
+        const subcategories = yield prisma.category.findMany({
+            where: {
+                upperLevel: main.name,
+            },
+        });
+        return { main: main, subcategories };
+    }
+>>>>>>> 8f5970bf5c384bc5c08901bc38d3b0490acf379d
     throw new Error("Something went wrong with database connection");
 });
 exports.getCategoryByMainCat = getCategoryByMainCat;
