@@ -14,6 +14,7 @@ export const getProductById = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
+    console.log()
     const id = req.params.id;
     const limit = Number(req.query.limit) || 1;
     if (isNaN(Number(id)) && id !== "random" && limit > 10) {
