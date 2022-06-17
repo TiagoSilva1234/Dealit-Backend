@@ -4,14 +4,14 @@ import getRevsByProductId from "../domain/reviews/get-reviewsByProductId";
 import getRevsByReviewer from "../domain/reviews/get-reviewsByReviewer";
 import postRev from "../domain/reviews/post-review";
 import { StatusCodes } from "http-status-codes";
-import { ReviewData } from "../types";
+import { ReviewData } from "../utils/types";
 
 export const getReviewsByUserId = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let userId = req.params.userId;
+    const userId = req.params.userId;
     if (isNaN(Number(userId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -47,7 +47,7 @@ export const getReviewsByProductId = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let productId = req.params.productId;
+    const productId = req.params.productId;
     if (isNaN(Number(productId))) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -83,7 +83,7 @@ export const getReviewsByReviewer = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let reviewer = req.params.reviewer;
+    const reviewer = req.params.reviewer;
 
     return res.send(await getRevsByReviewer(reviewer));
   } catch (e: any) {
@@ -112,7 +112,7 @@ export const postReview = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const { userId, productId, comment, photo, rating, reviewer } = req.body;
-    console.log(userId, productId)
+    console.log(userId, productId);
     if (!(comment && photo && rating && reviewer)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -130,11 +130,11 @@ export const postReview = async (
         rating: Number(rating),
         reviewer,
       };
-      return res.send({
+      return res.status(StatusCodes.CREATED).send({
         message: "Review successfully saved to datebase!",
         review: await postRev(data),
       });
-    } else if (productId) {
+    } else if (productId !== undefined) {
       const data: ReviewData = {
         productId: Number(productId),
         comment,
@@ -142,7 +142,10 @@ export const postReview = async (
         rating: Number(rating),
         reviewer,
       };
-      return res.send(await postRev(data));
+      return res.status(StatusCodes.CREATED).send({
+        message: "Review successfully saved to datebase!",
+        review: await postRev(data),
+      });
     }
     return res.status(StatusCodes.BAD_REQUEST).send({
       error: {

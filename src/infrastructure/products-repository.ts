@@ -1,5 +1,5 @@
 import { PrismaClient, Product } from "@prisma/client";
-import { ProductData, ProdUpdateData } from "../types";
+import { ProductData, ProdUpdateData } from "../utils/types";
 
 const prisma = new PrismaClient();
 
@@ -25,7 +25,7 @@ export const saveProduct = async (data: ProductData): Promise<Product> => {
       user: { connect: { id: data.userId } },
       name: data.name,
       description: data.description,
-      category: { connect: { name: data.category.catName } },
+      category: { connect: { name: data.category } },
       photos: data.photos,
       price: data.price,
     },
@@ -167,7 +167,7 @@ export const patchProduct = async (
       user: { connect: { id: !obj.userId ? before.userId : obj.userId } },
       category: {
         connect: {
-          name: !obj.category ? before.categoryName : obj.category.catName,
+          name: !obj.category ? before.categoryName : obj.category,
         },
       },
     },

@@ -6,11 +6,16 @@ import setFav from "../domain/creditCards/patch-setFavorite";
 
 export const postCreditCard = async (req: Request, res: Response) => {
   try {
-
     const data: CreditCard = req.body;
 
-    if (!(data.cardNumber && data.cvc && data.expiryDate && data.userId !== undefined)) {
-   
+    if (
+      !(
+        data.cardNumber &&
+        data.cvc &&
+        data.expiryDate &&
+        data.userId !== undefined
+      )
+    ) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required inputs missing",
@@ -19,8 +24,8 @@ export const postCreditCard = async (req: Request, res: Response) => {
         },
       });
     }
-    res.send({
-      message: "Address successfully saved to database",
+    res.status(StatusCodes.CREATED).send({
+      message: "Credit Card successfully saved to database",
       order: await postCC(data),
     });
   } catch (e: any) {
@@ -47,7 +52,7 @@ export const setFavoriteCreditCard = async (req: Request, res: Response) => {
       });
     }
     res.send({
-      message: "Favorite credit card successfully updated",
+      message: "Favorite Credit Card successfully updated",
       creditCard: await setFav(Number(id)),
     });
   } catch (e: any) {

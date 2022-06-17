@@ -3,7 +3,7 @@ import { Category, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const getCategoryByMainCat = async (
-  mainCat: string
+  cat: string
 ): Promise<
   | {
       main: Category;
@@ -14,9 +14,9 @@ export const getCategoryByMainCat = async (
       subcategories: Category[];
     }
 > => {
-  let main = await prisma.category.findUnique({
+  const main = await prisma.category.findUnique({
     where: {
-      name: mainCat,
+      name: cat,
     },
   });
   if (main && main.level === 2 && main.upperLevel !== null) {
@@ -30,7 +30,7 @@ export const getCategoryByMainCat = async (
   }
   const subcategories = await prisma.category.findMany({
     where: {
-      upperLevel: mainCat,
+      upperLevel: cat,
     },
   });
   if (main) return { main: main, subcategories };

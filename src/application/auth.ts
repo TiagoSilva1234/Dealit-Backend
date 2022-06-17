@@ -2,9 +2,12 @@ import { Request, Response } from "express";
 import postUser from "../domain/auth/post-user";
 import postLogin from "../domain/auth/post-login";
 import { StatusCodes } from "http-status-codes";
-import { userDataIsNotValid } from "../utils";
+import { userDataIsNotValid } from "../utils/utils";
 
-export const registerUser = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+export const registerUser = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const { username, email, password, phone, photo } = req.body;
 
@@ -155,7 +158,10 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
   }
 };
 
-export const userLogin = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+export const userLogin = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const { email, password } = req.body;
 

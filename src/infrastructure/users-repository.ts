@@ -1,7 +1,7 @@
 import { Address, CreditCard, Order, PrismaClient, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
-import { UserData, UserUpdateData } from "../types";
+import { UserData, UserUpdateData } from "../utils/types";
 const prisma = new PrismaClient();
 
 export const getUserById = async (
@@ -38,13 +38,13 @@ export const getUserById = async (
     creditCards: user.creditCards,
   };
 };
-export const getAllUsers = async ()=>{
+export const getAllUsers = async () => {
   const users = await prisma.user.findMany({
-    orderBy:{id: "asc"}
+    orderBy: { id: "asc" },
   });
 
-  return users
-}
+  return users;
+};
 
 export const saveUser = async (data: UserData): Promise<UserData> => {
   const oldUser = await prisma.user.findUnique({
