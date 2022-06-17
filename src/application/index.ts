@@ -70,7 +70,7 @@ export const endpointPatchProducts = (app: Express): Express =>
 
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express): void => {
-  app.get("/dealit/api/categories/:mainCat", getCategoryByMainCat);
+  app.get("/dealit/api/categories/:cat", getCategoryByMainCat);
 };
 
 export const endpointGetAllMainCategories = (app: Express): void => {
