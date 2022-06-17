@@ -144,6 +144,7 @@ const patchUser = (id, obj) => __awaiter(void 0, void 0, void 0, function* () {
             email: !obj.email ? before.email : obj.email,
             phone: !obj.phone ? before.phone : obj.phone,
             password: !obj.pws ? before.password : obj.pws,
+            photo: !obj.photo ? before.photo : obj.photo,
         },
     });
 });

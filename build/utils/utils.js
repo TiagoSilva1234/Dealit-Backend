@@ -27,28 +27,38 @@ const userDataIsNotValid = (data) => {
     const expiryDateRegex = /^\d{2}\/\d{2}/;
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
     const tester = { check: false, cause: Array() };
-    if (data.username.length < 2) {
-        tester.cause.push("Username is too short");
+    if (data.username) {
+        if (data.username.length < 3) {
+            tester.cause.push("Username is too short");
+        }
+        if (data.username.length > 40) {
+            tester.cause.push("Username is too long");
+        }
     }
-    if (data.username.length > 40) {
-        tester.cause.push("Username is too long");
+    if (data.address) {
+        if (!countries.includes(data.address.country)) {
+            tester.cause.push("Country does not exist");
+        }
     }
-    if (!countries.includes(data.address.country)) {
-        tester.cause.push("Country does not exist");
+    if (data.email) {
+        if (!emailRegex.test(data.email)) {
+            tester.cause.push("Email is not valid");
+        }
     }
-    if (!emailRegex.test(data.email)) {
-        tester.cause.push("Email is not valid");
+    if (data.password) {
+        if (data.password.length < 8) {
+            tester.cause.push("Password too short");
+        }
+        if (!passwordRegex.test(data.password)) {
+            tester.cause.push("Password not safe enough");
+        }
     }
-    if (data.password.length < 8) {
-        tester.cause.push("Password too short");
-    }
-    if (!passwordRegex.test(data.password)) {
-        tester.cause.push("Password not safe enough");
-    }
-    if (data.phone.length !== 9 &&
-        Number(data.phone) < 910000000 &&
-        Number(data.phone) > 969999999) {
-        tester.cause.push("Phone number not valid");
+    if (data.phone) {
+        if (data.phone.length !== 9 ||
+            Number(data.phone) < 910000000 ||
+            Number(data.phone) > 969999999) {
+            tester.cause.push("Phone number not valid");
+        }
     }
     if (data.creditCard) {
         if (data.creditCard.cardNumber.toString().length !== 16) {
@@ -95,7 +105,7 @@ exports.dealioErrorMessages = [
     "Oops, I can´t seem to connect to the internet... Hang on...",
     "Damn... Is it me or the internet seems kinda busy today?",
     "No way... I'm offline, so I can't help you right now :(",
-    "Something is wrong with my service... Have you tried reloading the page?"
+    "Something is wrong with my service... Have you tried reloading the page?",
 ];
 const countries = [
     "United States",
@@ -338,5 +348,5 @@ const countries = [
     "Yugoslavia",
     "Zaire",
     "Zambia",
-    "Zimbabwe"
+    "Zimbabwe",
 ];
