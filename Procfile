@@ -1,1 +1,1 @@
-worker: npm start
+web: node --loader ts-node/esm src/index.ts
