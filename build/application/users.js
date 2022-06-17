@@ -17,6 +17,7 @@ const get_UserById_1 = __importDefault(require("../domain/users/get-UserById"));
 const http_status_codes_1 = require("http-status-codes");
 const patch_user_1 = __importDefault(require("../domain/users/patch-user"));
 const get_allUsers_1 = __importDefault(require("../domain/users/get-allUsers"));
+const utils_1 = require("../utils/utils");
 //User endpoints logic
 const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -76,6 +77,16 @@ const patchUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
                 error: {
                     message: "Invalid id format",
+                    cause: "Bad Request",
+                    date: new Date().toLocaleString(),
+                },
+            });
+        }
+        const tester = (0, utils_1.userDataIsNotValid)(data);
+        if (tester.check) {
+            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
+                error: {
+                    message: tester.cause,
                     cause: "Bad Request",
                     date: new Date().toLocaleString(),
                 },
