@@ -4,8 +4,7 @@
   "description": "Dealit Backend Application",
   "main": "index.js",
   "scripts": {
-    "start": "node --loader ts-node/esm src/index.ts",
-    "online": "node --loader ts-node/esm build/index.js",
+    "start": "node --loader ts-node/esm build/index.js",
     "test": "jest -i --coverage",
     "postinstall": "npm run build",
     "build": "tsc",
