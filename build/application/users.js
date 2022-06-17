@@ -13,11 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.patchUser = exports.getEveryUser = exports.getUserById = void 0;
-<<<<<<< HEAD
 const get_UserById_1 = __importDefault(require("../domain/users/get-UserById"));
-=======
-const get_userById_1 = __importDefault(require("../domain/users/get-userById"));
->>>>>>> 8f5970bf5c384bc5c08901bc38d3b0490acf379d
 const http_status_codes_1 = require("http-status-codes");
 const patch_user_1 = __importDefault(require("../domain/users/patch-user"));
 const get_allUsers_1 = __importDefault(require("../domain/users/get-allUsers"));
@@ -34,11 +30,7 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 },
             });
         }
-<<<<<<< HEAD
         const user = yield (0, get_UserById_1.default)(id);
-=======
-        const user = yield (0, get_userById_1.default)(id);
->>>>>>> 8f5970bf5c384bc5c08901bc38d3b0490acf379d
         return res.send(user);
     }
     catch (e) {
