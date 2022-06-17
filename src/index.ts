@@ -86,6 +86,6 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(port, "0.0.0.0", () => console.log(`listening on port ${port} :)`));
+app.listen(port,() => console.log(`listening on port ${port} :)`));
 
 export default app;
