@@ -1,3 +1,4 @@
+"use strict";
 /* import { createUser, updateUsername } from './products'
 import { prismaMock } from '../../../singleton'
 
@@ -59,4 +60,4 @@ test('should fail if user does not accept terms', async () => {
   await expect(createUser(user)).resolves.toEqual(
     new Error('User must accept terms!')
   )
-}) */
+}) */ 

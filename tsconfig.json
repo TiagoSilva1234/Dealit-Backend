@@ -1,9 +1,8 @@
-
 {
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
-
+    "outDir": "build",
     "allowJs": true,
     "checkJs": true,
    
@@ -13,5 +12,7 @@
   
     "strict": true,       
     "skipLibCheck": true 
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build/**/*"]
 }

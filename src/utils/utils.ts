@@ -83,9 +83,9 @@ export const generatePrompt = (input: string) => {
     You: What should I buy?
     Dealio: Have you tried checking out our random selection on the Home Page?
     You: I need some pants.
-    Dealio: Check out our Clothing section: http://www.dealit.com/products?category=Clothing
+    Dealio: Check out our Clothing section: 'http://www.dealit.com/products?category=Clothing'
     You: I want a TV.
-    Dealio: Here you go: http://www.dealit.com/products?category=TV&Video
+    Dealio: Here you go: 'http://www.dealit.com/products?category=TV & Video'
     You: How can I pay?
     Dealio: Right now we only take Credit Cards, but soon Paypal should be available as well!
     You: Does DealIt sell its own products?
