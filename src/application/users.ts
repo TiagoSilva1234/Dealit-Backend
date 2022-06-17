@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 
 import patchUsr from "../domain/users/patch-user";
 import getAllUsers from "../domain/users/get-allUsers";
+import { userDataIsNotValid } from "../utils/utils";
 
 //User endpoints logic
 export const getUserById = async (
@@ -71,6 +72,18 @@ export const patchUser = async (
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+
+    const tester = userDataIsNotValid(data);
+
+    if (tester.check) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: tester.cause,
           cause: "Bad Request",
           date: new Date().toLocaleString(),
         },

@@ -66,4 +66,15 @@ export type UserUpdateData = {
   oldPassword?: string;
   newPassword?: string;
   pws?: string;
+  password?: string;
+  photo?: string;
+  creditCard?: CreditCard;
+  address?: {
+    country: string;
+    city: string;
+    zipCode: string;
+    street: string;
+    houseNumber: string;
+    isFavorite: boolean;
+  };
 };
