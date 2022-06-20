@@ -36,12 +36,6 @@ const app: Express = express();
 app.use(express.json());
 app.use(cors());
 
-app.use((req, res, next) => {
-  res.append("Access-Control-Allow-Origin", ["*"]);
-  res.append("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
-
 const port = Number(process.env.API_PORT) || 8080;
 
 //Endpoints user
