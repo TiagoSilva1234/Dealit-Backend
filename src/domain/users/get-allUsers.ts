@@ -6,6 +6,4 @@ export default async (): Promise<{
     username: string;
     email: string;
     phone: string;
-    address: Address;
-    creditCard: CreditCard;
 }[]> => await getAllUsers();

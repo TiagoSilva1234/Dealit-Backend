@@ -2,7 +2,11 @@ import jwt, { Secret } from "jsonwebtoken";
 import { Request, Response } from "express";
 import StatusCodes from "http-status-codes";
 
-export const verifyToken = (req: Request, res: Response, next: () => void): void | Response<any, Record<string, any>> => {
+export const verifyToken = (
+  req: Request,
+  res: Response,
+  next: () => void
+): void | Response<any, Record<string, any>> => {
   const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
 
@@ -19,7 +23,7 @@ export const verifyToken = (req: Request, res: Response, next: () => void): void
     if (process.env.TOKEN_KEY) {
       const secret: Secret = process.env.TOKEN_KEY;
       const decoded = jwt.verify(token, secret);
-      req.body.user = decoded;
+      req.body.decoded = decoded;
     }
   } catch (err) {
     return res.status(StatusCodes.UNAUTHORIZED).send({

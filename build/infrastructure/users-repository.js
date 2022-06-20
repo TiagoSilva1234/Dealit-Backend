@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchUser = exports.login = exports.saveUser = exports.getAllUsers = exports.getUserById = void 0;
+exports.patchUser = exports.login = exports.saveUser = exports.getAllUsers = exports.getUserByToken = exports.getUserById = void 0;
 const client_1 = require("@prisma/client");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -40,6 +40,31 @@ const getUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     };
 });
 exports.getUserById = getUserById;
+const getUserByToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    let decoded;
+    if (process.env.TOKEN_KEY) {
+        const secret = process.env.TOKEN_KEY;
+        decoded = jsonwebtoken_1.default.verify(token, secret);
+    }
+    let user;
+    if (decoded) {
+        user = yield prisma.user.findUnique({
+            where: {
+                username: decoded.username,
+            },
+            include: {
+                addresses: true,
+                creditCards: true,
+                orders: true,
+            },
+        });
+    }
+    if (!user) {
+        throw new Error("User does not exist");
+    }
+    return user;
+});
+exports.getUserByToken = getUserByToken;
 const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield prisma.user.findMany({
         orderBy: { id: "asc" },

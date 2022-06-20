@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import {
   endpointGetUserById,
+  endpointGetUserByToken,
   endpointPatchUser,
   endpointGetOrdersByUserId,
   endpointPostUser,
@@ -39,10 +40,11 @@ app.use((req, res, next) => {
   next();
 });
 
-const port = Number(process.env.API_PORT) || 3000;
+const port = Number(process.env.API_PORT) || 8080;
 
 //Endpoints user
 endpointGetUserById(app);
+endpointGetUserByToken(app);
 endpointPatchUser(app);
 endpointPostUser(app);
 endpointPostLogin(app);
@@ -74,12 +76,12 @@ endpointPatchOrdersDeliveryDate(app);
 //Endpoints addresses
 endpointPostAddress(app);
 endpointPatchAddressFavorite(app);
-endpointGetAddressesByUserId(app)
+endpointGetAddressesByUserId(app);
 
 //Endpoints credit cards
 endpointPostCreditCard(app);
 endpointSetFavoriteCreditCard(app);
-endpointGetCreditCardsByUserId(app)
+endpointGetCreditCardsByUserId(app);
 
 //Endpoint Completion
 endpointCompletion(app);
@@ -87,7 +89,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(process.env.PORT || 3220, () =>
+app.listen(process.env.PORT || port, () =>
   console.log(`listening on port ${port} :)`)
 );
 

@@ -11,8 +11,7 @@ export const getUserById = async (
   username: string;
   email: string;
   phone: string;
-  address: Address;
-  creditCard: CreditCard;
+  address: { country: string; city: string };
 }> => {
   const user = await prisma.user.findUnique({
     where: {
@@ -20,27 +19,62 @@ export const getUserById = async (
     },
     include: {
       addresses: true,
-      creditCards: true,
     },
   });
   if (user === null) {
     throw new Error("User does not exist");
   }
+  const favAdd = user.addresses.filter((e) => e.isFavorite)[0];
   return {
     id: user.id,
     username: user.username,
     email: user.email,
     phone: user.phone,
-    address: user.addresses.filter((e) => e.isFavorite)[0],
-    creditCard: user.creditCards.filter((e) => e.isFavorite)[0],
+    address: { country: favAdd.country, city: favAdd.city },
   };
 };
+
+export const getUserByToken = async (
+  token: string
+): Promise<{
+  id: number;
+  username: string;
+  email: string;
+  phone: string;
+  orders: Order[];
+  addresses: Address[];
+  creditCards: CreditCard[];
+}> => {
+  let decoded: any;
+  if (process.env.TOKEN_KEY) {
+    const secret: Secret = process.env.TOKEN_KEY;
+    decoded = jwt.verify(token, secret);
+  }
+
+  let user;
+  if (decoded) {
+    user = await prisma.user.findUnique({
+      where: {
+        username: decoded.username,
+      },
+      include: {
+        addresses: true,
+        creditCards: true,
+        orders: true,
+      },
+    });
+  }
+
+  if (!user) {
+    throw new Error("User does not exist");
+  }
+  return user;
+};
+
 export const getAllUsers = async () => {
   const users = await prisma.user.findMany({
     orderBy: { id: "asc" },
     include: {
-      addresses: true,
-      creditCards: true,
     },
   });
 
@@ -49,8 +83,6 @@ export const getAllUsers = async () => {
     username: user.username,
     email: user.email,
     phone: user.phone,
-    address: user.addresses.filter((e) => e.isFavorite)[0],
-    creditCard: user.creditCards.filter((e) => e.isFavorite)[0],
   }));
 };
 

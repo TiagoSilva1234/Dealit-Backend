@@ -1,7 +1,7 @@
 import { verifyToken } from "../utils/verifyToken";
 import { Express } from "express";
 
-import { getUserById, patchUser, getEveryUser } from "./users";
+import { getUserById, patchUser, getEveryUser, getUserByToken } from "./users";
 import {
   getOrdersByUserId,
   postOrder,
@@ -25,45 +25,57 @@ import {
   getReviewsByReviewer,
   postReview,
 } from "./reviews";
-import { postAddress, setFavoriteAddress, getAddressesByUserId } from "./addresses";
-import { postCreditCard, setFavoriteCreditCard, getCreditCardsByUserId } from "./creditCards";
+import {
+  postAddress,
+  setFavoriteAddress,
+  getAddressesByUserId,
+} from "./addresses";
+import {
+  postCreditCard,
+  setFavoriteCreditCard,
+  getCreditCardsByUserId,
+} from "./creditCards";
 import { GetTextCompletion } from "./completion";
 
 //EndpointsUser
-export const endpointGetUserById = (app: Express): Express =>
+export const endpointGetUserById = (app: Express): void => {
   app.get("/dealit/api/users/:id", getUserById);
-
-export const endpointPatchUser = (app: Express): Express =>
+};
+export const endpointGetUserByToken = (app: Express): void => {
+  app.get("/dealit/api/users/", getUserByToken);
+};
+export const endpointPatchUser = (app: Express): void => {
   app.patch("/dealit/api/users/:id", verifyToken, patchUser);
-
-export const endpointGetAllUsers = (app: Express) =>
-  app.get("/dealit/api/users", getEveryUser);
+};
+export const endpointGetAllUsers = (app: Express): void => {
+  app.get("/dealit/api/users/all", getEveryUser);
+}; 
 //EndpointsAuth
-export const endpointPostUser = (app: Express): Express =>
+export const endpointPostUser = (app: Express): void => {
   app.post("/dealit/api/register", registerUser);
-
-export const endpointPostLogin = (app: Express): Express =>
+};
+export const endpointPostLogin = (app: Express): void => {
   app.post("/dealit/api/login", userLogin);
-
+};
 //EndpointsProduct
-export const endpointGetProductById = (app: Express): Express =>
+export const endpointGetProductById = (app: Express): void => {
   app.get("/dealit/api/products/:id", getProductById);
-
-export const endpointPostProduct = (app: Express): Express =>
+};
+export const endpointPostProduct = (app: Express): void => {
   app.post("/dealit/api/products", verifyToken, postNewProduct);
-
-export const endpointgetProductsByCategoryPaginated = (app: Express): Express =>
+};
+export const endpointgetProductsByCategoryPaginated = (app: Express): void => {
   app.get("/dealit/api/products/category/:category", getProductsByCategory);
-
-export const endpointgetAllProductsPaginated = (app: Express): Express =>
+};
+export const endpointgetAllProductsPaginated = (app: Express): void => {
   app.get("/dealit/api/products", getAllProductsPaginated);
-
-export const endpointgetProductsByUserId = (app: Express): Express =>
+};
+export const endpointgetProductsByUserId = (app: Express): void => {
   app.get("/dealit/api/products/user/:userId", getProductsByUserId);
-
-export const endpointPatchProducts = (app: Express): Express =>
+};
+export const endpointPatchProducts = (app: Express): void => {
   app.patch("/dealit/api/products/:id", verifyToken, patchProduct);
-
+};
 //EndpointsCategory
 export const endpointGetCategoryByMainCat = (app: Express): void => {
   app.get("/dealit/api/categories/:cat", getCategoryByMainCat);
