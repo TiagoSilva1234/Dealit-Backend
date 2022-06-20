@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-
-import getUser from '../domain/users/get-UserById';
 import { StatusCodes } from "http-status-codes";
 
+import { userDataIsNotValid } from "../utils/utils";
 import patchUsr from "../domain/users/patch-user";
 import getAllUsers from "../domain/users/get-allUsers";
-import { userDataIsNotValid } from "../utils/utils";
+import getUser from "../domain/users/get-UserById";
+import getUserT from "../domain/users/get-userByToken";
 
 //User endpoints logic
 export const getUserById = async (
@@ -67,6 +67,7 @@ export const patchUser = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
+    console.log(req.body.decoded);
     const id = req.params.id;
     const data = req.body;
     if (isNaN(Number(id))) {
@@ -112,6 +113,39 @@ export const patchUser = async (
           date: new Date().toLocaleString(),
         },
       });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};
+
+export const getUserByToken = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    let token: any;
+    if (res.hasHeader("x-access-token")) {
+      token = req.headers["x-access-token"];
+    }
+    return res.send({
+      message: "Login successfully completed",
+      res: await getUserT(token),
+    });
+  } catch (e: any) {
+    if (e.message === "Invalid credentials") {
+      return res.status(StatusCodes.UNAUTHORIZED).send({
+        error: {
+          message: e.message,
+          cause: "Unauthorized",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,

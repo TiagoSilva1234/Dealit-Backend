@@ -8,6 +8,5 @@ export default async (
   username: string;
   email: string;
   phone: string;
-  address: Address;
-  creditCard: CreditCard;
+  address: { country: string; city: string };
 }> => await getUserById(id);

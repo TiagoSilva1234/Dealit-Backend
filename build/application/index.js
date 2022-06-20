@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.endpointCompletion = exports.endpointPatchAddressFavorite = exports.endpointGetAddressesByUserId = exports.endpointPostAddress = exports.endpointPostCreditCard = exports.endpointGetCreditCardsByUserId = exports.endpointSetFavoriteCreditCard = exports.endpointPostReviews = exports.endpointGetReviewsByReviewer = exports.endpointGetReviewsByProductId = exports.endpointGetReviewsByUserId = exports.endpointPatchOrdersDeliveryDate = exports.endpointPatchOrdersSendDate = exports.endpointPostOrders = exports.endpointGetOrdersByUserId = exports.endpointGetAllMainCategories = exports.endpointGetCategoryByMainCat = exports.endpointPatchProducts = exports.endpointgetProductsByUserId = exports.endpointgetAllProductsPaginated = exports.endpointgetProductsByCategoryPaginated = exports.endpointPostProduct = exports.endpointGetProductById = exports.endpointPostLogin = exports.endpointPostUser = exports.endpointGetAllUsers = exports.endpointPatchUser = exports.endpointGetUserById = void 0;
+exports.endpointCompletion = exports.endpointPatchAddressFavorite = exports.endpointGetAddressesByUserId = exports.endpointPostAddress = exports.endpointPostCreditCard = exports.endpointGetCreditCardsByUserId = exports.endpointSetFavoriteCreditCard = exports.endpointPostReviews = exports.endpointGetReviewsByReviewer = exports.endpointGetReviewsByProductId = exports.endpointGetReviewsByUserId = exports.endpointPatchOrdersDeliveryDate = exports.endpointPatchOrdersSendDate = exports.endpointPostOrders = exports.endpointGetOrdersByUserId = exports.endpointGetAllMainCategories = exports.endpointGetCategoryByMainCat = exports.endpointPatchProducts = exports.endpointgetProductsByUserId = exports.endpointgetAllProductsPaginated = exports.endpointgetProductsByCategoryPaginated = exports.endpointPostProduct = exports.endpointGetProductById = exports.endpointPostLogin = exports.endpointPostUser = exports.endpointGetAllUsers = exports.endpointPatchUser = exports.endpointGetUserByToken = exports.endpointGetUserById = void 0;
 const verifyToken_1 = require("../utils/verifyToken");
 const users_1 = require("./users");
 const orders_1 = require("./orders");
@@ -12,29 +12,55 @@ const addresses_1 = require("./addresses");
 const creditCards_1 = require("./creditCards");
 const completion_1 = require("./completion");
 //EndpointsUser
-const endpointGetUserById = (app) => app.get("/dealit/api/users/:id", users_1.getUserById);
+const endpointGetUserById = (app) => {
+    app.get("/dealit/api/users/:id", users_1.getUserById);
+};
 exports.endpointGetUserById = endpointGetUserById;
-const endpointPatchUser = (app) => app.patch("/dealit/api/users/:id", verifyToken_1.verifyToken, users_1.patchUser);
+const endpointGetUserByToken = (app) => {
+    app.get("/dealit/api/users/", users_1.getUserByToken);
+};
+exports.endpointGetUserByToken = endpointGetUserByToken;
+const endpointPatchUser = (app) => {
+    app.patch("/dealit/api/users/:id", verifyToken_1.verifyToken, users_1.patchUser);
+};
 exports.endpointPatchUser = endpointPatchUser;
-const endpointGetAllUsers = (app) => app.get("/dealit/api/users", users_1.getEveryUser);
+const endpointGetAllUsers = (app) => {
+    app.get("/dealit/api/users/all", users_1.getEveryUser);
+};
 exports.endpointGetAllUsers = endpointGetAllUsers;
 //EndpointsAuth
-const endpointPostUser = (app) => app.post("/dealit/api/register", auth_1.registerUser);
+const endpointPostUser = (app) => {
+    app.post("/dealit/api/register", auth_1.registerUser);
+};
 exports.endpointPostUser = endpointPostUser;
-const endpointPostLogin = (app) => app.post("/dealit/api/login", auth_1.userLogin);
+const endpointPostLogin = (app) => {
+    app.post("/dealit/api/login", auth_1.userLogin);
+};
 exports.endpointPostLogin = endpointPostLogin;
 //EndpointsProduct
-const endpointGetProductById = (app) => app.get("/dealit/api/products/:id", products_1.getProductById);
+const endpointGetProductById = (app) => {
+    app.get("/dealit/api/products/:id", products_1.getProductById);
+};
 exports.endpointGetProductById = endpointGetProductById;
-const endpointPostProduct = (app) => app.post("/dealit/api/products", verifyToken_1.verifyToken, products_1.postNewProduct);
+const endpointPostProduct = (app) => {
+    app.post("/dealit/api/products", verifyToken_1.verifyToken, products_1.postNewProduct);
+};
 exports.endpointPostProduct = endpointPostProduct;
-const endpointgetProductsByCategoryPaginated = (app) => app.get("/dealit/api/products/category/:category", products_1.getProductsByCategory);
+const endpointgetProductsByCategoryPaginated = (app) => {
+    app.get("/dealit/api/products/category/:category", products_1.getProductsByCategory);
+};
 exports.endpointgetProductsByCategoryPaginated = endpointgetProductsByCategoryPaginated;
-const endpointgetAllProductsPaginated = (app) => app.get("/dealit/api/products", products_1.getAllProductsPaginated);
+const endpointgetAllProductsPaginated = (app) => {
+    app.get("/dealit/api/products", products_1.getAllProductsPaginated);
+};
 exports.endpointgetAllProductsPaginated = endpointgetAllProductsPaginated;
-const endpointgetProductsByUserId = (app) => app.get("/dealit/api/products/user/:userId", products_1.getProductsByUserId);
+const endpointgetProductsByUserId = (app) => {
+    app.get("/dealit/api/products/user/:userId", products_1.getProductsByUserId);
+};
 exports.endpointgetProductsByUserId = endpointgetProductsByUserId;
-const endpointPatchProducts = (app) => app.patch("/dealit/api/products/:id", verifyToken_1.verifyToken, products_1.patchProduct);
+const endpointPatchProducts = (app) => {
+    app.patch("/dealit/api/products/:id", verifyToken_1.verifyToken, products_1.patchProduct);
+};
 exports.endpointPatchProducts = endpointPatchProducts;
 //EndpointsCategory
 const endpointGetCategoryByMainCat = (app) => {

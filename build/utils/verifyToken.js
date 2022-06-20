@@ -21,7 +21,7 @@ const verifyToken = (req, res, next) => {
         if (process.env.TOKEN_KEY) {
             const secret = process.env.TOKEN_KEY;
             const decoded = jsonwebtoken_1.default.verify(token, secret);
-            req.body.user = decoded;
+            req.body.decoded = decoded;
         }
     }
     catch (err) {

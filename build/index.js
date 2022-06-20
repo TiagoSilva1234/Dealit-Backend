@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     res.append("Access-Control-Allow-Headers", "Content-Type");
     next();
 });
-const port = Number(process.env.API_PORT) || 3000;
+const port = Number(process.env.API_PORT) || 8080;
 //Endpoints user
 (0, application_1.endpointGetUserById)(app);
 (0, application_1.endpointPatchUser)(app);
@@ -52,5 +52,5 @@ const port = Number(process.env.API_PORT) || 3000;
 app.get("/", (req, res) => {
     res.send("hello!");
 });
-app.listen(process.env.PORT || 3220, () => console.log(`listening on port ${port} :)`));
+app.listen(process.env.PORT || port, () => console.log(`listening on port ${port} :)`));
 exports.default = app;

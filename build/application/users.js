@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchUser = exports.getEveryUser = exports.getUserById = void 0;
-const get_UserById_1 = __importDefault(require("../domain/users/get-UserById"));
+exports.getUserByToken = exports.patchUser = exports.getEveryUser = exports.getUserById = void 0;
 const http_status_codes_1 = require("http-status-codes");
+const utils_1 = require("../utils/utils");
 const patch_user_1 = __importDefault(require("../domain/users/patch-user"));
 const get_allUsers_1 = __importDefault(require("../domain/users/get-allUsers"));
-const utils_1 = require("../utils/utils");
+const get_UserById_1 = __importDefault(require("../domain/users/get-UserById"));
+const get_userByToken_1 = __importDefault(require("../domain/users/get-userByToken"));
 //User endpoints logic
 const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -71,6 +72,7 @@ const getEveryUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getEveryUser = getEveryUser;
 const patchUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.body.decoded);
         const id = req.params.id;
         const data = req.body;
         if (isNaN(Number(id))) {
@@ -125,3 +127,34 @@ const patchUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.patchUser = patchUser;
+const getUserByToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let token;
+        if (res.hasHeader("x-access-token")) {
+            token = req.headers["x-access-token"];
+        }
+        return res.send({
+            message: "Login successfully completed",
+            res: yield (0, get_userByToken_1.default)(token),
+        });
+    }
+    catch (e) {
+        if (e.message === "Invalid credentials") {
+            return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).send({
+                error: {
+                    message: e.message,
+                    cause: "Unauthorized",
+                    date: new Date().toLocaleString(),
+                },
+            });
+        }
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).send({
+            error: {
+                message: e.message,
+                cause: "Unexpected error",
+                date: new Date().toLocaleString(),
+            },
+        });
+    }
+});
+exports.getUserByToken = getUserByToken;
