@@ -129,14 +129,8 @@ const patchUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.patchUser = patchUser;
 const getUserByToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let token;
-        if (res.hasHeader("x-access-token")) {
-            token = req.headers["x-access-token"];
-        }
-        return res.send({
-            message: "Login successfully completed",
-            res: yield (0, get_userByToken_1.default)(token),
-        });
+        const { username } = req.body.decoded;
+        return res.send(yield (0, get_userByToken_1.default)(username));
     }
     catch (e) {
         if (e.message === "Invalid credentials") {

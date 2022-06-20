@@ -2,7 +2,7 @@ import { Address, CreditCard, Order } from "@prisma/client";
 import { getUserByToken } from "../../infrastructure/users-repository";
 
 export default async (
-  token: string
+  username: string
 ): Promise<{
   id: number;
   username: string;
@@ -11,4 +11,4 @@ export default async (
   addresses: Address[];
   creditCards: CreditCard[];
   orders: Order[];  
-}> => await getUserByToken(token);
+}> => await getUserByToken(username);

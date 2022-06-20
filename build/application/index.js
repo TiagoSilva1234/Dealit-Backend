@@ -17,7 +17,7 @@ const endpointGetUserById = (app) => {
 };
 exports.endpointGetUserById = endpointGetUserById;
 const endpointGetUserByToken = (app) => {
-    app.get("/dealit/api/users/", users_1.getUserByToken);
+    app.get("/dealit/api/users/", verifyToken_1.verifyToken, users_1.getUserByToken);
 };
 exports.endpointGetUserByToken = endpointGetUserByToken;
 const endpointPatchUser = (app) => {

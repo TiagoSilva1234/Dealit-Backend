@@ -35,7 +35,7 @@ export const getUserById = async (
 };
 
 export const getUserByToken = async (
-  token: string
+  username: string
 ): Promise<{
   id: number;
   username: string;
@@ -45,25 +45,16 @@ export const getUserByToken = async (
   addresses: Address[];
   creditCards: CreditCard[];
 }> => {
-  let decoded: any;
-  if (process.env.TOKEN_KEY) {
-    const secret: Secret = process.env.TOKEN_KEY;
-    decoded = jwt.verify(token, secret);
-  }
-
-  let user;
-  if (decoded) {
-    user = await prisma.user.findUnique({
-      where: {
-        username: decoded.username,
-      },
-      include: {
-        addresses: true,
-        creditCards: true,
-        orders: true,
-      },
-    });
-  }
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+    include: {
+      addresses: true,
+      creditCards: true,
+      orders: true,
+    },
+  });
 
   if (!user) {
     throw new Error("User does not exist");
@@ -74,8 +65,7 @@ export const getUserByToken = async (
 export const getAllUsers = async () => {
   const users = await prisma.user.findMany({
     orderBy: { id: "asc" },
-    include: {
-    },
+    include: {},
   });
 
   return users.map((user) => ({
