@@ -12,10 +12,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setFavoriteAddress = exports.postAddress = void 0;
+exports.setFavoriteAddress = exports.postAddress = exports.getAddressesByUserId = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const post_address_1 = __importDefault(require("../domain/addresses/post-address"));
 const patch_adressIsFavorite_1 = __importDefault(require("../domain/addresses/patch-adressIsFavorite"));
+const get_addressByUserId_1 = __importDefault(require("../domain/addresses/get-addressByUserId"));
+const getAddressesByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        if (isNaN(Number(userId))) {
+            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
+                error: {
+                    message: "Invalid id format",
+                    cause: "Bad Request",
+                    date: new Date().toLocaleString(),
+                },
+            });
+        }
+        return res.send(yield (0, get_addressByUserId_1.default)(Number(userId)));
+    }
+    catch (e) {
+        if (e.message === "User does not exist") {
+            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).send({
+                error: {
+                    message: e.message,
+                    cause: "Not found",
+                    date: new Date().toLocaleString(),
+                },
+            });
+        }
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).send({
+            error: {
+                message: e.message,
+                cause: "Unexpected error",
+                date: new Date().toLocaleString(),
+            },
+        });
+    }
+});
+exports.getAddressesByUserId = getAddressesByUserId;
 const postAddress = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;

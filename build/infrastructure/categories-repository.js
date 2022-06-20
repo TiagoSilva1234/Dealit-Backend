@@ -18,7 +18,6 @@ const getCategoryByMainCat = (cat) => __awaiter(void 0, void 0, void 0, function
             name: cat,
         },
     });
-    console.log(cat);
     if (main && main.level === 2 && main.upperLevel !== null) {
         const actualMain = yield prisma.category.findUnique({
             where: {

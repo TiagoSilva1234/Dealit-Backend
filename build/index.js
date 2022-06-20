@@ -25,7 +25,6 @@ const port = Number(process.env.API_PORT) || 3000;
 (0, application_1.endpointgetProductsByCategoryPaginated)(app);
 (0, application_1.endpointgetAllProductsPaginated)(app);
 (0, application_1.endpointgetProductsByUserId)(app);
-(0, application_1.endpointGetLatestProducts)(app);
 (0, application_1.endpointPatchProducts)(app);
 //Endpoints categories
 (0, application_1.endpointGetCategoryByMainCat)(app);
@@ -43,13 +42,15 @@ const port = Number(process.env.API_PORT) || 3000;
 //Endpoints addresses
 (0, application_1.endpointPostAddress)(app);
 (0, application_1.endpointPatchAddressFavorite)(app);
+(0, application_1.endpointGetAddressesByUserId)(app);
 //Endpoints credit cards
 (0, application_1.endpointPostCreditCard)(app);
 (0, application_1.endpointSetFavoriteCreditCard)(app);
+(0, application_1.endpointGetCreditCardsByUserId)(app);
 //Endpoint Completion
 (0, application_1.endpointCompletion)(app);
 app.get("/", (req, res) => {
     res.send("hello!");
 });
-app.listen(process.env.PORT || 8080, () => console.log(`listening on port ${port} :)`));
+app.listen(process.env.PORT || 3220, () => console.log(`listening on port ${port} :)`));
 exports.default = app;

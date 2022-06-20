@@ -16,7 +16,6 @@ import {
   getProductsByCategory,
   getAllProductsPaginated,
   getProductsByUserId,
-  getLateProducts,
   patchProduct,
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
@@ -26,8 +25,8 @@ import {
   getReviewsByReviewer,
   postReview,
 } from "./reviews";
-import { postAddress, setFavoriteAddress } from "./addresses";
-import { postCreditCard, setFavoriteCreditCard } from "./creditCards";
+import { postAddress, setFavoriteAddress, getAddressesByUserId } from "./addresses";
+import { postCreditCard, setFavoriteCreditCard, getCreditCardsByUserId } from "./creditCards";
 import { GetTextCompletion } from "./completion";
 
 //EndpointsUser
@@ -61,9 +60,6 @@ export const endpointgetAllProductsPaginated = (app: Express): Express =>
 
 export const endpointgetProductsByUserId = (app: Express): Express =>
   app.get("/dealit/api/products/user/:userId", getProductsByUserId);
-
-export const endpointGetLatestProducts = (app: Express): Express =>
-  app.get("/dealit/api/latest-products", getLateProducts);
 
 export const endpointPatchProducts = (app: Express): Express =>
   app.patch("/dealit/api/products/:id", verifyToken, patchProduct);
@@ -119,6 +115,9 @@ export const endpointPostReviews = (app: Express): void => {
 export const endpointSetFavoriteCreditCard = (app: Express): void => {
   app.patch("/dealit/api/credit-cards/:id", verifyToken, setFavoriteCreditCard);
 };
+export const endpointGetCreditCardsByUserId = (app: Express): void => {
+  app.get("/dealit/api/credit-cards/user/:userId", getCreditCardsByUserId);
+};
 export const endpointPostCreditCard = (app: Express): void => {
   app.post("/dealit/api/credit-cards", verifyToken, postCreditCard);
 };
@@ -126,6 +125,10 @@ export const endpointPostCreditCard = (app: Express): void => {
 //Endpoints Adress
 export const endpointPostAddress = (app: Express): void => {
   app.post("/dealit/api/addresses", verifyToken, postAddress);
+};
+
+export const endpointGetAddressesByUserId = (app: Express): void => {
+  app.get("/dealit/api/addresses/user/:userId", getAddressesByUserId);
 };
 
 export const endpointPatchAddressFavorite = (app: Express): void => {

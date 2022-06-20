@@ -2,6 +2,19 @@ import { Address, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export const getAddressesByUserId = async (
+  userId: number
+): Promise<Address[]> => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { addresses: true },
+  });
+  if (user) {
+    return user.addresses;
+  }
+  throw new Error("User does not exist");
+};
+
 export const postAddress = async (data: Address): Promise<Address> => {
   if (data.isFavorite) {
     await prisma.address.updateMany({

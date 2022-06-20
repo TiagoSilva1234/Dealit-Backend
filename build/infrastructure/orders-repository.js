@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchOrderDeliveryDate = exports.patchOrderSendDate = exports.postOrder = exports.getUserOrdersById = void 0;
+exports.patchOrderDeliveryDate = exports.patchOrderSendDate = exports.postOrder = exports.getOrdersByUserId = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-const getUserOrdersById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+const getOrdersByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield prisma.user.findUnique({
         where: { id: userId },
         include: { orders: true },
@@ -22,7 +22,7 @@ const getUserOrdersById = (userId) => __awaiter(void 0, void 0, void 0, function
     }
     throw new Error("User does not exist");
 });
-exports.getUserOrdersById = getUserOrdersById;
+exports.getOrdersByUserId = getOrdersByUserId;
 const postOrder = (data, arr) => __awaiter(void 0, void 0, void 0, function* () {
     const order = yield prisma.order.create({
         data: {

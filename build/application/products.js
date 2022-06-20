@@ -12,21 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchProduct = exports.getLateProducts = exports.getProductsByUserId = exports.getAllProductsPaginated = exports.getProductsByCategory = exports.postNewProduct = exports.getProductById = void 0;
+exports.patchProduct = exports.getProductsByUserId = exports.getAllProductsPaginated = exports.getProductsByCategory = exports.postNewProduct = exports.getProductById = void 0;
 const get_productById_1 = __importDefault(require("../domain/products/get-productById"));
 const get_allProductsPaginated_1 = __importDefault(require("../domain/products/get-allProductsPaginated"));
 const post_product_1 = __importDefault(require("../domain/products/post-product"));
 const get_productsByCategoryPaginated_1 = __importDefault(require("../domain/products/get-productsByCategoryPaginated"));
 const get_productsByUserId_1 = __importDefault(require("../domain/products/get-productsByUserId"));
-const get_latestProducts_1 = __importDefault(require("../domain/products/get-latestProducts"));
 const patch_product_1 = __importDefault(require("../domain/products/patch-product"));
 const http_status_codes_1 = require("http-status-codes");
 //Product endpoints logic
 const getProductById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
-        const limit = Number(req.query.limit) || 1;
-        if (isNaN(Number(id)) && id !== "random" && limit > 10) {
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 3;
+        if (isNaN(Number(id)) && id !== "random" && id !== "latest" && limit > 10) {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
                 error: {
                     message: "Invalid id format",
@@ -35,10 +35,10 @@ const getProductById = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 },
             });
         }
-        const product = yield (0, get_productById_1.default)(id, limit);
-        return res.send(product);
+        return res.send(yield (0, get_productById_1.default)(id, page, limit));
     }
     catch (e) {
+        console.log(e.message);
         if (e.message === "Product does not exist") {
             return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).send({
                 error: {
@@ -175,24 +175,6 @@ const getProductsByUserId = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.getProductsByUserId = getProductsByUserId;
-const getLateProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const page = Number(req.query.page) || 1;
-        const limit = Number(req.query.limit) || 6;
-        const ret = yield (0, get_latestProducts_1.default)(page, limit);
-        return res.send(ret);
-    }
-    catch (e) {
-        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).send({
-            error: {
-                message: e.message,
-                cause: "Unexpected error",
-                date: new Date().toLocaleString(),
-            },
-        });
-    }
-});
-exports.getLateProducts = getLateProducts;
 const patchProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;

@@ -9,9 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setAdressFavorite = exports.postAddress = void 0;
+exports.setAdressFavorite = exports.postAddress = exports.getAddressesByUserId = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
+const getAddressesByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma.user.findUnique({
+        where: { id: userId },
+        include: { addresses: true },
+    });
+    if (user) {
+        return user.addresses;
+    }
+    throw new Error("User does not exist");
+});
+exports.getAddressesByUserId = getAddressesByUserId;
 const postAddress = (data) => __awaiter(void 0, void 0, void 0, function* () {
     if (data.isFavorite) {
         yield prisma.address.updateMany({

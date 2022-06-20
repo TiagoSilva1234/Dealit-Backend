@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.endpointCompletion = exports.endpointPatchAddressFavorite = exports.endpointPostAddress = exports.endpointPostCreditCard = exports.endpointSetFavoriteCreditCard = exports.endpointPostReviews = exports.endpointGetReviewsByReviewer = exports.endpointGetReviewsByProductId = exports.endpointGetReviewsByUserId = exports.endpointPatchOrdersDeliveryDate = exports.endpointPatchOrdersSendDate = exports.endpointPostOrders = exports.endpointGetOrdersByUserId = exports.endpointGetAllMainCategories = exports.endpointGetCategoryByMainCat = exports.endpointPatchProducts = exports.endpointGetLatestProducts = exports.endpointgetProductsByUserId = exports.endpointgetAllProductsPaginated = exports.endpointgetProductsByCategoryPaginated = exports.endpointPostProduct = exports.endpointGetProductById = exports.endpointPostLogin = exports.endpointPostUser = exports.endpointGetAllUsers = exports.endpointPatchUser = exports.endpointGetUserById = void 0;
+exports.endpointCompletion = exports.endpointPatchAddressFavorite = exports.endpointGetAddressesByUserId = exports.endpointPostAddress = exports.endpointPostCreditCard = exports.endpointGetCreditCardsByUserId = exports.endpointSetFavoriteCreditCard = exports.endpointPostReviews = exports.endpointGetReviewsByReviewer = exports.endpointGetReviewsByProductId = exports.endpointGetReviewsByUserId = exports.endpointPatchOrdersDeliveryDate = exports.endpointPatchOrdersSendDate = exports.endpointPostOrders = exports.endpointGetOrdersByUserId = exports.endpointGetAllMainCategories = exports.endpointGetCategoryByMainCat = exports.endpointPatchProducts = exports.endpointgetProductsByUserId = exports.endpointgetAllProductsPaginated = exports.endpointgetProductsByCategoryPaginated = exports.endpointPostProduct = exports.endpointGetProductById = exports.endpointPostLogin = exports.endpointPostUser = exports.endpointGetAllUsers = exports.endpointPatchUser = exports.endpointGetUserById = void 0;
 const verifyToken_1 = require("../utils/verifyToken");
 const users_1 = require("./users");
 const orders_1 = require("./orders");
@@ -34,8 +34,6 @@ const endpointgetAllProductsPaginated = (app) => app.get("/dealit/api/products",
 exports.endpointgetAllProductsPaginated = endpointgetAllProductsPaginated;
 const endpointgetProductsByUserId = (app) => app.get("/dealit/api/products/user/:userId", products_1.getProductsByUserId);
 exports.endpointgetProductsByUserId = endpointgetProductsByUserId;
-const endpointGetLatestProducts = (app) => app.get("/dealit/api/latest-products", products_1.getLateProducts);
-exports.endpointGetLatestProducts = endpointGetLatestProducts;
 const endpointPatchProducts = (app) => app.patch("/dealit/api/products/:id", verifyToken_1.verifyToken, products_1.patchProduct);
 exports.endpointPatchProducts = endpointPatchProducts;
 //EndpointsCategory
@@ -86,6 +84,10 @@ const endpointSetFavoriteCreditCard = (app) => {
     app.patch("/dealit/api/credit-cards/:id", verifyToken_1.verifyToken, creditCards_1.setFavoriteCreditCard);
 };
 exports.endpointSetFavoriteCreditCard = endpointSetFavoriteCreditCard;
+const endpointGetCreditCardsByUserId = (app) => {
+    app.get("/dealit/api/credit-cards/user/:userId", creditCards_1.getCreditCardsByUserId);
+};
+exports.endpointGetCreditCardsByUserId = endpointGetCreditCardsByUserId;
 const endpointPostCreditCard = (app) => {
     app.post("/dealit/api/credit-cards", verifyToken_1.verifyToken, creditCards_1.postCreditCard);
 };
@@ -95,6 +97,10 @@ const endpointPostAddress = (app) => {
     app.post("/dealit/api/addresses", verifyToken_1.verifyToken, addresses_1.postAddress);
 };
 exports.endpointPostAddress = endpointPostAddress;
+const endpointGetAddressesByUserId = (app) => {
+    app.get("/dealit/api/addresses/user/:userId", addresses_1.getAddressesByUserId);
+};
+exports.endpointGetAddressesByUserId = endpointGetAddressesByUserId;
 const endpointPatchAddressFavorite = (app) => {
     app.patch("/dealit/api/addresses/:id", verifyToken_1.verifyToken, addresses_1.setFavoriteAddress);
 };

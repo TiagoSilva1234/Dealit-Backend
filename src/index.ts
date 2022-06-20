@@ -10,7 +10,6 @@ import {
   endpointgetProductsByCategoryPaginated,
   endpointgetAllProductsPaginated,
   endpointgetProductsByUserId,
-  endpointGetLatestProducts,
   endpointGetCategoryByMainCat,
   endpointGetAllMainCategories,
   endpointGetReviewsByUserId,
@@ -21,13 +20,14 @@ import {
   endpointPatchProducts,
   endpointPatchOrdersSendDate,
   endpointPatchOrdersDeliveryDate,
-  endpointPostCreditCard,
   endpointPostAddress,
   endpointPatchAddressFavorite,
+  endpointGetAddressesByUserId,
+  endpointPostCreditCard,
   endpointSetFavoriteCreditCard,
+  endpointGetCreditCardsByUserId,
   endpointGetAllUsers,
-  endpointCompletion
-
+  endpointCompletion,
 } from "./application";
 const app: Express = express();
 
@@ -46,14 +46,13 @@ endpointGetUserById(app);
 endpointPatchUser(app);
 endpointPostUser(app);
 endpointPostLogin(app);
-endpointGetAllUsers(app)
+endpointGetAllUsers(app);
 //Endpoints products
 endpointGetProductById(app);
 endpointPostProduct(app);
 endpointgetProductsByCategoryPaginated(app);
 endpointgetAllProductsPaginated(app);
 endpointgetProductsByUserId(app);
-endpointGetLatestProducts(app);
 endpointPatchProducts(app);
 
 //Endpoints categories
@@ -75,10 +74,12 @@ endpointPatchOrdersDeliveryDate(app);
 //Endpoints addresses
 endpointPostAddress(app);
 endpointPatchAddressFavorite(app);
+endpointGetAddressesByUserId(app)
 
 //Endpoints credit cards
 endpointPostCreditCard(app);
 endpointSetFavoriteCreditCard(app);
+endpointGetCreditCardsByUserId(app)
 
 //Endpoint Completion
 endpointCompletion(app);
@@ -86,6 +87,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(process.env.PORT || 8080,() => console.log(`listening on port ${port} :)`));
+app.listen(process.env.PORT || 3220, () =>
+  console.log(`listening on port ${port} :)`)
+);
 
 export default app;

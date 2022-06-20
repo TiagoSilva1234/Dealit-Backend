@@ -3,9 +3,16 @@ import { ProductData, ProdUpdateData } from "../utils/types";
 
 const prisma = new PrismaClient();
 
-export const getProductById = async (id: string, num: number) => {
+export const getProductById = async (
+  id: string,
+  skip: number,
+  take: number
+) => {
   if (id === "random") {
-    return getRandomProduct(num);
+    return getRandomProduct(take);
+  }
+  if (id === "latest") {
+    return getLatestProducts(skip, take);
   }
 
   const product = await prisma.product.findUnique({
@@ -131,7 +138,7 @@ const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
 };
 //////////////////////////////////////////////////////////
 
-export const getLatestProducts = async (
+const getLatestProducts = async (
   skip: number,
   take: number
 ): Promise<Product[]> => {

@@ -3,6 +3,43 @@ import { StatusCodes } from "http-status-codes";
 import { Address } from "@prisma/client";
 import postAdd from "../domain/addresses/post-address";
 import setAddressIsFavorite from "../domain/addresses/patch-adressIsFavorite";
+import getAddsByUserId from "../domain/addresses/get-addressByUserId";
+
+export const getAddressesByUserId = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const userId = req.params.userId;
+    if (isNaN(Number(userId))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.send(await getAddsByUserId(Number(userId)));
+  } catch (e: any) {
+    if (e.message === "User does not exist") {
+      return res.status(StatusCodes.NOT_FOUND).send({
+        error: {
+          message: e.message,
+          cause: "Not found",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};
 
 export const postAddress = async (
   req: Request,
