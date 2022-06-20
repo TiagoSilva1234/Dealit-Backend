@@ -175,7 +175,7 @@ const userLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         const arroz = yield (0, post_login_1.default)(email, password);
-        res.cookie("token", arroz.token, { domain: ".dealit-backend.herokuapp.com" });
+        res.cookie("token", arroz.token, { domain: ".dealit-backend.herokuapp.com", path: '/dealit/api/login', secure: true });
         return res.send({
             message: "Login successfully completed",
             res: arroz,

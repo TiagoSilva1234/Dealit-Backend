@@ -176,7 +176,7 @@ export const userLogin = async (
       });
     }
 const arroz = await postLogin(email, password)
-res.cookie("token",arroz.token,{domain:".dealit-backend.herokuapp.com", path: '/dealit/api/login', secure: true})
+res.cookie("token",arroz.token,{domain:".dealit-backend.herokuapp.com", path: '/dealit/api', secure: true})
 
     return res.send({
       message: "Login successfully completed",
