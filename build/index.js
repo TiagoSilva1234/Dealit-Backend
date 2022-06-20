@@ -15,6 +15,7 @@ app.use((req, res, next) => {
 const port = Number(process.env.API_PORT) || 8080;
 //Endpoints user
 (0, application_1.endpointGetUserById)(app);
+(0, application_1.endpointGetUserByToken)(app);
 (0, application_1.endpointPatchUser)(app);
 (0, application_1.endpointPostUser)(app);
 (0, application_1.endpointPostLogin)(app);

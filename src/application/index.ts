@@ -42,14 +42,14 @@ export const endpointGetUserById = (app: Express): void => {
   app.get("/dealit/api/users/:id", getUserById);
 };
 export const endpointGetUserByToken = (app: Express): void => {
-  app.get("/dealit/api/users/", getUserByToken);
+  app.get("/dealit/api/users/", verifyToken, getUserByToken);
 };
 export const endpointPatchUser = (app: Express): void => {
   app.patch("/dealit/api/users/:id", verifyToken, patchUser);
 };
 export const endpointGetAllUsers = (app: Express): void => {
   app.get("/dealit/api/users/all", getEveryUser);
-}; 
+};
 //EndpointsAuth
 export const endpointPostUser = (app: Express): void => {
   app.post("/dealit/api/register", registerUser);

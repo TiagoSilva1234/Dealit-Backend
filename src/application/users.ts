@@ -128,14 +128,8 @@ export const getUserByToken = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    let token: any;
-    if (res.hasHeader("x-access-token")) {
-      token = req.headers["x-access-token"];
-    }
-    return res.send({
-      message: "Login successfully completed",
-      res: await getUserT(token),
-    });
+    const {username} = req.body.decoded;
+    return res.send(await getUserT(username));
   } catch (e: any) {
     if (e.message === "Invalid credentials") {
       return res.status(StatusCodes.UNAUTHORIZED).send({

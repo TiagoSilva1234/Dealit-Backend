@@ -24,41 +24,32 @@ const getUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
         },
         include: {
             addresses: true,
-            creditCards: true,
         },
     });
     if (user === null) {
         throw new Error("User does not exist");
     }
+    const favAdd = user.addresses.filter((e) => e.isFavorite)[0];
     return {
         id: user.id,
         username: user.username,
         email: user.email,
         phone: user.phone,
-        address: user.addresses.filter((e) => e.isFavorite)[0],
-        creditCard: user.creditCards.filter((e) => e.isFavorite)[0],
+        address: { country: favAdd.country, city: favAdd.city },
     };
 });
 exports.getUserById = getUserById;
-const getUserByToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
-    let decoded;
-    if (process.env.TOKEN_KEY) {
-        const secret = process.env.TOKEN_KEY;
-        decoded = jsonwebtoken_1.default.verify(token, secret);
-    }
-    let user;
-    if (decoded) {
-        user = yield prisma.user.findUnique({
-            where: {
-                username: decoded.username,
-            },
-            include: {
-                addresses: true,
-                creditCards: true,
-                orders: true,
-            },
-        });
-    }
+const getUserByToken = (username) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma.user.findUnique({
+        where: {
+            username: username,
+        },
+        include: {
+            addresses: true,
+            creditCards: true,
+            orders: true,
+        },
+    });
     if (!user) {
         throw new Error("User does not exist");
     }
@@ -68,18 +59,13 @@ exports.getUserByToken = getUserByToken;
 const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield prisma.user.findMany({
         orderBy: { id: "asc" },
-        include: {
-            addresses: true,
-            creditCards: true,
-        },
+        include: {},
     });
     return users.map((user) => ({
         id: user.id,
         username: user.username,
         email: user.email,
         phone: user.phone,
-        address: user.addresses.filter((e) => e.isFavorite)[0],
-        creditCard: user.creditCards.filter((e) => e.isFavorite)[0],
     }));
 });
 exports.getAllUsers = getAllUsers;

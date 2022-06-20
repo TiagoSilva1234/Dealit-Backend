@@ -10,4 +10,4 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const users_repository_1 = require("../../infrastructure/users-repository");
-exports.default = (token) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, users_repository_1.getUserByToken)(token); });
+exports.default = (username) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, users_repository_1.getUserByToken)(username); });

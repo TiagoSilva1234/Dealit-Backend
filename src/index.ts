@@ -49,6 +49,7 @@ endpointPatchUser(app);
 endpointPostUser(app);
 endpointPostLogin(app);
 endpointGetAllUsers(app);
+
 //Endpoints products
 endpointGetProductById(app);
 endpointPostProduct(app);
@@ -85,6 +86,8 @@ endpointGetCreditCardsByUserId(app);
 
 //Endpoint Completion
 endpointCompletion(app);
+
+
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
