@@ -162,6 +162,7 @@ export const userLogin = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
+
   try {
     const { email, password } = req.body;
 
@@ -174,10 +175,12 @@ export const userLogin = async (
         },
       });
     }
-
+const arroz = await postLogin(email, password)
+res.cookie("jwt-cookie",arroz.token)
+console.log("pao")
     return res.send({
       message: "Login successfully completed",
-      res: await postLogin(email, password),
+      res: arroz,
     });
   } catch (e: any) {
     if (e.message === "Invalid credentials") {

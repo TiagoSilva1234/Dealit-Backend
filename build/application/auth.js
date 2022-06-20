@@ -174,9 +174,12 @@ const userLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 },
             });
         }
+        const arroz = yield (0, post_login_1.default)(email, password);
+        res.cookie("cookie", arroz.token);
+        console.log("pao");
         return res.send({
             message: "Login successfully completed",
-            res: yield (0, post_login_1.default)(email, password),
+            res: arroz,
         });
     }
     catch (e) {
