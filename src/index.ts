@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
 import {
   endpointGetUserById,
   endpointGetUserByToken,
@@ -33,6 +34,7 @@ import {
 const app: Express = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
@@ -86,7 +88,6 @@ endpointGetCreditCardsByUserId(app);
 
 //Endpoint Completion
 endpointCompletion(app);
-
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
