@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/domain/users/get-allUsers.ts</title>
+    <title>Code coverage report for src/domain/products/patch-product.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/domain/users</a> get-allUsers.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/domain/products</a> patch-product.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -69,27 +69,18 @@
 <a name='L4'></a><a href='#L4'>4</a>
 <a name='L5'></a><a href='#L5'>5</a>
 <a name='L6'></a><a href='#L6'>6</a>
-<a name='L7'></a><a href='#L7'>7</a>
-<a name='L8'></a><a href='#L8'>8</a>
-<a name='L9'></a><a href='#L9'>9</a>
-<a name='L10'></a><a href='#L10'>10</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L7'></a><a href='#L7'>7</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Address, CreditCard, User } from "@prisma/client";
-import { getAllUsers } from "../../infrastructure/users-repository";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Product } from "@prisma/client";
+import { patchProduct } from "../../infrastructure/products-repository";
+import { ProdUpdateData } from "../../utils/types";
 &nbsp;
-export default <span class="fstat-no" title="function not covered" >as</span>ync (): Promise&lt;{
-    id: number;
-    username: string;
-    email: string;
-    phone: string;
-}[]&gt; =&gt; <span class="cstat-no" title="statement not covered" >await getAllUsers();</span>
+export default <span class="fstat-no" title="function not covered" >as</span>ync (id: number, obj: ProdUpdateData): Promise&lt;Product&gt; =&gt;
+<span class="cstat-no" title="statement not covered" >  await patchProduct(id, obj);</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
