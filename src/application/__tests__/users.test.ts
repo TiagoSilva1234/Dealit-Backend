@@ -1,8 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
 const { getUserById } = require("../users");
-const getUser = require("../../Domain/users/get-userById");
 
-const mockedjest =jest.mock("../../Domain/users/get-userById");
+const getUser = require("../../Domain/users/get-userById");
+jest.mock("../../Domain/users/get-userById",()=>jest.fn());
 
 describe("Users Endpoints", () => {
   describe("get user by id", () => {
@@ -11,12 +11,11 @@ describe("Users Endpoints", () => {
       send: jest.fn().mockReturnThis(),
     };
 
-    afterEach(() => {
-      jest.clearAllMocks();
+    beforeEach(() => {
+      jest.clearAllMocks();      
     });
 
-    it("should return a custom error object if id has letters in it", async () => {
-      mockedjest.fn(()=>new Error("Invalid id format"))
+   it("should return a custom error object if id has letters in it", async () => {
       await getUserById({ params: { id: "as" } }, mockSend);
 
       expect(mockSend.status).toHaveBeenNthCalledWith(
@@ -33,7 +32,7 @@ describe("Users Endpoints", () => {
     });
 
     it("should return a custom error object if name doesn't match user in database", async () => {
-  mockedjest.fn(()=>new Error("User does not exist"))
+      getUser.mockRejectedValueOnce(new Error("User does not exist"))
 
       await getUserById({ params: { id: "81231" } }, mockSend);
 
@@ -50,7 +49,7 @@ describe("Users Endpoints", () => {
     });
 
     it("should return a successful response", async () => {
-      mockedjest.fn();
+
       const response = {
         id: 0,
         username: "DealIt",
@@ -62,10 +61,11 @@ describe("Users Endpoints", () => {
             city: "Porto",  
           },
       };
+      getUser.mockResolvedValueOnce(response)
+    
+      await getUserById({ params: { id: 2 } }, mockSend);
 
-      await getUserById({ params: { id: 0 } }, mockSend);
-
-      expect(mockSend.status).toHaveBeenCalledTimes(0);
+    expect(mockSend.status).toHaveBeenCalledTimes(0);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
     });
   });

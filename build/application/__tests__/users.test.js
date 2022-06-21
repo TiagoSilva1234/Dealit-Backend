@@ -11,18 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const { StatusCodes } = require("http-status-codes");
 const { getUserById } = require("../users");
 const getUser = require("../../Domain/users/get-userById");
-const mockedjest = jest.mock("../../Domain/users/get-userById");
+jest.mock("../../Domain/users/get-userById", () => jest.fn());
 describe("Users Endpoints", () => {
     describe("get user by id", () => {
         const mockSend = {
             status: jest.fn().mockReturnThis(),
             send: jest.fn().mockReturnThis(),
         };
-        afterEach(() => {
+        beforeEach(() => {
             jest.clearAllMocks();
         });
         it("should return a custom error object if id has letters in it", () => __awaiter(void 0, void 0, void 0, function* () {
-            mockedjest.fn(() => new Error("Invalid id format"));
             yield getUserById({ params: { id: "as" } }, mockSend);
             expect(mockSend.status).toHaveBeenNthCalledWith(1, StatusCodes.BAD_REQUEST);
             expect(mockSend.send).toHaveBeenNthCalledWith(1, {
@@ -34,7 +33,7 @@ describe("Users Endpoints", () => {
             });
         }));
         it("should return a custom error object if name doesn't match user in database", () => __awaiter(void 0, void 0, void 0, function* () {
-            mockedjest.fn(() => new Error("User does not exist"));
+            getUser.mockRejectedValueOnce(new Error("User does not exist"));
             yield getUserById({ params: { id: "81231" } }, mockSend);
             expect(mockSend.status).toHaveBeenNthCalledWith(1, StatusCodes.NOT_FOUND);
             expect(mockSend.send).toHaveBeenNthCalledWith(1, {
@@ -46,7 +45,6 @@ describe("Users Endpoints", () => {
             });
         }));
         it("should return a successful response", () => __awaiter(void 0, void 0, void 0, function* () {
-            mockedjest.fn();
             const response = {
                 id: 0,
                 username: "DealIt",
@@ -57,7 +55,8 @@ describe("Users Endpoints", () => {
                     city: "Porto",
                 },
             };
-            yield getUserById({ params: { id: 0 } }, mockSend);
+            getUser.mockResolvedValueOnce(response);
+            yield getUserById({ params: { id: 2 } }, mockSend);
             expect(mockSend.status).toHaveBeenCalledTimes(0);
             expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
         }));

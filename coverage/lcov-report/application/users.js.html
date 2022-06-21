@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.29% </span>
+                <span class="strong">53.73% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/67</span>
+                <span class='fraction'>36/67</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.62% </span>
+                <span class="strong">53.12% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>13/32</span>
+                <span class='fraction'>17/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">56.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/16</span>
+                <span class='fraction'>9/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.82% </span>
+                <span class="strong">56.89% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/58</span>
+                <span class='fraction'>33/58</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -219,12 +219,12 @@
 <a name='L154'></a><a href='#L154'>154</a>
 <a name='L155'></a><a href='#L155'>155</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -239,24 +239,24 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -373,11 +373,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 var __awaiter = (this &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this.__awaiter)</span> || function (thisArg, _arguments, P, generator) {
-    function <span class="fstat-no" title="function not covered" >adopt(</span>value) { <span class="cstat-no" title="statement not covered" >return value instanceof P ? value : new P(<span class="fstat-no" title="function not covered" >fu</span>nction (resolve) { <span class="cstat-no" title="statement not covered" >resolve(value); </span>}); </span>}
+    function adopt(value) { return value instanceof P ? value : <span class="branch-1 cbranch-no" title="branch not covered" >new P(<span class="fstat-no" title="function not covered" >fu</span>nction (resolve) { <span class="cstat-no" title="statement not covered" >resolve(value); </span>});</span> }
     return new (P || (P = Promise))(function (resolve, reject) {
-        function <span class="fstat-no" title="function not covered" >fulfilled(</span>value) { <span class="cstat-no" title="statement not covered" >try { <span class="cstat-no" title="statement not covered" >step(generator.next(value)); </span>} catch (e) { <span class="cstat-no" title="statement not covered" >reject(e); </span>} </span>}
-        function <span class="fstat-no" title="function not covered" >rejected(</span>value) { <span class="cstat-no" title="statement not covered" >try { <span class="cstat-no" title="statement not covered" >step(generator["throw"](value)); </span>} catch (e) { <span class="cstat-no" title="statement not covered" >reject(e); </span>} </span>}
-        function step(result) { result.done ? resolve(result.value) : <span class="branch-1 cbranch-no" title="branch not covered" >adopt(result.value).then(fulfilled, rejected);</span> }
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { <span class="cstat-no" title="statement not covered" >reject(e); </span>} }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { <span class="cstat-no" title="statement not covered" >reject(e); </span>} }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -396,7 +396,7 @@ const get_userByToken_1 = __importDefault(require("../domain/users/get-userByTok
 const getUserById = (req, res) =&gt; __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
-        <span class="missing-if-branch" title="else path not taken" >E</span>if (isNaN(Number(id))) {
+        if (isNaN(Number(id))) {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({
                 error: {
                     message: "Invalid id format",
@@ -405,12 +405,12 @@ const getUserById = (req, res) =&gt; __awaiter(void 0, void 0, void 0, function*
                 },
             });
         }
-        const user = <span class="cstat-no" title="statement not covered" >yield (0, get_UserById_1.default)(id);</span>
-<span class="cstat-no" title="statement not covered" >        return res.send(user);</span>
+        const user = yield (0, get_UserById_1.default)(id);
+        return res.send(user);
     }
     catch (e) {
-<span class="cstat-no" title="statement not covered" >        if (e.message === "User does not exist") {</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).send({</span>
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (e.message === "User does not exist") {
+            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).send({
                 error: {
                     message: e.message,
                     cause: "Not found",
@@ -532,7 +532,7 @@ exports.getUserByToken = getUserByToken;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Jun 20 2022 17:21:23 GMT+0100 (Western European Summer Time)
+                at Tue Jun 21 2022 12:40:57 GMT+0100 (Western European Summer Time)
             </div>
         <script src="../prettify.js"></script>
         <script>
