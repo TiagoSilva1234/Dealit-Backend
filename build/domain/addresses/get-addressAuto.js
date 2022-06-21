@@ -9,5 +9,5 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const products_repository_1 = require("../../infrastructure/products-repository");
-exports.default = (page, limit) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, products_repository_1.getLatestProducts)(page * limit - limit, limit); });
+const addresses_repository_1 = require("../../infrastructure/addresses-repository");
+exports.default = (text) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, addresses_repository_1.getAdressAutocomplete)(text); });

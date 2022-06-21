@@ -30,6 +30,7 @@ import {
   endpointGetCreditCardsByUserId,
   endpointGetAllUsers,
   endpointCompletion,
+  endpointGetAddressAutocomplete
 } from "./application";
 const app: Express = express();
 
@@ -74,7 +75,7 @@ endpointPatchOrdersDeliveryDate(app);
 endpointPostAddress(app);
 endpointPatchAddressFavorite(app);
 endpointGetAddressesByUserId(app);
-
+endpointGetAddressAutocomplete(app)
 //Endpoints credit cards
 endpointPostCreditCard(app);
 endpointSetFavoriteCreditCard(app);

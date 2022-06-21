@@ -29,6 +29,7 @@ import {
   postAddress,
   setFavoriteAddress,
   getAddressesByUserId,
+  getAddressAutocomplete
 } from "./addresses";
 import {
   postCreditCard,
@@ -146,6 +147,9 @@ export const endpointGetAddressesByUserId = (app: Express): void => {
 export const endpointPatchAddressFavorite = (app: Express): void => {
   app.patch("/dealit/api/addresses/:id", verifyToken, setFavoriteAddress);
 };
+export const endpointGetAddressAutocomplete= (app:Express):void=>{
+  app.get("/dealit/api/addresses/autocomplete", getAddressAutocomplete)
+}
 
 //Endpoint Completion
 export const endpointCompletion = (app: Express): void => {

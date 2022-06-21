@@ -12,11 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setFavoriteAddress = exports.postAddress = exports.getAddressesByUserId = void 0;
+exports.getAddressAutocomplete = exports.setFavoriteAddress = exports.postAddress = exports.getAddressesByUserId = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const post_address_1 = __importDefault(require("../domain/addresses/post-address"));
 const patch_adressIsFavorite_1 = __importDefault(require("../domain/addresses/patch-adressIsFavorite"));
 const get_addressByUserId_1 = __importDefault(require("../domain/addresses/get-addressByUserId"));
+const get_addressAuto_1 = __importDefault(require("../domain/addresses/get-addressAuto"));
 const getAddressesByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.params.userId;
@@ -100,3 +101,11 @@ const setFavoriteAddress = (req, res) => __awaiter(void 0, void 0, void 0, funct
     });
 });
 exports.setFavoriteAddress = setFavoriteAddress;
+const getAddressAutocomplete = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (typeof req.query.text === "string" || req.query.text instanceof String) {
+        const f = String(req.query.text) || "porto";
+        const result = yield (0, get_addressAuto_1.default)(f);
+        return res.send(result);
+    }
+});
+exports.getAddressAutocomplete = getAddressAutocomplete;

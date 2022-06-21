@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setAdressFavorite = exports.postAddress = exports.getAddressesByUserId = void 0;
+exports.getAdressAutocomplete = exports.setAdressFavorite = exports.postAddress = exports.getAddressesByUserId = void 0;
 const client_1 = require("@prisma/client");
+const axios_1 = __importDefault(require("axios"));
 const prisma = new client_1.PrismaClient();
 const getAddressesByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield prisma.user.findUnique({
@@ -70,3 +74,12 @@ const setAdressFavorite = (addressId) => __awaiter(void 0, void 0, void 0, funct
     return updated;
 });
 exports.setAdressFavorite = setAdressFavorite;
+const getAdressAutocomplete = (text) => __awaiter(void 0, void 0, void 0, function* () {
+    const env = process.env.ADRRESS_API_KEY;
+    let idk = {};
+    yield axios_1.default.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${env}`).then(res => {
+        idk = res.data;
+    });
+    return idk;
+});
+exports.getAdressAutocomplete = getAdressAutocomplete;

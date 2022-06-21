@@ -41,6 +41,7 @@ const port = Number(process.env.API_PORT) || 8080;
 (0, application_1.endpointPostAddress)(app);
 (0, application_1.endpointPatchAddressFavorite)(app);
 (0, application_1.endpointGetAddressesByUserId)(app);
+(0, application_1.endpointGetAddressAutocomplete)(app);
 //Endpoints credit cards
 (0, application_1.endpointPostCreditCard)(app);
 (0, application_1.endpointSetFavoriteCreditCard)(app);

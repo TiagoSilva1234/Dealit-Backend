@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.endpointCompletion = exports.endpointPatchAddressFavorite = exports.endpointGetAddressesByUserId = exports.endpointPostAddress = exports.endpointPostCreditCard = exports.endpointGetCreditCardsByUserId = exports.endpointSetFavoriteCreditCard = exports.endpointPostReviews = exports.endpointGetReviewsByReviewer = exports.endpointGetReviewsByProductId = exports.endpointGetReviewsByUserId = exports.endpointPatchOrdersDeliveryDate = exports.endpointPatchOrdersSendDate = exports.endpointPostOrders = exports.endpointGetOrdersByUserId = exports.endpointGetAllMainCategories = exports.endpointGetCategoryByMainCat = exports.endpointPatchProducts = exports.endpointgetProductsByUserId = exports.endpointgetAllProductsPaginated = exports.endpointgetProductsByCategoryPaginated = exports.endpointPostProduct = exports.endpointGetProductById = exports.endpointPostLogin = exports.endpointPostUser = exports.endpointGetAllUsers = exports.endpointPatchUser = exports.endpointGetUserByToken = exports.endpointGetUserById = void 0;
+exports.endpointCompletion = exports.endpointGetAddressAutocomplete = exports.endpointPatchAddressFavorite = exports.endpointGetAddressesByUserId = exports.endpointPostAddress = exports.endpointPostCreditCard = exports.endpointGetCreditCardsByUserId = exports.endpointSetFavoriteCreditCard = exports.endpointPostReviews = exports.endpointGetReviewsByReviewer = exports.endpointGetReviewsByProductId = exports.endpointGetReviewsByUserId = exports.endpointPatchOrdersDeliveryDate = exports.endpointPatchOrdersSendDate = exports.endpointPostOrders = exports.endpointGetOrdersByUserId = exports.endpointGetAllMainCategories = exports.endpointGetCategoryByMainCat = exports.endpointPatchProducts = exports.endpointgetProductsByUserId = exports.endpointgetAllProductsPaginated = exports.endpointgetProductsByCategoryPaginated = exports.endpointPostProduct = exports.endpointGetProductById = exports.endpointPostLogin = exports.endpointPostUser = exports.endpointGetAllUsers = exports.endpointPatchUser = exports.endpointGetUserByToken = exports.endpointGetUserById = void 0;
 const verifyToken_1 = require("../utils/verifyToken");
 const users_1 = require("./users");
 const orders_1 = require("./orders");
@@ -131,6 +131,10 @@ const endpointPatchAddressFavorite = (app) => {
     app.patch("/dealit/api/addresses/:id", verifyToken_1.verifyToken, addresses_1.setFavoriteAddress);
 };
 exports.endpointPatchAddressFavorite = endpointPatchAddressFavorite;
+const endpointGetAddressAutocomplete = (app) => {
+    app.get("/dealit/api/addresses/autocomplete", addresses_1.getAddressAutocomplete);
+};
+exports.endpointGetAddressAutocomplete = endpointGetAddressAutocomplete;
 //Endpoint Completion
 const endpointCompletion = (app) => {
     app.get("/dealit/api/completion", completion_1.GetTextCompletion);

@@ -4,7 +4,7 @@ import { Address } from "@prisma/client";
 import postAdd from "../domain/addresses/post-address";
 import setAddressIsFavorite from "../domain/addresses/patch-adressIsFavorite";
 import getAddsByUserId from "../domain/addresses/get-addressByUserId";
-
+import getAddressAuto from "../domain/addresses/get-addressAuto";
 export const getAddressesByUserId = async (
   req: Request,
   res: Response
@@ -98,3 +98,15 @@ export const setFavoriteAddress = async (
     address: await setAddressIsFavorite(id),
   });
 };
+
+
+export const getAddressAutocomplete = async (req:Request,res:Response)=>{
+  if( typeof req.query.text === "string"|| req.query.text instanceof String){
+    const f:string = String(req.query.text) || "porto"
+    const result = await getAddressAuto(f);
+
+    return res.send(result)
+  }
+ 
+
+  }
