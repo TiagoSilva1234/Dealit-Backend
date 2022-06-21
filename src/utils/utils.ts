@@ -25,7 +25,7 @@ export const productDataIsNotValid = (
   return tester;
 };
 
-export const userDataIsNotValid = (
+const userDataIsNotValid = (
   data: UserData | UserUpdateData
 ): { check: boolean; cause: string[] } => {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -379,3 +379,5 @@ const countries = [
   "Zambia",
   "Zimbabwe",
 ];
+
+export default userDataIsNotValid;

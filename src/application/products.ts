@@ -13,7 +13,7 @@ export const getProductById = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    
+
     const id = req.params.id;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 3;
