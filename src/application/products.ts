@@ -17,7 +17,7 @@ export const getProductById = async (
     const id = req.params.id;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 3;
-    if (isNaN(Number(id)) && id !== "random" && id !== "latest" && limit > 10) {
+    if (isNaN(Number(id)) && (id !== "random" && id !== "latest") || limit > 10) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
@@ -53,7 +53,12 @@ export const postNewProduct = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const { name, description, photos, price, userId, category } = req.body;
+    const name= req.body.name;
+    const  description= req.body.description;
+    const photos =req.body.photos
+    const price = req.body.price;
+    const userId = req.body.userId;
+    const category = req.body.category;
 
     if (!(name && description && photos && price && userId && category)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
