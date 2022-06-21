@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { userDataIsNotValid } from "../utils/utils";
+import  userDataIsNotValid  from "../utils/utils";
 import patchUsr from "../domain/users/patch-user";
 import getAllUsers from "../domain/users/get-allUsers";
 import getUser from "../domain/users/get-UserById";
@@ -67,7 +67,6 @@ export const patchUser = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    console.log(req.body.decoded);
     const id = req.params.id;
     const data = req.body;
     if (isNaN(Number(id))) {

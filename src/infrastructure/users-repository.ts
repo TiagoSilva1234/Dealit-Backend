@@ -65,7 +65,6 @@ export const getUserByToken = async (
 export const getAllUsers = async () => {
   const users = await prisma.user.findMany({
     orderBy: { id: "asc" },
-    include: {},
   });
 
   return users.map((user) => ({
