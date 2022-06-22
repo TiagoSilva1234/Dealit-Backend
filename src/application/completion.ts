@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import getCompletion from "../domain/completion/get-textCompletion";
 import { StatusCodes } from "http-status-codes";
-import { dealioErrorMessages } from "../utils/utils";
 
 export const GetTextCompletion = async (req: Request, res: Response) => {
   try {
@@ -9,13 +8,14 @@ export const GetTextCompletion = async (req: Request, res: Response) => {
     if (!input) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
-          message: "Required inputs missing",
-          cause: "Bad request",
+          message: "Required data missing",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
     }
-    res.send(await getCompletion(input));
+    const resCompl = await getCompletion(input);
+    res.send(resCompl);
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
