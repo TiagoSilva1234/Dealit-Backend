@@ -28,7 +28,7 @@ export const getProductById = async (
     }
     return res.send(await getProduct(id, page, limit));
   } catch (e: any) {
-    console.log(e.message);
+
     if (e.message === "Product does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
         error: {
