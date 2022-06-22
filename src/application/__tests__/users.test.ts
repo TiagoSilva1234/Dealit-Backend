@@ -19,6 +19,7 @@ jest.mock("../../utils/utils", () => jest.fn());
 
 
 describe("Users Endpoints", () => {
+
   describe("get user by id", () => {
     const mockSend = {
       status: jest.fn().mockReturnThis(),
@@ -43,7 +44,6 @@ describe("Users Endpoints", () => {
         },
       });
     });
-
 
     it("should return a custom error object if id doesn't match user in database", async () => {
       getUser.mockRejectedValueOnce(new Error("User does not exist"));
@@ -296,6 +296,7 @@ describe("Users Endpoints", () => {
     });
 
     it("should return a custom error object if user in token does not exist", async () => {
+
       const e = new Error("User does not exist");
 
       getUsrToken.mockRejectedValueOnce(e);
@@ -316,7 +317,7 @@ describe("Users Endpoints", () => {
       const e = new Error("Error");
       getUsrToken.mockRejectedValueOnce(e);
 
-      await getUserByToken({}, mockSend);
+      await getUserByToken(mockReq, mockSend);
       expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
