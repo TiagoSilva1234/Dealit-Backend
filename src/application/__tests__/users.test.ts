@@ -1,13 +1,20 @@
 const { StatusCodes } = require("http-status-codes");
-const { getUserById, getEveryUser, patchUser, getUserByToken } = require("../users");
+const {
+  getUserById,
+  getEveryUser,
+  patchUser,
+  getUserByToken,
+} = require("../users");
 
 const getUser = require("../../Domain/users/get-userById");
 const getAllUsers = require("../../Domain/users/get-allUsers");
 const patchU = require("../../Domain/users/patch-user");
+const getUsrToken = require("../../Domain/users/get-userByToken");
 const userDataIsNotValid = require("../../utils/utils");
 jest.mock("../../Domain/users/get-userById", () => jest.fn());
 jest.mock("../../Domain/users/get-allUsers", () => jest.fn());
 jest.mock("../../Domain/users/patch-user", () => jest.fn());
+jest.mock("../../Domain/users/get-userByToken", () => jest.fn());
 jest.mock("../../utils/utils", () => jest.fn());
 
 describe("Users Endpoints", () => {
@@ -24,10 +31,7 @@ describe("Users Endpoints", () => {
     it("should return a custom error object if id has letters in it", async () => {
       await getUserById({ params: { id: "qu1m" } }, mockSend);
 
-      expect(mockSend.status).toHaveBeenNthCalledWith(
-        1,
-        StatusCodes.BAD_REQUEST
-      );
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "Invalid id format",
@@ -40,7 +44,7 @@ describe("Users Endpoints", () => {
     it("should return a custom error object if id doesn't match user in database", async () => {
       getUser.mockRejectedValueOnce(new Error("User does not exist"));
       await getUserById({ params: { id: "90" } }, mockSend);
-      expect(mockSend.status).toHaveBeenNthCalledWith(1, StatusCodes.NOT_FOUND);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 404);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "User does not exist",
@@ -67,6 +71,20 @@ describe("Users Endpoints", () => {
       expect(mockSend.status).toHaveBeenCalledTimes(0);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
     });
+
+    it("should return a custom error object if any unexpected error is met", async () => {
+      const e = new Error("An unexpected Error");
+      getUser.mockRejectedValueOnce(e);
+      await getUserById({ params: { id: "90" } }, mockSend);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: e.message,
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
   });
 
   describe("get all users", () => {
@@ -90,15 +108,15 @@ describe("Users Endpoints", () => {
       ]);
     });
 
-    it("should return internal error", async () => {
-      await getUserById({}, mockSend);
-      expect(mockSend.status).toHaveBeenNthCalledWith(
-        1,
-        StatusCodes.INTERNAL_SERVER_ERROR
-      );
+    it("should return a custom error object if any unexpected error is met", async () => {
+      const e = new Error("An unexpected error");
+      getAllUsers.mockRejectedValueOnce(e);
+
+      await getEveryUser({}, mockSend);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
-          message: "Cannot read properties of undefined (reading 'id')",
+          message: e.message,
           cause: "Unexpected error",
           date: new Date().toLocaleString(),
         },
@@ -126,10 +144,7 @@ describe("Users Endpoints", () => {
       };
       await patchUser({ params: { id: "qu1m" }, body: data }, mockSend);
 
-      expect(mockSend.status).toHaveBeenNthCalledWith(
-        1,
-        StatusCodes.BAD_REQUEST
-      );
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "Invalid id format",
@@ -158,7 +173,7 @@ describe("Users Endpoints", () => {
       };
       userDataIsNotValid.mockReturnValueOnce(testerResponse);
       await patchUser({ params: { id: "0" }, body: data }, mockSend);
-      // expect(mockSend.status).toHaveBeenNthCalledWith(1, StatusCodes.BAD_REQUEST);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: [
@@ -188,7 +203,7 @@ describe("Users Endpoints", () => {
       patchU.mockRejectedValueOnce(new Error("User not found"));
       await patchUser({ params: { id: "1521" }, body: data }, mockSend);
 
-      expect(mockSend.status).toHaveBeenNthCalledWith(1, StatusCodes.NOT_FOUND);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 404);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "User not found",
@@ -197,6 +212,26 @@ describe("Users Endpoints", () => {
         },
       });
     });
+
+    it("should return a custom error object if any unexpected error is met", async () => {
+      const testerResponse = {
+        check: false,
+        cause: [],
+      };
+      const e = new Error("An unexpected Error");
+      userDataIsNotValid.mockReturnValueOnce(testerResponse);
+      patchU.mockRejectedValueOnce(e);
+      await patchUser({ params: { id: "0" } }, mockSend);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: e.message,
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
+
     it("should return a success response", async () => {
       const data = {
         username: "DealIt",
@@ -234,6 +269,16 @@ describe("Users Endpoints", () => {
   });
 
   describe("get user by token", () => {
+    const mockReq = {
+      body: {
+        decoded: {
+          username: "DealIt",
+          email: "dealit@dealit.com",
+          iat: 1655717318,
+          exp: 1655724518,
+        },
+      },
+    };
     const mockSend = {
       status: jest.fn().mockReturnThis(),
       send: jest.fn().mockReturnThis(),
@@ -243,30 +288,33 @@ describe("Users Endpoints", () => {
       jest.clearAllMocks();
     });
 
-    it("should return a custom error object if id has letters in it", async () => {
-      await getUserById({ params: { id: "qu1m" } }, mockSend);
+    it("should return a custom error object if user in token does not exist", async () => {
+      const e = new Error("User does not exist");
 
-      expect(mockSend.status).toHaveBeenNthCalledWith(
-        1,
-        StatusCodes.BAD_REQUEST
-      );
+      getUsrToken.mockRejectedValueOnce(e);
+
+      await getUserByToken(mockReq, mockSend);
+
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
-          message: "Invalid id format",
+          message: e.message,
           cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
     });
 
-    it("should return a custom error object if id doesn't match user in database", async () => {
-      getUser.mockRejectedValueOnce(new Error("User does not exist"));
-      await getUserById({ params: { id: "90" } }, mockSend);
-      expect(mockSend.status).toHaveBeenNthCalledWith(1, StatusCodes.NOT_FOUND);
+    it("should return a custom error object if any unexpected error is met", async () => {
+      const e = new Error("Error");
+      getUsrToken.mockRejectedValueOnce(e);
+
+      await getUserByToken({}, mockSend);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
-          message: "User does not exist",
-          cause: "Not found",
+          message: e.message,
+          cause: "Unexpected error",
           date: new Date().toLocaleString(),
         },
       });
@@ -283,10 +331,10 @@ describe("Users Endpoints", () => {
           city: "Porto",
         },
       };
-      getUser.mockResolvedValueOnce(response);
-      await getUserById({ params: { id: "1" } }, mockSend);
+      getUsrToken.mockResolvedValueOnce(response);
+      await getUserByToken(mockReq, mockSend);
 
-      expect(mockSend.status).toHaveBeenCalledTimes(0);
+      // expect(mockSend.status).toHaveBeenCalledTimes(0);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
     });
   });

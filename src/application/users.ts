@@ -104,14 +104,6 @@ export const patchUser = async (
         },
       });
     }
-    if (e.message.slice(10, 33) === "prisma.user.update()")
-      return res.status(StatusCodes.BAD_REQUEST).send({
-        error: {
-          message: `${e.message.slice(10, 33)} failed`,
-          cause: "Bad Request",
-          date: new Date().toLocaleString(),
-        },
-      });
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,
@@ -130,11 +122,11 @@ export const getUserByToken = async (
     const {username} = req.body.decoded;
     return res.send(await getUserT(username));
   } catch (e: any) {
-    if (e.message === "Invalid credentials") {
-      return res.status(StatusCodes.UNAUTHORIZED).send({
+    if (e.message === "User does not exist") {
+      return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: e.message,
-          cause: "Unauthorized",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
