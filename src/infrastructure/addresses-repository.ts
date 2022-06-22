@@ -1,5 +1,5 @@
 import { Address, PrismaClient } from "@prisma/client";
-
+import axios from "axios";
 const prisma = new PrismaClient();
 
 export const getAddressesByUserId = async (
@@ -65,3 +65,15 @@ export const setAdressFavorite = async (
 
   return updated;
 };
+
+export const getAdressAutocomplete = async (text: string)=>{
+const env = process.env.ADRRESS_API_KEY
+let idk = {}
+await axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${env}`).then(res =>{
+  idk = res.data 
+})
+if(idk){
+return idk
+}
+return "nothing found"
+}

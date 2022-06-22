@@ -1,10 +1,10 @@
-const { StatusCodes } = require("http-status-codes");
 const {
   getUserById,
   getEveryUser,
   patchUser,
   getUserByToken,
 } = require("../users");
+
 
 const getUser = require("../../Domain/users/get-userById");
 const getAllUsers = require("../../Domain/users/get-allUsers");
@@ -17,6 +17,7 @@ jest.mock("../../Domain/users/patch-user", () => jest.fn());
 jest.mock("../../Domain/users/get-userByToken", () => jest.fn());
 jest.mock("../../utils/utils", () => jest.fn());
 
+
 describe("Users Endpoints", () => {
   describe("get user by id", () => {
     const mockSend = {
@@ -24,14 +25,16 @@ describe("Users Endpoints", () => {
       send: jest.fn().mockReturnThis(),
     };
 
-    afterEach(() => {
-      jest.clearAllMocks();
+    beforeEach(() => {
+      jest.clearAllMocks();      
     });
+
 
     it("should return a custom error object if id has letters in it", async () => {
       await getUserById({ params: { id: "qu1m" } }, mockSend);
 
       expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
+
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "Invalid id format",
@@ -41,6 +44,7 @@ describe("Users Endpoints", () => {
       });
     });
 
+
     it("should return a custom error object if id doesn't match user in database", async () => {
       getUser.mockRejectedValueOnce(new Error("User does not exist"));
       await getUserById({ params: { id: "90" } }, mockSend);
@@ -48,6 +52,7 @@ describe("Users Endpoints", () => {
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "User does not exist",
+
           cause: "Not found",
           date: new Date().toLocaleString(),
         },
@@ -55,11 +60,13 @@ describe("Users Endpoints", () => {
     });
 
     it("should return a successful response", async () => {
+
       const response = {
         id: 0,
         username: "DealIt",
         email: "dealit@dealit.com",
         phone: "910000000",
+
         address: {
           country: "Portugal",
           city: "Porto",
@@ -334,7 +341,7 @@ describe("Users Endpoints", () => {
       getUsrToken.mockResolvedValueOnce(response);
       await getUserByToken(mockReq, mockSend);
 
-      // expect(mockSend.status).toHaveBeenCalledTimes(0);
+      expect(mockSend.status).toHaveBeenCalledTimes(0);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
     });
   });
