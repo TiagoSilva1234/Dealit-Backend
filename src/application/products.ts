@@ -79,9 +79,10 @@ export const postNewProduct = async (
       category,
     };
 
+    const result = await postProduct(data)
     return res.status(StatusCodes.CREATED).send({
       message: "Product successfully saved to database!",
-      product: await postProduct(data),
+      product: result,
     });
   } catch (e: any) {
 

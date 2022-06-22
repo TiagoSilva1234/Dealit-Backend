@@ -118,12 +118,18 @@ describe("Products Endpoints", () => {
              category : "pao",
           }
         }
-        postProduct.mockRejectedValueOnce(new Error("Product does not exist"))
+        postProduct.mockRejectedValueOnce(new Error())
    
         await postNewProduct(mock, mockSend);
   
        expect(mockSend.status).toHaveBeenNthCalledWith(1,500);
-        expect(mockSend.send).toHaveBeenNthCalledWith(1,TypeError());
+        expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+          error: {
+            message:"",
+            cause: "Unexpected error",
+            date: new Date().toLocaleString(),
+          },
+        });
       });
     })
   });
