@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1655900120468" clover="3.2.0">
-  <project timestamp="1655900120468" name="All files">
+<coverage generated="1655900259650" clover="3.2.0">
+  <project timestamp="1655900259650" name="All files">
     <metrics statements="122" coveredstatements="108" conditionals="69" coveredconditionals="54" methods="14" coveredmethods="11" elements="205" coveredelements="173" complexity="0" loc="122" ncloc="122" packages="1" files="3" classes="3"/>
-    <file name="addresses.ts" path="/Users/nunolima/workspace/Dealit-Backend/src/application/addresses.ts">
+    <file name="addresses.ts" path="/Users/tiagosilva/Desktop/BackEndDealIt/src/application/addresses.ts">
       <metrics statements="26" coveredstatements="12" conditionals="19" coveredconditionals="4" methods="4" coveredmethods="1"/>
       <line num="9" count="1" type="stmt"/>
       <line num="13" count="4" type="stmt"/>
@@ -31,7 +31,7 @@
       <line num="107" count="0" type="stmt"/>
       <line num="109" count="0" type="stmt"/>
     </file>
-    <file name="products.ts" path="/Users/nunolima/workspace/Dealit-Backend/src/application/products.ts">
+    <file name="products.ts" path="/Users/tiagosilva/Desktop/BackEndDealIt/src/application/products.ts">
       <metrics statements="62" coveredstatements="62" conditionals="38" coveredconditionals="38" methods="6" coveredmethods="6"/>
       <line num="11" count="1" type="stmt"/>
       <line num="15" count="4" type="stmt"/>
@@ -96,7 +96,7 @@
       <line num="210" count="1" type="stmt"/>
       <line num="218" count="1" type="stmt"/>
     </file>
-    <file name="users.ts" path="/Users/nunolima/workspace/Dealit-Backend/src/application/users.ts">
+    <file name="users.ts" path="/Users/tiagosilva/Desktop/BackEndDealIt/src/application/users.ts">
       <metrics statements="34" coveredstatements="34" conditionals="12" coveredconditionals="12" methods="4" coveredmethods="4"/>
       <line num="11" count="1" type="stmt"/>
       <line num="15" count="4" type="stmt"/>
