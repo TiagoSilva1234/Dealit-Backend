@@ -1,7 +1,6 @@
-const { getProductById } = require("../Products");
-
+const { getProductById, postNewProduct } = require("../Products");
 const getProduct = require("../../Domain/products/get-productById");
-const postProduct = require("../../domain/products/post-product")
+const postProduct = require("../../Domain/products/post-product")
 jest.mock("../../Domain/products/get-productById",()=>jest.fn())
 jest.mock("../../domain/products/post-product",()=>jest.fn())
 
@@ -21,7 +20,7 @@ describe("Products Endpoints", () => {
   
         expect(mockSend.status).toHaveBeenNthCalledWith(
           1,
-          StatusCodes.BAD_REQUEST
+          400
         );
         expect(mockSend.send).toHaveBeenNthCalledWith(1, {
           error: {
@@ -38,7 +37,7 @@ describe("Products Endpoints", () => {
         await getProductById({ params: { id: "1" },query:{page:1,limit:3} }, mockSend);
   
         expect(mockSend.status).toHaveBeenNthCalledWith(1,
-           StatusCodes.NOT_FOUND);
+           404);
         expect(mockSend.send).toHaveBeenNthCalledWith(1,
            {
           error: {
@@ -76,12 +75,30 @@ describe("Products Endpoints", () => {
         expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
       });
 
-      it("should return a custom error required data missing", async () => {
+        it("should return unexpected error", async () => {
   
+        getProduct.mockResolvedValueOnce(new Error())
       
-        await getProductById({ body:{}}, mockSend);
+        await getProductById({ params: { id: 2 },query:{} }, mockSend);
   
-    //  expect(mockSend.status).toHaveBeenNthCalledWith(1,StatusCodes.BAD_REQUEST);
+      expect(mockSend.status).toHaveBeenCalledTimes(0);
+        expect(mockSend.send).toHaveBeenNthCalledWith(1, TypeError());
+      });  
+
+    });
+    describe("post product",()=>{
+      const mockSend = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn().mockReturnThis(),
+      };
+  
+      beforeEach(() => {
+        jest.clearAllMocks();      
+      });
+      it("should return a custom error required data missing", async () => {
+        await postNewProduct({ body:{}}, mockSend);
+  
+        expect(mockSend.status).toHaveBeenNthCalledWith(1,400);
         expect(mockSend.send).toHaveBeenNthCalledWith(1,{
           error: {
             message: "Required data missing",
@@ -90,6 +107,24 @@ describe("Products Endpoints", () => {
           },
         });
       });
-    });
+      it("should return a unexpected error", async () => {
+        const mock = {
+          body:{
+            name: "claudio",
+            description: "idk",
+             photos :["asd"],
+             price : 123.1,
+             userId : 1,
+             category : "pao",
+          }
+        }
+        postProduct.mockRejectedValueOnce(new Error("Product does not exist"))
+   
+        await postNewProduct(mock, mockSend);
+  
+       expect(mockSend.status).toHaveBeenNthCalledWith(1,500);
+        expect(mockSend.send).toHaveBeenNthCalledWith(1,TypeError());
+      });
+    })
   });
   

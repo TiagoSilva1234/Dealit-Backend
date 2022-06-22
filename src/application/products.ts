@@ -80,22 +80,11 @@ export const postNewProduct = async (
     };
 
     return res.status(StatusCodes.CREATED).send({
-      message: "Product successfully saved to datebase!",
+      message: "Product successfully saved to database!",
       product: await postProduct(data),
     });
   } catch (e: any) {
-    if (
-      e.message ===
-      "\nInvalid `prisma.product.create()` invocation in\n/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/products-repository.ts:23:40\n\n  20 };\n  21 \n  22 export const saveProduct = async (data: ProductData) => {\n→ 23   const product = await prisma.product.create(\n  An operation failed because it depends on one or more records that were required but not found. No 'Category' record(s) (needed to inline the relation on 'Product' record(s)) was found for a nested connect on one-to-many relation 'CategoryToProduct'."
-    ) {
-      return res.status(StatusCodes.UNPROCESSABLE_ENTITY).send({
-        error: {
-          message: "Category name does not match any category in database",
-          cause: "Unprocessable entity",
-          date: new Date().toLocaleString(),
-        },
-      });
-    }
+
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,
