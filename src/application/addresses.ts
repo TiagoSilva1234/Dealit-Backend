@@ -59,24 +59,26 @@ export const postAddress = async (
     ) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
-          message: "Required inputs missing",
+          message: "Required data missing",
           cause: "Bad request",
           date: new Date().toLocaleString(),
         },
       });
     }
+    const resAddress = await postAdd(data);
     return res.status(StatusCodes.CREATED).send({
       message: "Address successfully saved to database",
-      order: await postAdd(data),
+      address: resAddress,
     });
   } catch (e: any) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+    const resError = res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,
         cause: "Unexpected error",
         date: new Date().toLocaleString(),
       },
     });
+    return resError;
   }
 };
 
@@ -100,14 +102,11 @@ export const setFavoriteAddress = async (
   });
 };
 
-
-export const getAddressAutocomplete = async (req:Request,res:Response)=>{
-  if( typeof req.query.text === "string"|| req.query.text instanceof String){
-    const f:string = String(req.query.text) || "porto"
+export const getAddressAutocomplete = async (req: Request, res: Response) => {
+  if (typeof req.query.text === "string" || req.query.text instanceof String) {
+    const f: string = String(req.query.text) || "porto";
     const result = await getAddressAuto(f);
 
-    return res.send(result)
+    return res.send(result);
   }
- 
-
-  }
+};

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1655900120468" clover="3.2.0">
-  <project timestamp="1655900120468" name="All files">
-    <metrics statements="122" coveredstatements="108" conditionals="69" coveredconditionals="54" methods="14" coveredmethods="11" elements="205" coveredelements="173" complexity="0" loc="122" ncloc="122" packages="1" files="3" classes="3"/>
+<coverage generated="1655906192472" clover="3.2.0">
+  <project timestamp="1655906192472" name="All files">
+    <metrics statements="124" coveredstatements="116" conditionals="69" coveredconditionals="61" methods="14" coveredmethods="12" elements="207" coveredelements="189" complexity="0" loc="124" ncloc="124" packages="1" files="3" classes="3"/>
     <file name="addresses.ts" path="/Users/nunolima/workspace/Dealit-Backend/src/application/addresses.ts">
-      <metrics statements="26" coveredstatements="12" conditionals="19" coveredconditionals="4" methods="4" coveredmethods="1"/>
+      <metrics statements="28" coveredstatements="20" conditionals="19" coveredconditionals="11" methods="4" coveredmethods="2"/>
       <line num="9" count="1" type="stmt"/>
       <line num="13" count="4" type="stmt"/>
       <line num="14" count="4" type="stmt"/>
@@ -14,22 +14,24 @@
       <line num="27" count="1" type="stmt"/>
       <line num="35" count="1" type="stmt"/>
       <line num="45" count="1" type="stmt"/>
-      <line num="49" count="0" type="stmt"/>
-      <line num="50" count="0" type="stmt"/>
-      <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="60" count="0" type="stmt"/>
-      <line num="68" count="0" type="stmt"/>
-      <line num="73" count="0" type="stmt"/>
-      <line num="83" count="1" type="stmt"/>
-      <line num="87" count="0" type="stmt"/>
-      <line num="88" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="49" count="3" type="stmt"/>
+      <line num="50" count="3" type="stmt"/>
+      <line num="51" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="60" count="1" type="stmt"/>
+      <line num="68" count="2" type="stmt"/>
+      <line num="69" count="1" type="stmt"/>
+      <line num="74" count="1" type="stmt"/>
+      <line num="81" count="1" type="stmt"/>
+      <line num="85" count="1" type="stmt"/>
       <line num="89" count="0" type="stmt"/>
-      <line num="97" count="0" type="stmt"/>
-      <line num="104" count="1" type="stmt"/>
-      <line num="105" count="0" type="cond" truecount="0" falsecount="4"/>
-      <line num="106" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="107" count="0" type="stmt"/>
-      <line num="109" count="0" type="stmt"/>
+      <line num="90" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="91" count="0" type="stmt"/>
+      <line num="99" count="0" type="stmt"/>
+      <line num="105" count="1" type="stmt"/>
+      <line num="106" count="0" type="cond" truecount="0" falsecount="4"/>
+      <line num="107" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="108" count="0" type="stmt"/>
+      <line num="110" count="0" type="stmt"/>
     </file>
     <file name="products.ts" path="/Users/nunolima/workspace/Dealit-Backend/src/application/products.ts">
       <metrics statements="62" coveredstatements="62" conditionals="38" coveredconditionals="38" methods="6" coveredmethods="6"/>

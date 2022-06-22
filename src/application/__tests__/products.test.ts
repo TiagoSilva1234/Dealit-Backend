@@ -96,6 +96,7 @@ describe("Products Endpoints", () => {
       });
     });
   });
+
   describe("post product", () => {
     const mockSend = {
       status: jest.fn().mockReturnThis(),
@@ -169,6 +170,7 @@ describe("Products Endpoints", () => {
       expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
     });
   });
+
   describe("get product by category", () => {
     const mockSend = {
       status: jest.fn().mockReturnThis(),
@@ -207,6 +209,7 @@ describe("Products Endpoints", () => {
       expect(mockSend.send).toHaveBeenNthCalledWith(1, []);
     });
   });
+
   describe("get products paginated", () => {
     const mockSend = {
       status: jest.fn().mockReturnThis(),
@@ -245,6 +248,7 @@ describe("Products Endpoints", () => {
       expect(mockSend.send).toHaveBeenNthCalledWith(1, []);
     });
   });
+
   describe("get products by user Id", () => {
     const mockSend = {
       status: jest.fn().mockReturnThis(),
@@ -314,6 +318,7 @@ describe("Products Endpoints", () => {
       });
     });
   });
+
   describe("get products by user Id", () => {
     const mockSend = {
       status: jest.fn().mockReturnThis(),

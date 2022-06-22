@@ -15,11 +15,12 @@ const getAddressAuto = require("../../domain/addresses/get-addressAuto");
 jest.mock("../../Domain/addresses/get-addressAuto", () => jest.fn());
 
 describe("Addresses Endpoint", () => {
+
   const mockSend = {
     status: jest.fn().mockReturnThis(),
     send: jest.fn().mockReturnThis(),
   };
-  
+
   describe("get addresses by user id", () => {
     beforeEach(() => {
       jest.clearAllMocks();
@@ -55,25 +56,25 @@ describe("Addresses Endpoint", () => {
     it("should return a successful response", async () => {
       const response = [
         {
-          "id": 4,
-          "country": "Portugal",
-          "city": "Porto",
-          "zipCode": "4000-543",
-          "street": "Rua do Porto",
-          "houseNumber": "534",
-          "isFavorite": true,
-          "userId": 0
+          id: 4,
+          country: "Portugal",
+          city: "Porto",
+          zipCode: "4000-543",
+          street: "Rua do Porto",
+          houseNumber: "534",
+          isFavorite: true,
+          userId: 0,
         },
         {
-          "id": 6,
-          "country": "United States",
-          "city": "Silicon Valley",
-          "zipCode": "90041",
-          "street": "Sili Street",
-          "houseNumber": "332",
-          "isFavorite": false,
-          "userId": 0
-        }
+          id: 6,
+          country: "United States",
+          city: "Silicon Valley",
+          zipCode: "90041",
+          street: "Sili Street",
+          houseNumber: "332",
+          isFavorite: false,
+          userId: 0,
+        },
       ];
       getAddsByUserId.mockResolvedValueOnce(response);
       await getAddressesByUserId({ params: { userId: 0 } }, mockSend);
@@ -83,17 +84,92 @@ describe("Addresses Endpoint", () => {
     });
 
     it("should return a custom error object if any unexpected error is met", async () => {
-      const e = new Error("An unexpected Error");
-      getAddsByUserId.mockRejectedValueOnce(e);
+      getAddsByUserId.mockRejectedValueOnce(new Error("An unexpected Error"));
       await getAddressesByUserId({ params: { userId: "0" } }, mockSend);
       expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
-          message: e.message,
+          message: "An unexpected Error",
           cause: "Unexpected error",
           date: new Date().toLocaleString(),
         },
       });
+    });
+  });
+
+  describe("post address", () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return a custom error if required data is missing", async () => {
+      await postAddress({ body: {} }, mockSend);
+      //expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: "Required data missing",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
+    
+    it("should return a custom error if an unexpected error occurs", async () => {
+      const mockReq = {
+        body: {
+          country: "United States",
+          city: "Silicon Valley",
+          zipCode: "90041",
+          street: "Sili Street",
+          houseNumber: "332",
+          isFavorite: false,
+          userId: 0,
+        },
+      };
+
+      postAdd.mockRejectedValueOnce(new Error("An unexpected error"));
+
+      await postAddress(mockReq, mockSend);
+
+      //expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: "An unexpected error",
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
+
+    it("should return a successful response", async () => {
+      const response = {
+        message: "Address successfully saved to database",
+        address: {
+          country: "United States",
+          city: "Silicon Valley",
+          zipCode: "90041",
+          street: "Sili Street",
+          houseNumber: "332",
+          isFavorite: false,
+          userId: 0,
+        },
+      };
+      const mockReq = {
+        body: {
+          country: "United States",
+          city: "Silicon Valley",
+          zipCode: "90041",
+          street: "Sili Street",
+          houseNumber: "332",
+          isFavorite: false,
+          userId: 0,
+        },
+      };
+      postAdd.mockResolvedValueOnce(mockReq.body);
+      await postAddress(mockReq, mockSend);
+
+      //expect(mockSend.status).toHaveBeenNthCalledWith(1, 201);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
     });
   });
 });
