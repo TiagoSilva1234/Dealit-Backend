@@ -107,7 +107,7 @@ describe("Addresses Endpoint", () => {
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "Required data missing",
-          cause: "Bad request",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });

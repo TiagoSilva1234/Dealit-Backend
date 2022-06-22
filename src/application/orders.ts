@@ -48,7 +48,7 @@ export const postOrder = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const data: Order = req.body.order;
-    const prodIds: number[] = req.body.prodIdss;
+    const prodIds: number[] = req.body.prods;
     if (!data || !prodIds) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -67,9 +67,10 @@ export const postOrder = async (
         },
       });
     }
+    const result  =await postOrders(data, prodIds)
     return res.status(StatusCodes.CREATED).send({
       message: "Order successfully saved to database",
-      order: await postOrders(data, prodIds),
+      order: result,
     });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -108,9 +109,10 @@ export const patchOrderSend = async (
         },
       });
     }
+    const result = await patchOrderSendDate(id, data);
     return res.send({
       message: "Send date successfully updated",
-      order: await patchOrderSendDate(id, data),
+      order: result,
     });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -149,9 +151,10 @@ export const patchOrderDelivery = async (
         },
       });
     }
+    const result = await patchOrderDeliveryDate(Number(id), data)
     return res.send({
       message: "Delivery date successfully updated",
-      order: await patchOrderDeliveryDate(Number(id), data),
+      order: result,
     });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
