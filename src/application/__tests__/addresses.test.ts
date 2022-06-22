@@ -104,11 +104,11 @@ describe("Addresses Endpoint", () => {
 
     it("should return a custom error if required data is missing", async () => {
       await postAddress({ body: {} }, mockSend);
-      //expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "Required data missing",
-          cause: "Bad Request",
+          cause: "Bad request",
           date: new Date().toLocaleString(),
         },
       });
@@ -131,7 +131,7 @@ describe("Addresses Endpoint", () => {
 
       await postAddress(mockReq, mockSend);
 
-      //expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, {
         error: {
           message: "An unexpected error",
