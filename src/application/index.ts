@@ -49,7 +49,7 @@ export const endpointPatchUser = (app: Express): void => {
   app.patch("/dealit/api/users/:id", verifyToken, patchUser);
 };
 export const endpointGetAllUsers = (app: Express): void => {
-  app.get("/dealit/api/users/all", getEveryUser);
+  app.get("/dealit/api/all-users/", getEveryUser);
 };
 //EndpointsAuth
 export const endpointPostUser = (app: Express): void => {
