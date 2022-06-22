@@ -117,7 +117,8 @@ export const getAddressAutocomplete = async (req: Request, res: Response) => {
       typeof req.query.text === "string" ||
       req.query.text instanceof String
     ) {
-      const f: string = String(req.query.text) ;
+
+      const f: string = String(req.query.text);
       const result = await getAddressAuto(f);
       return res.send(result);
     }
