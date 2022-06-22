@@ -1,5 +1,5 @@
 const { getProductById } = require("../Products");
-const { StatusCodes } = require("http-status-codes");
+
 const getProduct = require("../../Domain/products/get-productById");
 const postProduct = require("../../domain/products/post-product")
 jest.mock("../../Domain/products/get-productById",()=>jest.fn())
