@@ -7,25 +7,25 @@ const {
 
 
 const getUser = require("../../Domain/users/get-userById");
-const getAllUsers = require("../../Domain/users/get-allUsers");
-const patchU = require("../../Domain/users/patch-user");
-const getUsrToken = require("../../Domain/users/get-userByToken");
-const userDataIsNotValid = require("../../utils/utils");
 jest.mock("../../Domain/users/get-userById", () => jest.fn());
+const getAllUsers = require("../../Domain/users/get-allUsers");
 jest.mock("../../Domain/users/get-allUsers", () => jest.fn());
+const patchU = require("../../Domain/users/patch-user");
 jest.mock("../../Domain/users/patch-user", () => jest.fn());
+const getUsrToken = require("../../Domain/users/get-userByToken");
 jest.mock("../../Domain/users/get-userByToken", () => jest.fn());
+const userDataIsNotValid = require("../../utils/utils");
 jest.mock("../../utils/utils", () => jest.fn());
 
 
 describe("Users Endpoints", () => {
 
-  describe("get user by id", () => {
-    const mockSend = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
-    };
+  const mockSend = {
+    status: jest.fn().mockReturnThis(),
+    send: jest.fn().mockReturnThis(),
+  };
 
+  describe("get user by id", () => {
     beforeEach(() => {
       jest.clearAllMocks();      
     });
@@ -95,12 +95,10 @@ describe("Users Endpoints", () => {
   });
 
   describe("get all users", () => {
-    const mockSend = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
-    };
 
-    afterEach(() => {
+    
+
+    beforeEach(() => {
       jest.clearAllMocks();
     });
 
@@ -132,12 +130,8 @@ describe("Users Endpoints", () => {
   });
 
   describe("patch user", () => {
-    const mockSend = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
-    };
 
-    afterEach(() => {
+    beforeEach(() => {
       jest.clearAllMocks();
     });
 
@@ -286,12 +280,8 @@ describe("Users Endpoints", () => {
         },
       },
     };
-    const mockSend = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
-    };
 
-    afterEach(() => {
+    beforeEach(() => {
       jest.clearAllMocks();
     });
 

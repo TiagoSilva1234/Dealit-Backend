@@ -5,6 +5,7 @@ import postAdd from "../domain/addresses/post-address";
 import setAddressIsFavorite from "../domain/addresses/patch-adressIsFavorite";
 import getAddsByUserId from "../domain/addresses/get-addressByUserId";
 import getAddressAuto from "../domain/addresses/get-addressAuto";
+
 export const getAddressesByUserId = async (
   req: Request,
   res: Response
