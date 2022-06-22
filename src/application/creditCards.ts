@@ -55,15 +55,16 @@ export const postCreditCard = async (req: Request, res: Response) => {
     ) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
-          message: "Required inputs missing",
-          cause: "Bad request",
+          message: "Required data missing",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
     }
+    const resCC = await postCC(data);
     res.status(StatusCodes.CREATED).send({
       message: "Credit Card successfully saved to database",
-      order: await postCC(data),
+      creditCard: resCC
     });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -83,7 +84,7 @@ export const setFavoriteCreditCard = async (req: Request, res: Response) => {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
-          cause: "Bad request",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });

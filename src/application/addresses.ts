@@ -60,7 +60,7 @@ export const postAddress = async (
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required data missing",
-          cause: "Bad request",
+          cause: "Bad Request",
           date: new Date().toLocaleString(),
         },
       });
@@ -71,14 +71,13 @@ export const postAddress = async (
       address: resAddress,
     });
   } catch (e: any) {
-    const resError = res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,
         cause: "Unexpected error",
         date: new Date().toLocaleString(),
       },
     });
-    return resError;
   }
 };
 
@@ -87,26 +86,55 @@ export const setFavoriteAddress = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   const id = Number(req.params.id);
-  if (isNaN(Number(id))) {
-    return res.status(StatusCodes.BAD_REQUEST).send({
+  try {
+    if (isNaN(Number(id))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.send({
+      message: "Favorite address successfully updated",
+      address: await setAddressIsFavorite(id),
+    });
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
-        message: "Invalid id format",
-        cause: "Bad Request",
+        message: e.message,
+        cause: "Unexpected error",
         date: new Date().toLocaleString(),
       },
     });
   }
-  return res.send({
-    message: "Favorite address successfully updated",
-    address: await setAddressIsFavorite(id),
-  });
 };
 
 export const getAddressAutocomplete = async (req: Request, res: Response) => {
-  if (typeof req.query.text === "string" || req.query.text instanceof String) {
-    const f: string = String(req.query.text) || "porto";
-    const result = await getAddressAuto(f);
-
-    return res.send(result);
+  try {
+    if (
+      typeof req.query.text === "string" ||
+      req.query.text instanceof String
+    ) {
+      const f: string = String(req.query.text) || "porto";
+      const result = await getAddressAuto(f);
+      return res.send(result);
+    }
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      error: {
+        message: "Invalid query parameter type",
+        cause: "Bad Request",
+        date: new Date().toLocaleString(),
+      },
+    });
+  } catch (e: any) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
   }
 };

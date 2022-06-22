@@ -15,7 +15,6 @@ const getAddressAuto = require("../../domain/addresses/get-addressAuto");
 jest.mock("../../Domain/addresses/get-addressAuto", () => jest.fn());
 
 describe("Addresses Endpoint", () => {
-
   const mockSend = {
     status: jest.fn().mockReturnThis(),
     send: jest.fn().mockReturnThis(),
@@ -113,7 +112,7 @@ describe("Addresses Endpoint", () => {
         },
       });
     });
-    
+
     it("should return a custom error if an unexpected error occurs", async () => {
       const mockReq = {
         body: {
@@ -168,8 +167,105 @@ describe("Addresses Endpoint", () => {
       postAdd.mockResolvedValueOnce(mockReq.body);
       await postAddress(mockReq, mockSend);
 
-      //expect(mockSend.status).toHaveBeenNthCalledWith(1, 201);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 201);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
+    });
+  });
+
+  describe("set favorite address", () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return a custom error if id has letters", async () => {
+      await setFavoriteAddress({ params: { id: "f" } }, mockSend);
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
+
+    it("should return a custom error if an unexpected error occurs", async () => {
+      setAddressIsFavorite.mockRejectedValueOnce(
+        new Error("An unexpected error")
+      );
+
+      await setFavoriteAddress({ params: { id: "0" } }, mockSend);
+
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: "An unexpected error",
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
+
+    it("should return a successful response", async () => {
+      const response = {
+        message: "Favorite address successfully updated",
+        address: {
+          country: "United States",
+          city: "Silicon Valley",
+          zipCode: "90041",
+          street: "Sili Street",
+          houseNumber: "332",
+          isFavorite: false,
+          userId: 0,
+        },
+      };
+      setAddressIsFavorite.mockResolvedValueOnce(response.address);
+      await setFavoriteAddress({ params: { id: "0" } }, mockSend);
+
+      expect(mockSend.status).toHaveBeenCalledTimes(0);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
+    });
+  });
+
+  describe("get address autocomplete", () => {
+    it("should return a custom error query param is not of string type", async () => {
+      await getAddressAutocomplete(
+        { query: { text: ["asd", "sdf"] } },
+        mockSend
+      );
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: "Invalid query parameter type",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
+
+    it("should return a custom error if an unexpected error occurs", async () => {
+      getAddressAuto.mockRejectedValueOnce(new Error("An unexpected error"));
+
+      await getAddressAutocomplete({ query: { text: "porto" } }, mockSend);
+
+      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
+        error: {
+          message: "An unexpected error",
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    });
+
+    it("should return a successful response", async () => {
+      const mockRes = [{ address: "a" }, { address: "b" }];
+      getAddressAuto.mockResolvedValueOnce(mockRes);
+
+      await getAddressAutocomplete({ query: { text: "porto" } }, mockSend);
+
+     // expect(mockSend.status).toHaveBeenCalledTimes(0);
+      expect(mockSend.send).toHaveBeenNthCalledWith(1, mockRes);
     });
   });
 });
