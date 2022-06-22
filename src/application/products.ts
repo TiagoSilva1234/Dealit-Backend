@@ -200,28 +200,21 @@ export const patchProduct = async (
         },
       });
     }
+    const result =  await patchProd(Number(id), data)
     return res.send({
       message: "Product successfully patched",
-      user: await patchProd(Number(id), data),
+      user: result,
     });
   } catch (e: any) {
     if (e.message === "Product not found") {
       return res.status(StatusCodes.NOT_FOUND).send({
         error: {
           message: e.message,
-          cause: "Unexpected error",
+          cause: "Product not found",
           date: new Date().toLocaleString(),
         },
       });
     }
-    if (e.message.slice(10, 33) === "prisma.product.update()")
-      return res.status(StatusCodes.BAD_REQUEST).send({
-        error: {
-          message: `${e.message.slice(10, 33)} failed`,
-          cause: "Invalid data format",
-          date: new Date().toLocaleString(),
-        },
-      });
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,
