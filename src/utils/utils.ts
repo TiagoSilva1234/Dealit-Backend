@@ -1,29 +1,4 @@
-import { UserData, ProductData, UserUpdateData } from "./types";
-
-export const productDataIsNotValid = (
-  data: ProductData
-): { check: boolean; cause: string[] } => {
-  const tester = { check: false, cause: Array<string>() };
-
-  if (!data.name) {
-    tester.cause.push("Name not defined");
-  }
-  if (!data.description) {
-    tester.cause.push("Description not defined");
-  }
-  if (!data.price) {
-    tester.cause.push("Price not defined");
-  }
-  if (!data.userId) {
-    tester.cause.push("Seller not defined");
-  }
-  if (!data.category) {
-    tester.cause.push("Category not defined");
-  }
-
-  tester.cause.length > 0 ? (tester.check = true) : (tester.check = false);
-  return tester;
-};
+import { UserData, UserUpdateData } from "./types";
 
 const userDataIsNotValid = (
   data: UserData | UserUpdateData

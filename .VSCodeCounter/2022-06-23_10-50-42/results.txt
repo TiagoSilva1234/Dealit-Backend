@@ -1,0 +1,120 @@
+Date : 2022-06-23 10:50:42
+Directory : /Users/tiagosilva/Desktop/BackEndDealIt
+Total : 71 files,  17552 codes, 73 comments, 635 blanks, all 18260 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          2 |     12,379 |          0 |          4 |     12,383 |
+| TypeScript         |         63 |      4,876 |         26 |        548 |      5,450 |
+| SQL                |          2 |        176 |         44 |         60 |        280 |
+| Prisma             |          1 |         94 |          0 |         11 |        105 |
+| JavaScript         |          2 |         15 |          3 |          6 |         24 |
+| JSON with Comments |          1 |         12 |          0 |          6 |         18 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                           | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                              |         71 |     17,552 |         73 |        635 |     18,260 |
+| prisma                                                                                         |          3 |        270 |         44 |         71 |        385 |
+| prisma/migrations                                                                              |          2 |        176 |         44 |         60 |        280 |
+| prisma/migrations/20220615135746_v10                                                           |          1 |         88 |         22 |         30 |        140 |
+| prisma/migrations/20220615154426_v6                                                            |          1 |         88 |         22 |         30 |        140 |
+| src                                                                                            |         62 |      4,873 |         26 |        547 |      5,446 |
+| src/application                                                                                |         19 |      3,117 |         14 |        344 |      3,475 |
+| src/application/__tests__                                                                      |          9 |      1,801 |          2 |        262 |      2,065 |
+| src/domain                                                                                     |         31 |        468 |          0 |        100 |        568 |
+| src/domain/__tests__                                                                           |          1 |        270 |          0 |         39 |        309 |
+| src/domain/addresses                                                                           |          4 |         15 |          0 |          9 |         24 |
+| src/domain/auth                                                                                |          2 |         18 |          0 |          4 |         22 |
+| src/domain/categories                                                                          |          2 |         26 |          0 |          4 |         30 |
+| src/domain/completion                                                                          |          1 |          6 |          0 |          2 |          8 |
+| src/domain/creditCards                                                                         |          3 |         12 |          0 |          6 |         18 |
+| src/domain/orders                                                                              |          4 |         18 |          0 |          8 |         26 |
+| src/domain/products                                                                            |          6 |         31 |          0 |         12 |         43 |
+| src/domain/reviews                                                                             |          4 |         35 |          0 |          8 |         43 |
+| src/domain/users                                                                               |          4 |         37 |          0 |          8 |         45 |
+| src/infrastructure                                                                             |          8 |        732 |          4 |         68 |        804 |
+| src/utils                                                                                      |          3 |        481 |          0 |         22 |        503 |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                       | language           | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /Users/tiagosilva/Desktop/BackEndDealIt/babel.config.js                                        | JavaScript         |          4 |          0 |          3 |          7 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/client.ts                                              | TypeScript         |          3 |          0 |          1 |          4 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/jest.config.js                                         | JavaScript         |         11 |          3 |          3 |         17 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/package-lock.json                                      | JSON               |     12,320 |          0 |          1 |     12,321 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/package.json                                           | JSON               |         59 |          0 |          3 |         62 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/prisma/migrations/20220615135746_v10/migration.sql     | SQL                |         88 |         22 |         30 |        140 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/prisma/migrations/20220615154426_v6/migration.sql      | SQL                |         88 |         22 |         30 |        140 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/prisma/schema.prisma                                   | Prisma             |         94 |          0 |         11 |        105 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/addresses.test.ts            | TypeScript         |        238 |          1 |         33 |        272 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/auth.test.ts                 | TypeScript         |         48 |          1 |         11 |         60 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/categories.test.ts           | TypeScript         |        109 |          0 |         13 |        122 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/completion.test.ts           | TypeScript         |         43 |          0 |          8 |         51 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/creditCards.test.ts          | TypeScript         |        190 |          0 |         28 |        218 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/orders.test.ts               | TypeScript         |        229 |          0 |         38 |        267 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/products.test.ts             | TypeScript         |        346 |          0 |         47 |        393 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/reviews.test.ts              | TypeScript         |        304 |          0 |         38 |        342 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/users.test.ts                | TypeScript         |        294 |          0 |         46 |        340 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/addresses.ts                           | TypeScript         |        136 |          0 |          5 |        141 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/auth.ts                                | TypeScript         |        201 |          0 |         12 |        213 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/categories.ts                          | TypeScript         |         47 |          1 |          3 |         51 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/completion.ts                          | TypeScript         |         27 |          0 |          2 |         29 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/creditCards.ts                         | TypeScript         |        101 |          0 |          5 |        106 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/index.ts                               | TypeScript         |        131 |          9 |         18 |        158 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/orders.ts                              | TypeScript         |        162 |          0 |          7 |        169 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/products.ts                            | TypeScript         |        211 |          1 |         15 |        227 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/reviews.ts                             | TypeScript         |        166 |          0 |          7 |        173 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/application/users.ts                               | TypeScript         |        134 |          1 |          8 |        143 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/__tests__/domainFunctions.test.ts           | TypeScript         |        270 |          0 |         39 |        309 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/addresses/get-addressAuto.ts                | TypeScript         |          3 |          0 |          3 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/addresses/get-addressByUserId.ts            | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/addresses/patch-adressIsFavorite.ts         | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/addresses/post-address.ts                   | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/auth/post-login.ts                          | TypeScript         |         13 |          0 |          2 |         15 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/auth/post-user.ts                           | TypeScript         |          5 |          0 |          2 |          7 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/categories/get-allMainCategories.ts         | TypeScript         |         12 |          0 |          2 |         14 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/categories/get-categoryById.ts              | TypeScript         |         14 |          0 |          2 |         16 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/completion/get-textCompletion.ts            | TypeScript         |          6 |          0 |          2 |          8 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/creditCards/get-creditCardsByUserId.ts      | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/creditCards/patch-setFavorite.ts            | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/creditCards/post-creditCard.ts              | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/orders/get-ordersByUserId.ts                | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/orders/patch-orderDeliveryDate.ts           | TypeScript         |          6 |          0 |          2 |          8 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/orders/patch-orderSendDate.ts               | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/orders/post-order.ts                        | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-allProductsPaginated.ts        | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-productById.ts                 | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-productsByCategoryPaginated.ts | TypeScript         |          8 |          0 |          2 |         10 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/get-productsByUserId.ts            | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/patch-product.ts                   | TypeScript         |          5 |          0 |          2 |          7 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/products/post-product.ts                    | TypeScript         |          6 |          0 |          2 |          8 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/reviews/get-reviewsByProductId.ts           | TypeScript         |         13 |          0 |          2 |         15 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/reviews/get-reviewsByReviewer.ts            | TypeScript         |          4 |          0 |          2 |          6 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/reviews/get-reviewsByUserId.ts              | TypeScript         |         13 |          0 |          2 |         15 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/reviews/post-review.ts                      | TypeScript         |          5 |          0 |          2 |          7 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/users/get-UserById.ts                       | TypeScript         |         11 |          0 |          2 |         13 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/users/get-allUsers.ts                       | TypeScript         |          8 |          0 |          2 |         10 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/users/get-userByToken.ts                    | TypeScript         |         13 |          0 |          2 |         15 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/domain/users/patch-user.ts                         | TypeScript         |          5 |          0 |          2 |          7 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/index.ts                                           | TypeScript         |         75 |          8 |         13 |         96 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/addresses-repository.ts             | TypeScript         |         71 |          0 |          7 |         78 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/categories-repository.ts            | TypeScript         |         65 |          0 |          5 |         70 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/completion-repository.ts            | TypeScript         |         28 |          0 |          4 |         32 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/creditCards-repository.ts           | TypeScript         |         57 |          0 |          7 |         64 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/orders-repository.ts                | TypeScript         |         62 |          0 |          6 |         68 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/products-repository.ts              | TypeScript         |        166 |          3 |         15 |        184 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/reviews-repository.ts               | TypeScript         |        101 |          0 |          6 |        107 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/users-repository.ts                 | TypeScript         |        182 |          1 |         18 |        201 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/utils/types.ts                                     | TypeScript         |         74 |          0 |          7 |         81 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/utils/utils.ts                                     | TypeScript         |        371 |          0 |         12 |        383 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/src/utils/verifyToken.ts                               | TypeScript         |         36 |          0 |          3 |         39 |
+| /Users/tiagosilva/Desktop/BackEndDealIt/tsconfig.json                                          | JSON with Comments |         12 |          0 |          6 |         18 |
+| Total                                                                                          |                    |     17,552 |         73 |        635 |     18,260 |
++------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
