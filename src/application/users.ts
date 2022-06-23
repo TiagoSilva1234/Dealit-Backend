@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
-<<<<<<< HEAD
-=======
-import getUser from "../domain/users/get-userById";
->>>>>>> parent of 323e8b1 (cona)
+
 import { StatusCodes } from "http-status-codes";
 
 import  userDataIsNotValid  from "../utils/utils";
