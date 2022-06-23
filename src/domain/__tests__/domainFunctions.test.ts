@@ -75,13 +75,13 @@ jest.mock("../../infrastructure/reviews-repository", () => ({
 }));
 
 jest.mock("../../infrastructure/users-repository", () => ({
-    login: () => "test",
-    saveUser: () => "test",
-    getAllUsers: () => "test",
-    getUserById: () => "test",
-    getUserByToken: () => "test",
-    patchUser: () => "test",
-  }));
+  login: () => "test",
+  saveUser: () => "test",
+  getAllUsers: () => "test",
+  getUserById: () => "test",
+  getUserByToken: () => "test",
+  patchUser: () => "test",
+}));
 
 describe("Domain tests", () => {
   describe("addresses domain", () => {
