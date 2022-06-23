@@ -9,15 +9,19 @@ export const registerUser = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    /* const username= req.body.username;
+     const username= req.body.username;
     const email= req.body.email;
     const password = req.body.password;
     const phone = req.body.phone;
-    const { photo } = req.body; */
-    const { username, email, password, phone, photo } = req.body;
+    const  photo  = req.body.photo;
 
-    const { country, city, zipCode, street, houseNumber } = req.body.address;
+    const country = req.body.address.country;
+    const city = req.body.address.city;
+    const zipCode = req.body.address.zipCode;
+    const street = req.body.address.street;
+    const houseNumber = req.body.address.houseNumber;
 
+  
     if (
       !(
         email &&
@@ -138,10 +142,10 @@ export const registerUser = async (
         },
       });
     }
-
+  const result = await postUser(data)
     return res.status(StatusCodes.CREATED).send({
       message: "User successfully saved to database!",
-      user: await postUser(data),
+      user: result,
     });
   } catch (e: any) {
     if (e.message === "User Already Exists. Please Login") {
@@ -169,7 +173,8 @@ export const userLogin = async (
 ): Promise<Response<any, Record<string, any>>> => {
 
   try {
-    const { email, password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
 
     if (!(email && password)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
