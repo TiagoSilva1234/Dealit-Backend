@@ -264,7 +264,7 @@ describe("Addresses Endpoint", () => {
 
       await getAddressAutocomplete({ query: { text: "porto" } }, mockSend);
 
-     // expect(mockSend.status).toHaveBeenCalledTimes(0);
+      // expect(mockSend.status).toHaveBeenCalledTimes(0);
       expect(mockSend.send).toHaveBeenNthCalledWith(1, mockRes);
     });
   });

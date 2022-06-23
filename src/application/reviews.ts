@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { ReviewData } from "../utils/types";
 import getRevsByUserId from "../domain/reviews/get-reviewsByUserId";
 import getRevsByProductId from "../domain/reviews/get-reviewsByProductId";
 import getRevsByReviewer from "../domain/reviews/get-reviewsByReviewer";
 import postRev from "../domain/reviews/post-review";
-import { StatusCodes } from "http-status-codes";
-import { ReviewData } from "../utils/types";
 
 export const getReviewsByUserId = async (
   req: Request,
@@ -111,7 +111,13 @@ export const postReview = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const { userId, productId, comment, photo, rating, reviewer } = req.body;
+    const userId = req.body.userId,
+      productId = req.body.productId,
+      comment = req.body.comment,
+      photo = req.body.photo,
+      rating = req.body.rating,
+      reviewer = req.body.reviewer;
+      
     if (!(comment && photo && rating && reviewer)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
@@ -129,9 +135,10 @@ export const postReview = async (
         rating: Number(rating),
         reviewer,
       };
+      const resRev = await postRev(data);
       return res.status(StatusCodes.CREATED).send({
-        message: "Review successfully saved to datebase!",
-        review: await postRev(data),
+        message: "Review successfully saved to database",
+        review: resRev,
       });
     } else if (productId !== undefined) {
       const data: ReviewData = {
@@ -142,7 +149,7 @@ export const postReview = async (
         reviewer,
       };
       return res.status(StatusCodes.CREATED).send({
-        message: "Review successfully saved to datebase!",
+        message: "Review successfully saved to database",
         review: await postRev(data),
       });
     }

@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import getProduct from "../domain/products/get-productById";
 import getProducts from "../domain/products/get-allProductsPaginated";
 import postProduct from "../domain/products/post-product";
 import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import patchProd from "../domain/products/patch-product";
-import { StatusCodes } from "http-status-codes";
 
 //Product endpoints logic
 export const getProductById = async (

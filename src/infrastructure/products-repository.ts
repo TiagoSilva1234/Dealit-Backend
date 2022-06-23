@@ -136,7 +136,6 @@ const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
 
   return ar;
 };
-//////////////////////////////////////////////////////////
 
 const getLatestProducts = async (
   skip: number,
@@ -152,6 +151,8 @@ const getLatestProducts = async (
   }
   throw new Error("Something went wrong with database products fetch");
 };
+
+//////////////////////////////////////////////////////////
 
 export const patchProduct = async (
   id: number,

@@ -6,7 +6,7 @@
   "scripts": {
 
     "start": "node --loader ts-node/esm build/index.js",
-    "test": "jest -i --coverage",
+    "test": "jest -i --coverage --watchAll",
     "postinstall": "npm run build",
     "build": "tsc",
     "dev": "nodemon build/index.js",
