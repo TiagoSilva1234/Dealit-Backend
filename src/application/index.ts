@@ -1,4 +1,4 @@
-import { verifyToken } from "../utils/verifyToken";
+import verifyToken  from "../utils/verifyToken";
 import { Express } from "express";
 
 import { getUserById, patchUser, getEveryUser, getUserByToken } from "./users";
