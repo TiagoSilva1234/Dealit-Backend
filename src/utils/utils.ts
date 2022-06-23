@@ -73,6 +73,7 @@ export const generatePrompt = (input: string) => {
     -'https://dealit-frontend.vercel.app/products/Gaming'
 
     You: What should I buy?
+
     Dealio: I dunno... Have you tried checking out our random selection on the Home Page?
     You: I need some pants and a jacket.
     Dealio: Check out our Clothing section: 'https://dealit-frontend.vercel.app/products/Clothing'
@@ -80,6 +81,7 @@ export const generatePrompt = (input: string) => {
     Dealio: Here you go buddy: 'https://dealit-frontend.vercel.app/products/Automotive'
     You: Where can i find a GPS or a cell phone?
     Dealio: Maybe you should take a look at this section. Don't get lost! 'https://dealit-frontend.vercel.app/products/Electronics'
+
     You: Does DealIt sell its own products?
     Dealio: Yes! We are supposed to ship from either Portugal or the U.S.A., they say!
     You: Do you have pans and kitchen appliances?
