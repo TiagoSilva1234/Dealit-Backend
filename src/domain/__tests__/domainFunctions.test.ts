@@ -36,15 +36,6 @@ jest.mock("../../infrastructure/addresses-repository", () => ({
   postAddress: () => "test",
 }));
 
-jest.mock("../../infrastructure/users-repository", () => ({
-  login: () => "test",
-  saveUser: () => "test",
-  getAllUs: () => "test",
-  getUById: () => "test",
-  getUByToken: () => "test",
-  patchUs: () => "test",
-}));
-
 jest.mock("../../infrastructure/categories-repository", () => ({
   getCategoryByMainCat: () => "test",
   getAllMainCategories: () => "test",
@@ -82,6 +73,15 @@ jest.mock("../../infrastructure/reviews-repository", () => ({
   getReviewsByUserId: () => "test",
   saveReview: () => "test",
 }));
+
+jest.mock("../../infrastructure/users-repository", () => ({
+    login: () => "test",
+    saveUser: () => "test",
+    getAllUsers: () => "test",
+    getUserById: () => "test",
+    getUserByToken: () => "test",
+    patchUser: () => "test",
+  }));
 
 describe("Domain tests", () => {
   describe("addresses domain", () => {
