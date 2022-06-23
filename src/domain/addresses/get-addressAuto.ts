@@ -1,5 +1,5 @@
 
-import { getAdressAutocomplete } from "../../infrastructure/addresses-repository";
+import { getAddressAutocomplete } from "../../infrastructure/addresses-repository";
 
 export default async (text:string): Promise<any> =>
-  await getAdressAutocomplete(text);
+  await getAddressAutocomplete(text);

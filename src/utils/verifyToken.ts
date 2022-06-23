@@ -2,7 +2,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import { Request, Response } from "express";
 import StatusCodes from "http-status-codes";
 
-export const verifyToken = (
+export default (
   req: Request,
   res: Response,
   next: () => void

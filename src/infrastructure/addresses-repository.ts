@@ -39,7 +39,7 @@ export const postAddress = async (data: Address): Promise<Address> => {
   return order;
 };
 
-export const setAdressFavorite = async (
+export const setAddressFavorite = async (
   addressId: number
 ): Promise<Address> => {
   const address = await prisma.address.findUnique({
@@ -66,14 +66,12 @@ export const setAdressFavorite = async (
   return updated;
 };
 
-export const getAdressAutocomplete = async (text: string)=>{
-const env = process.env.ADRRESS_API_KEY
-let idk = {}
-await axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${env}`).then(res =>{
-  idk = res.data 
-})
-if(idk){
-return idk
-}
-return "nothing found"
-}
+export const getAddressAutocomplete = async (text: string): Promise<any> => {
+  const env = process.env.ADRRESS_API_KEY;
+  let response = await axios
+    .get(
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&apiKey=${env}`
+    )
+    .then((res) => res.data);
+  return response;
+};
