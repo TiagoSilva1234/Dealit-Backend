@@ -11,7 +11,6 @@
     "postinstall": "npm run build",
     "build": "tsc",
     "dev": "nodemon build/index.js",
-
     "studio": "DATABASE_URL=postgres://qaevniyqxdscsi:a4550c4ab39faed03321e502429476ac54ac290d936f067571ed55372dedd492@ec2-54-227-248-71.compute-1.amazonaws.com:5432/db6716npdpqkei prisma studio",
     "dbmiglima": "DATABASE_URL=postgresql://postgres:@localhost:5432/dealit_db?schema=public npx prisma migrate dev",
     "dbmigtiago": "DATABASE_URL=postgresql://postgres:root@localhost:5432/dealit_db?schema=public npx prisma migrate dev",
