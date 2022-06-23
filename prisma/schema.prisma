@@ -15,7 +15,6 @@ model User {
   phone       String       @unique
   token       String
   photo       String       @default("https://toppng.com/uploads/preview/file-svg-profile-icon-vector-11562942678pprjdh47a8.png")
-  description String       @default("")
   addresses   Address[]
   creditCards CreditCard[]
   orders      Order[]
