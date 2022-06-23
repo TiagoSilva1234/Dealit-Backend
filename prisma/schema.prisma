@@ -69,7 +69,6 @@ model Address {
   isFavorite  Boolean
   userId      Int
   user        User    @relation(fields: [userId], references: [id])
-  isActive    Boolean @default(true)
 
 }
 
@@ -82,7 +81,6 @@ model CreditCard {
   isFavorite Boolean
   user       User    @relation(fields: [userId], references: [id])
   Order      Order[]
-  isActive   Boolean @default(true)
 
 }
 
