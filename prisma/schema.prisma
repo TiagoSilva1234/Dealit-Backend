@@ -15,6 +15,7 @@ model User {
   phone       String       @unique
   token       String
   photo       String       @default("https://toppng.com/uploads/preview/file-svg-profile-icon-vector-11562942678pprjdh47a8.png")
+  description String       @default("")
   addresses   Address[]
   creditCards CreditCard[]
   orders      Order[]
@@ -35,6 +36,7 @@ model Product {
   user           User             @relation(fields: [userId], references: [id])
   ProductsOrders ProductsOrders[]
   reviews        Review[]
+  isActive       Boolean          @default(true)
 }
 
 model Category {
@@ -69,6 +71,8 @@ model Address {
   isFavorite  Boolean
   userId      Int
   user        User    @relation(fields: [userId], references: [id])
+  isActive    Boolean @default(true)
+
 }
 
 model CreditCard {
@@ -80,6 +84,8 @@ model CreditCard {
   isFavorite Boolean
   user       User    @relation(fields: [userId], references: [id])
   Order      Order[]
+  isActive   Boolean @default(true)
+
 }
 
 model Review {
