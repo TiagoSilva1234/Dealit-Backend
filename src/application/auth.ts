@@ -9,6 +9,11 @@ export const registerUser = async (
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
+    /* const username= req.body.username;
+    const email= req.body.email;
+    const password = req.body.password;
+    const phone = req.body.phone;
+    const { photo } = req.body; */
     const { username, email, password, phone, photo } = req.body;
 
     const { country, city, zipCode, street, houseNumber } = req.body.address;
