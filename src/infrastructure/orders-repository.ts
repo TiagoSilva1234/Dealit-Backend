@@ -1,13 +1,28 @@
-import  prisma  from "../../client";
+import prisma from "../../client";
 import { Order, Product } from "@prisma/client";
 
-export const getOrdersByUserId = async (userId: number): Promise<Order[]> => {
+export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: { orders: true },
   });
   if (user) {
-    return user.orders;
+    const orders = Promise.all(
+      user.orders.map(async (order: any) => {
+        const prods = await prisma.productsOrders.findMany({
+          where: { orderId: order.id },
+          include: { product: true },
+        });
+        console.log(prods);
+        const pro = prods.map((p: any) => p.product);
+        return {
+          order,
+          products: pro,
+        };
+      })
+    );
+    console.log(orders);
+    return orders;
   }
   throw new Error("User does not exist");
 };
