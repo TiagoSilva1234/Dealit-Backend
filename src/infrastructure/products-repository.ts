@@ -115,7 +115,6 @@ const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
     if (randomProduct) {
       return randomProduct;
     }
-    return product;
   }
   const ar: Product[] = [];
   while (ar.length !== num) {
