@@ -1,6 +1,6 @@
-import { Address, PrismaClient } from "@prisma/client";
+import { Address } from "@prisma/client";
 import axios from "axios";
-const prisma = new PrismaClient();
+import  prisma  from "../../client";
 
 export const getAddressesByUserId = async (
   userId: number

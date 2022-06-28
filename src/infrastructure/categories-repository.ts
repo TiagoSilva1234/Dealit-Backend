@@ -1,6 +1,6 @@
-import { Category, PrismaClient } from "@prisma/client";
+import { Category } from "@prisma/client";
+import  prisma  from "../../client";
 
-const prisma = new PrismaClient();
 
 export const getCategoryByMainCat = async (
   cat: string

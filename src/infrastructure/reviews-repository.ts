@@ -1,7 +1,7 @@
-import { PrismaClient, Review } from "@prisma/client";
+import {  Review } from "@prisma/client";
 import { ReviewData } from "../utils/types";
+import  prisma  from "../../client";
 
-const prisma = new PrismaClient();
 
 export const getReviewsByUserId = async (
   userId: number

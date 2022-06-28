@@ -74,7 +74,7 @@ export const postNewProduct = async (
     const price = req.body.price;
     const userId = req.body.userId;
     const category = req.body.category;
-imageUpload.array(name)
+imageUpload.array("my-image-file")
     if (!(name && description && photos && price && userId && category)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {

@@ -1,8 +1,9 @@
-import { PrismaClient, Product } from "@prisma/client";
+import  prisma  from "../../client";
+import {Product} from '@prisma/client'
 import { ProductData, ProdUpdateData } from "../utils/types";
 
-const prisma = new PrismaClient();
 
+;
 export const getProductById = async (
   id: string,
   skip: number,

@@ -1,6 +1,5 @@
-import { CreditCard, PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { CreditCard } from "@prisma/client";
+import  prisma  from "../../client";
 
 export const getCreditCardsByUserId = async (
   userId: number

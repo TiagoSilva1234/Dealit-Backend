@@ -4,7 +4,7 @@
   "description": "Dealit Backend Application",
   "main": "index.js",
   "scripts": {
-    "start": "node --loader ts-node/esm build/index.js",
+    "start": "node --loader ts-node/esm build/src/index.js",
     "test": "jest -i --coverage --watchAll",
     "build": "tsc",
     "dev": "nodemon build/index.js",

@@ -1,8 +1,8 @@
-import { Address, CreditCard, Order, PrismaClient, User } from "@prisma/client";
+import { Address, CreditCard, Order, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
 import { UserData, UserUpdateData } from "../utils/types";
-const prisma = new PrismaClient();
+import  prisma  from "../../client";
 
 export const getUserById = async (
   id: string
