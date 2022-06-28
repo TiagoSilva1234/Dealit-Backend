@@ -1,0 +1,22 @@
+"filename", "language", "TypeScript", "JSON with Comments", "JSON", "JavaScript", "Prisma", "SQL", "comment", "blank", "total"
+"/Users/tiagosilva/Desktop/BackEndDealIt/context.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 0, 3, 16
+"/Users/tiagosilva/Desktop/BackEndDealIt/jest.config.js", "JavaScript", 0, 0, 0, -6, 0, 0, -3, -3, -12
+"/Users/tiagosilva/Desktop/BackEndDealIt/package-lock.json", "JSON", 0, 0, 194, 0, 0, 0, 0, 0, 194
+"/Users/tiagosilva/Desktop/BackEndDealIt/package.json", "JSON", 0, 0, -1, 0, 0, 0, 0, -2, -3
+"/Users/tiagosilva/Desktop/BackEndDealIt/prisma/migrations/20220615154426_v6/migration.sql", "SQL", 0, 0, 0, 0, 0, -88, -22, -30, -140
+"/Users/tiagosilva/Desktop/BackEndDealIt/prisma/schema.prisma", "Prisma", 0, 0, 0, 0, 0, 0, 0, 2, 2
+"/Users/tiagosilva/Desktop/BackEndDealIt/singleton.ts", "TypeScript", 11, 0, 0, 0, 0, 0, 0, 4, 15
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/auth.test.ts", "TypeScript", 191, 0, 0, 0, 0, 0, -1, 17, 207
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/index.test.ts", "TypeScript", 218, 0, 0, 0, 0, 0, 0, 23, 241
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/__tests__/products.test.ts", "TypeScript", -63, 0, 0, 0, 0, 0, 75, -12, 0
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/auth.ts", "TypeScript", 1, 0, 0, 0, 0, 0, 0, 0, 1
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/index.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 3, 3
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/products.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 0, 2, 15
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/application/users.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/__tests__/products.test.ts", "TypeScript", 99, 0, 0, 0, 0, 0, 0, 28, 127
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/creditCards-repository.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, -1, -1
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/orders-repository.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 0, 0, 14
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/infrastructure/products-repository.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 3, 3
+"/Users/tiagosilva/Desktop/BackEndDealIt/src/utils/utils.ts", "TypeScript", -22, 0, 0, 0, 0, 0, 0, 1, -21
+"/Users/tiagosilva/Desktop/BackEndDealIt/tsconfig.json", "JSON with Comments", 0, 2, 0, 0, 0, 0, 0, 0, 2
+"Total", "-", 475, 2, 193, -6, 0, -88, 49, 39, 664
