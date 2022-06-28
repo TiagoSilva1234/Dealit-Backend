@@ -47,12 +47,13 @@ describe("Products infrastructure", () => {
 
      it("should return three random products", async () => {
       const id = "random";
-      pFindUnique.mockResolvedValue({id:1})
-      pFindMany.mockResolvedValueOnce([{id:5}])
-      const res = await getProductById(id,0,3);
+      pFindUnique.mockResolvedValue({id:2})
+      pFindMany.mockResolvedValueOnce([{id:2}])
 
-      expect(res).toStrictEqual([{id:1},{id:1},{id:1}]);
-      expect(prisma.product.findUnique).toHaveBeenCalledTimes(3);
+      const res = await getProductById(id,0,5);
+
+      expect(res).toStrictEqual([{id:2},{id:2},{id:2},{id:2},{id:2}]);
+      expect(prisma.product.findUnique).toHaveBeenCalledTimes(5);
       expect(prisma.product.findMany).toHaveBeenCalledTimes(1);
       
     });
@@ -69,12 +70,27 @@ describe("Products infrastructure", () => {
     });
     it("should return latest products", async () => {
       const id = "latest";
-      pFindUnique.mockResolvedValueOnce("Product found")
-      pFindMany.mockResolvedValueOnce([{id:5}])  
+      pFindMany.mockResolvedValueOnce("Latest Products")  
       const res = await getProductById(id,1,1);
-      expect(res).toStrictEqual("Found products");
+      expect(res).toStrictEqual("Latest Products");
       expect(prisma.product.findMany).toHaveBeenCalledTimes(1);
-      
+    });
+    it("should return error on latest", async () => {
+      const id = "latest";
+      pFindMany.mockResolvedValueOnce(undefined)  
+
+      expect(getProductById(id,1,1)).rejects.toThrow();
+      expect(prisma.product.findMany).toHaveBeenCalledTimes(1);
+    });
+
+    it("should return error", async () => {
+      const id = "2";
+      pFindUnique.mockResolvedValueOnce(null)
+   
+
+ 
+      expect( async ()=>{await getProductById(id)}).rejects.toThrow(new Error("Product does not exist"))
+      expect(prisma.product.findUnique).toHaveBeenCalledTimes(1);
     });
 
   }); 

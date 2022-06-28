@@ -228,7 +228,7 @@ describe("Address endpoints", () => {
 describe("Completion endpoints", () => {
   it("get completition should be called once",()=>{
     endpointCompletion(mockApp);
-    expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/completion", GetTextCompletion)
+    expect(mockApp.post).toHaveBeenCalledWith("/dealit/api/completion", GetTextCompletion)
   })
   
 

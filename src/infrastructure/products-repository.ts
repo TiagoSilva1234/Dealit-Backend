@@ -22,10 +22,10 @@ export const getProductById = async (
     },
   });
 
-  if (product === null) {
+  if (product === null || product === undefined) {
     throw new Error("Product does not exist");
   }
-  
+
   return product;
 };
 
