@@ -20,7 +20,20 @@ const getOrdersByUserId = (userId) => __awaiter(void 0, void 0, void 0, function
         include: { orders: true },
     });
     if (user) {
-        return user.orders;
+        const orders = Promise.all(user.orders.map((order) => __awaiter(void 0, void 0, void 0, function* () {
+            const prods = yield client_1.default.productsOrders.findMany({
+                where: { orderId: order.id },
+                include: { product: true },
+            });
+            console.log(prods);
+            const pro = prods.map((p) => p.product);
+            return {
+                order,
+                products: pro,
+            };
+        })));
+        console.log(orders);
+        return orders;
     }
     throw new Error("User does not exist");
 });

@@ -20,7 +20,8 @@ jest.mock("@prisma/client", () => {
             return {
                 product: {
                     findUnique: jest.fn(() => Promise.resolve("Product found")),
-                    findMany: jest.fn(() => Promise.resolve("Product found")),
+                    findMany: jest.fn(() => Promise.resolve("Found products")),
+                    create: jest.fn(() => Promise.resolve("created with success")),
                 },
             };
         },

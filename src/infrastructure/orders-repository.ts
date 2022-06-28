@@ -7,16 +7,21 @@ export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
     include: { orders: true },
   });
   if (user) {
-    const orders = user.orders.map(async (order: any) => {
-      const prods = await prisma.productsOrders.findMany({
-        where: { orderId: order.id },
-        include: { product: true },
-      });
-      return {
-        ...order,
-        products: prods.map((p: any) => p.product),
-      };
-    });
+    const orders = Promise.all(
+      user.orders.map(async (order: any) => {
+        const prods = await prisma.productsOrders.findMany({
+          where: { orderId: order.id },
+          include: { product: true },
+        });
+        console.log(prods);
+        const pro = prods.map((p: any) => p.product);
+        return {
+          order,
+          products: pro,
+        };
+      })
+    );
+    console.log(orders);
     return orders;
   }
   throw new Error("User does not exist");
