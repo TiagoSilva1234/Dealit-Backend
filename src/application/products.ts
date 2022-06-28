@@ -6,7 +6,7 @@ import postProduct from "../domain/products/post-product";
 import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import patchProd from "../domain/products/patch-product";
-
+const multer = require('multer');
 //Product endpoints logic
 export const getProductById = async (
   req: Request,
@@ -48,18 +48,33 @@ export const getProductById = async (
   }
 };
 
+const imageUploadPath = `../../images/`;
+const storage = multer.diskStorage({
+  destination: function(req:any,file:any,cb:any){
+  cb(null,)
+  },
+  filename: function(req:any,file:any,cb:any){
+ cb(null,`${file.fieldname}_dateVal_${Date.now()}_${file.originalname}`)
+  }
+}
+)
+
+
+const imageUpload = multer({storage: storage})
+
 export const postNewProduct = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
+
     const name= req.body.name;
     const  description= req.body.description;
     const photos =req.body.photos
     const price = req.body.price;
     const userId = req.body.userId;
     const category = req.body.category;
-
+imageUpload.array(name)
     if (!(name && description && photos && price && userId && category)) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {

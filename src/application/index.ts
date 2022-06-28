@@ -59,9 +59,12 @@ export const endpointPostLogin = (app: Express): void => {
   app.post("/dealit/api/login", userLogin);
 };
 //EndpointsProduct
+
 export const endpointGetProductById = (app: Express): void => {
   app.get("/dealit/api/products/:id", getProductById);
 };
+
+
 export const endpointPostProduct = (app: Express): void => {
   app.post("/dealit/api/products", verifyToken, postNewProduct);
 };

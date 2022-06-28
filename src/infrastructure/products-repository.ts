@@ -20,6 +20,7 @@ export const getProductById = async (
       id: Number(id),
     },
   });
+
   if (product === null) {
     throw new Error("Product does not exist");
   }
@@ -27,6 +28,7 @@ export const getProductById = async (
 };
 
 export const saveProduct = async (data: ProductData): Promise<Product> => {
+
   return await prisma.product.create({
     data: {
       user: { connect: { id: data.userId } },

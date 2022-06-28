@@ -1,33 +1,31 @@
 const {getProductById} = require("../products-repository")
-const {PrismaClient} = require("@prisma/client")
-import { MockContext, Context, createMockContext } from '../../../context'
-import { prismaMock } from '../../../singleton'
-let mockCtx: MockContext
-let ctx: Context
+const {PrismaClient} = require( "@prisma/client")
+import { mockDeep } from 'jest-mock-extended';
 
-beforeEach(() => {
-  mockCtx = createMockContext()
-  ctx = mockCtx as unknown as Context
+jest.mock('@prisma/client', () => ({
+  PrismaClient: function (){
+    return ({
+     product: ({ findUnique:jest.fn().mockImplementation()
+    })
+  }
+)}
 })
-
-
+);
 describe("Products infrastructure",()=>{
+
+  describe("get products by id ",()=>{
+/*
+    it("should return crud query as supposed",async ()=>{
     
-  describe("get products by id",()=>{
-    it("test",async ()=>{
-
- await  getProductById("0",1,2)
- //prismaMock.product.findUnique.mockResolvedValue()
-    expect(prismaMock.product.findUnique).toHaveBeenNthCalledWith(1,{
-      where: {
-        id: Number(0),
-      },
-    })
-
+      const id = "1"
+      const recieved={where: {id: Number(id)}}
+      const res =await getProductById(id)
+   
+ expect(PrismaClient().product.findUnique()).resolves.toHaveBeenCalledTimes(1)
+   
 
     })
+     */
   })
-
-
 }) 
 
