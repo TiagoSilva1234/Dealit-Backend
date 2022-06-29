@@ -59,8 +59,6 @@ const storage = multer.diskStorage({
   }
 }
 )
- 
-
 const imageUpload = multer({storage: storage})
 
 export const postNewProduct = async (
@@ -75,9 +73,10 @@ export const postNewProduct = async (
     const userId = req.body.userId;
     const category = req.body.category;
     imageUpload.array("my-image-file")
+
     if (
       !(name && description && photos && price && category) ||
-      userId !== undefined
+      userId === undefined
     ) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
