@@ -88,7 +88,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(3330 ,"0.0.0.0", () =>
+app.listen(process.env.PORT || port, () =>
   console.log(`listening on port ${port} :)`)
 );
 
