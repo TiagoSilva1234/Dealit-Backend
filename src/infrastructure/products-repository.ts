@@ -22,9 +22,10 @@ export const getProductById = async (
     },
   });
 
-  if (product === null) {
+  if (product === null || product === undefined) {
     throw new Error("Product does not exist");
   }
+
   return product;
 };
 
@@ -115,7 +116,6 @@ const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
     if (randomProduct) {
       return randomProduct;
     }
-    return product;
   }
   const ar: Product[] = [];
   while (ar.length !== num) {

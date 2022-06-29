@@ -156,5 +156,5 @@ export const endpointGetAddressAutocomplete= (app:Express):void=>{
 
 //Endpoint Completion
 export const endpointCompletion = (app: Express): void => {
-  app.get("/dealit/api/completion", GetTextCompletion);
+  app.post("/dealit/api/completion", GetTextCompletion);
 };

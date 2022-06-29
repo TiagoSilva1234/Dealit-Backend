@@ -1,8 +1,8 @@
 
-import { UserData, UserUpdateData } from "./types";
+import { UserData, UserUpdateData} from "./types";
 
 const userDataIsNotValid = (
-  data: UserData | UserUpdateData
+  data: UserData | UserUpdateData 
 ): { check: boolean; cause: string[] } => {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const expiryDateRegex = /^\d{2}\/\d{2}/;
@@ -28,6 +28,9 @@ const userDataIsNotValid = (
       tester.cause.push("Email is not valid");
     }
   }
+
+
+if((data as UserData).password){
   if (data.password) {
     if (data.password.length < 8) {
       tester.cause.push("Password too short");
@@ -36,6 +39,17 @@ const userDataIsNotValid = (
       tester.cause.push("Password not safe enough");
     }
   }
+}else if((data as UserUpdateData).newPassword){
+  const now = data as UserUpdateData;
+  if (now.newPassword) {
+    if (now.newPassword.length < 8) {
+      tester.cause.push("Password too short");
+    }
+    if (!passwordRegex.test(now.newPassword)) {
+      tester.cause.push("Password not safe enough");
+    }
+  }
+}
   if (data.phone) {
     if (
       data.phone.length !== 9 ||
@@ -65,12 +79,14 @@ export const generatePrompt = (input: string) => {
   return `Dealio is a funny new generation AI chat assistant, created to help customers navigate the DealIt website.
   
     He can only redirect you to one of the website's six main categories:
+
     -%https://dealit-frontend.vercel.app/products/Clothing%
     -%https://dealit-frontend.vercel.app/products/Automotive%
     -%https://dealit-frontend.vercel.app/products/Electronics%
     -%https://dealit-frontend.vercel.app/products/Kitchen%
     -%https://dealit-frontend.vercel.app/products/Outdoor%
     -%https://dealit-frontend.vercel.app/products/Gaming%
+
 
     You: What should I buy?
 
@@ -81,7 +97,6 @@ export const generatePrompt = (input: string) => {
     Dealio: Here you go buddy: %https://dealit-frontend.vercel.app/products/Automotive%
     You: Where can i find a GPS or a cell phone?
     Dealio: Maybe you should take a look at this section. Don't get lost! %https://dealit-frontend.vercel.app/products/Electronics%
-
     You: Does DealIt sell its own products?
     Dealio: Yes! We are supposed to ship from either Portugal or the U.S.A., they say!
     You: Do you have pans and kitchen appliances?
