@@ -1,8 +1,8 @@
 
-import { UserData, UserUpdateData } from "./types";
+import { UserData, UserUpdateData} from "./types";
 
 const userDataIsNotValid = (
-  data: UserData | UserUpdateData
+  data: UserData | UserUpdateData 
 ): { check: boolean; cause: string[] } => {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const expiryDateRegex = /^\d{2}\/\d{2}/;
@@ -28,6 +28,9 @@ const userDataIsNotValid = (
       tester.cause.push("Email is not valid");
     }
   }
+
+
+if((data as UserData).password){
   if (data.password) {
     if (data.password.length < 8) {
       tester.cause.push("Password too short");
@@ -36,6 +39,17 @@ const userDataIsNotValid = (
       tester.cause.push("Password not safe enough");
     }
   }
+}else if((data as UserUpdateData).oldPassword){
+  const now = data as UserUpdateData;
+  if (now.oldPassword) {
+    if (now.oldPassword.length < 8) {
+      tester.cause.push("Password too short");
+    }
+    if (!passwordRegex.test(now.oldPassword)) {
+      tester.cause.push("Password not safe enough");
+    }
+  }
+}
   if (data.phone) {
     if (
       data.phone.length !== 9 ||
