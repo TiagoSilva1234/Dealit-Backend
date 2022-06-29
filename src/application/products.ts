@@ -48,7 +48,7 @@ export const getProductById = async (
     });
   }
 };
-
+/* 
  const imageUploadPath = `../../images/`;
 const storage = multer.diskStorage({
   destination: function(req:any,file:any,cb:any){
@@ -60,7 +60,7 @@ const storage = multer.diskStorage({
 }
 )
 const imageUpload = multer({storage: storage})
-
+ */
 export const postNewProduct = async (
   req: Request,
   res: Response
@@ -72,7 +72,7 @@ export const postNewProduct = async (
     const price = req.body.price;
     const userId = req.body.userId;
     const category = req.body.category;
-    imageUpload.array("my-image-file")
+ //   imageUpload.array("my-image-file")
 
     if (
       !(name && description && photos && price && category) ||
