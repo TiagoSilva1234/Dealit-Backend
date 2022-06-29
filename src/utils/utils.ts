@@ -39,13 +39,13 @@ if((data as UserData).password){
       tester.cause.push("Password not safe enough");
     }
   }
-}else if((data as UserUpdateData).oldPassword){
+}else if((data as UserUpdateData).newPassword){
   const now = data as UserUpdateData;
-  if (now.oldPassword) {
-    if (now.oldPassword.length < 8) {
+  if (now.newPassword) {
+    if (now.newPassword.length < 8) {
       tester.cause.push("Password too short");
     }
-    if (!passwordRegex.test(now.oldPassword)) {
+    if (!passwordRegex.test(now.newPassword)) {
       tester.cause.push("Password not safe enough");
     }
   }

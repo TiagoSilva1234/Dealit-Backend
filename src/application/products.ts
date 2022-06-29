@@ -6,18 +6,20 @@ import postProduct from "../domain/products/post-product";
 import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import patchProd from "../domain/products/patch-product";
-const multer = require('multer');
+const multer = require("multer");
 //Product endpoints logic
 export const getProductById = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-
     const id = req.params.id;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 3;
-    if (isNaN(Number(id)) && (id !== "random" && id !== "latest") || limit > 10) {
+    if (
+      (isNaN(Number(id)) && id !== "random" && id !== "latest") ||
+      limit > 10
+    ) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Invalid id format",
@@ -28,7 +30,6 @@ export const getProductById = async (
     }
     return res.send(await getProduct(id, page, limit));
   } catch (e: any) {
-
     if (e.message === "Product does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
         error: {
@@ -48,7 +49,7 @@ export const getProductById = async (
   }
 };
 
-/* const imageUploadPath = `../../images/`;
+ const imageUploadPath = `../../images/`;
 const storage = multer.diskStorage({
   destination: function(req:any,file:any,cb:any){
   cb(null,)
@@ -58,24 +59,26 @@ const storage = multer.diskStorage({
   }
 }
 )
- */
+ 
 
-//const imageUpload = multer({storage: storage})
+const imageUpload = multer({storage: storage})
 
 export const postNewProduct = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-
-    const name= req.body.name;
-    const  description= req.body.description;
-    const photos =req.body.photos
+    const name = req.body.name;
+    const description = req.body.description;
+    const photos = req.body.photos;
     const price = req.body.price;
     const userId = req.body.userId;
     const category = req.body.category;
-//imageUpload.array("my-image-file")
-    if (!(name && description && photos && price && userId && category)) {
+    imageUpload.array("my-image-file")
+    if (
+      !(name && description && photos && price && category) ||
+      userId !== undefined
+    ) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required data missing",
@@ -94,13 +97,12 @@ export const postNewProduct = async (
       category,
     };
 
-    const result = await postProduct(data)
+    const result = await postProduct(data);
     return res.status(StatusCodes.CREATED).send({
       message: "Product successfully saved to database!",
       product: result,
     });
   } catch (e: any) {
-
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
         message: e.message,
@@ -215,7 +217,7 @@ export const patchProduct = async (
         },
       });
     }
-    const result =  await patchProd(Number(id), data)
+    const result = await patchProd(Number(id), data);
     return res.send({
       message: "Product successfully patched",
       user: result,
