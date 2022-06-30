@@ -33,7 +33,6 @@ export type ProductData = {
 };
 
 export type OrderData = {
-  buyDate: Date;
   userId: number;
   creditCardId: number;
 };
