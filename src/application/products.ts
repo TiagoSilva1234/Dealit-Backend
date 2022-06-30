@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import getProduct from "../domain/products/get-productById";
 import getProducts from "../domain/products/get-allProductsPaginated";
-import postProduct from "../domain/products/post-product";
+//import postProduct from "../domain/products/post-product";
 import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import patchProd from "../domain/products/patch-product";
+import { saveProduct } from "../infrastructure/products-repository";
 const multer = require("multer");
 //Product endpoints logic
 export const getProductById = async (
@@ -83,10 +84,10 @@ export const postNewProduct = async (
       category,
     };
 
-    const result = await postProduct(data);
+    //const result = await saveProduct(data,upload,req,res);
     return res.status(StatusCodes.CREATED).send({
       message: "Product successfully saved to database!",
-      product: result,
+      product: "result",
     });
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({

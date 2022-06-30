@@ -29,9 +29,9 @@ export const getProductById = async (
   return product;
 };
 
-export const saveProduct = async (data: ProductData): Promise<Product> => {
+export const saveProduct = async (data: ProductData,upload:any,req:any,res:any): Promise<Product> => {
 
-  return await prisma.product.create({
+ const result = await prisma.product.create({
     data: {
       user: { connect: { id: data.userId } },
       name: data.name,
@@ -41,6 +41,18 @@ export const saveProduct = async (data: ProductData): Promise<Product> => {
       price: data.price,
     },
   });
+  upload(req,res,function(err:any) {
+    if(err) {
+      console.log(err)
+        return "pao"
+    }
+    console.log("done upload---")
+    res.json({"status":"completed"});
+});
+
+return result
+
+
 };
 
 export const getProductsByCategoryPaginated = async (

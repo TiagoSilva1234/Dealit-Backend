@@ -2,8 +2,12 @@ import verifyToken  from "../utils/verifyToken";
 import { Express } from "express";
 const path = require("path")
 const multer = require('multer');
-
+import  prisma  from "../../client";
+const fs = require("fs")
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import { getUserById, patchUser, getEveryUser, getUserByToken } from "./users";
+
 import {
   getOrdersByUserId,
   postOrder,
@@ -39,6 +43,7 @@ import {
   getCreditCardsByUserId,
 } from "./creditCards";
 import { GetTextCompletion } from "./completion";
+import { saveProduct } from "../infrastructure/products-repository";
 
 //EndpointsUser
 export const endpointGetUserById = (app: Express): void => {
@@ -68,10 +73,93 @@ export const endpointGetProductById = (app: Express): void => {
   app.get("/dealit/api/products/:id", getProductById);
 };
 
+let counter = 0;
+var storage = multer.diskStorage({
+  destination: async function (req:any, file:any, cb:any) {
+    const product = await prisma.product.findMany({
+      orderBy: { id: "desc" },
+      take: 1,
+    });
+fs.mkdirSync(`./public/${req.body.userId}`,{recursive:true})
+fs.mkdirSync(`./public/${req.body.userId}/${product[0].id +1}`,{recursive:true})
+    cb(null, `./public/${req.body.userId}/${product[0].id +1}`)
+  },
+  filename: function (req:any, file:any, cb:any) {
+
+    counter = counter+1;
+    cb(null, counter + ".png")
+  }
+})
+
+var upload = multer({ storage:storage }).array('photos')
 
 export const endpointPostProduct = (app: Express): void => {
 
-  app.post("/dealit/api/products",postNewProduct);
+  app.post("/dealit/api/products",upload,async(req:any, res:any) => {
+counter = 0
+    try {
+      console.log(req.body)
+      const name = req.body.name;
+      const description = req.body.description;
+     
+      const price = Number(req.body.price);
+      const userId = Number(req.body.userId);
+      const category = req.body.category;
+      let length = 0
+      fs.readdir('./public', (err:Error, files:any) => {
+        length= files.length;
+      });
+    
+      if (
+        !(name && description && price && category) ||
+        userId === undefined
+      ) {
+        return res.status(StatusCodes.BAD_REQUEST).send({
+          error: {
+            message: "Required data missing",
+            cause: "Bad Request",
+            date: new Date().toLocaleString(),
+          },
+        });
+      }
+  
+      const data = {
+        name,
+        description,
+        photos:[],
+        price,
+        userId,
+        category,
+      };
+  
+      const result = await saveProduct(data,upload,req,res);
+      const urls= []
+  for(let i = 1;i<length+1;i++){
+urls.push(`http://10.10.255.145:3330/static/${data.userId}/${result.id}/${i}.png`)
+  }
+const updated= await prisma.product.update({
+    where:{
+      id:result.id
+    },
+    data:{
+      photos: urls
+    }
+  })
+      return res.status(StatusCodes.CREATED).send({
+        message: "Product successfully saved to database!",
+        product: updated,
+      });
+    } catch (e: any) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+        error: {
+          message: e.message,
+          cause: "Unexpected error",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }    
+  });
+
 };
 
 
