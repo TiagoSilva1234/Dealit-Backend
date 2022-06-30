@@ -5,6 +5,7 @@ import getUserOrders from "../domain/orders/get-ordersByUserId";
 import postOrders from "../domain/orders/post-order";
 import patchOrderSendDate from "../domain/orders/patch-orderSendDate";
 import patchOrderDeliveryDate from "../domain/orders/patch-orderDeliveryDate";
+import { ProductInOrderData } from "../utils/types";
 
 export const getOrdersByUserId = async (
   req: Request,
@@ -48,8 +49,8 @@ export const postOrder = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const data: Order = req.body.order;
-    const prodIds: number[] = req.body.prods;
-    if (!data || !prodIds) {
+    const prods: ProductInOrderData[] = req.body.products;
+    if (!data || !prods) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required inputs missing",
@@ -58,7 +59,7 @@ export const postOrder = async (
         },
       });
     }
-    if (prodIds.length === 0) {
+    if (prods.length === 0) {
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Order requires products",
@@ -67,7 +68,7 @@ export const postOrder = async (
         },
       });
     }
-    const result  =await postOrders(data, prodIds)
+    const result  = await postOrders(data, prods)
     return res.status(StatusCodes.CREATED).send({
       message: "Order successfully saved to database",
       order: result,
