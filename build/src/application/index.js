@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.endpointCompletion = exports.endpointGetAddressAutocomplete = exports.endpointPatchAddressFavorite = exports.endpointGetAddressesByUserId = exports.endpointPostAddress = exports.endpointPostCreditCard = exports.endpointGetCreditCardsByUserId = exports.endpointSetFavoriteCreditCard = exports.endpointPostReviews = exports.endpointGetReviewsByReviewer = exports.endpointGetReviewsByProductId = exports.endpointGetReviewsByUserId = exports.endpointPatchOrdersDeliveryDate = exports.endpointPatchOrdersSendDate = exports.endpointPostOrders = exports.endpointGetOrdersByUserId = exports.endpointGetAllMainCategories = exports.endpointGetCategoryByMainCat = exports.endpointPatchProducts = exports.endpointgetProductsByUserId = exports.endpointgetAllProductsPaginated = exports.endpointgetProductsByCategoryPaginated = exports.endpointPostProduct = exports.endpointGetProductById = exports.endpointPostLogin = exports.endpointPostUser = exports.endpointGetAllUsers = exports.endpointPatchUser = exports.endpointGetUserByToken = exports.endpointGetUserById = void 0;
 const verifyToken_1 = __importDefault(require("../utils/verifyToken"));
+const path = require("path");
+const multer = require('multer');
 const users_1 = require("./users");
 const orders_1 = require("./orders");
 const auth_1 = require("./auth");
@@ -46,7 +48,7 @@ const endpointGetProductById = (app) => {
 };
 exports.endpointGetProductById = endpointGetProductById;
 const endpointPostProduct = (app) => {
-    app.post("/dealit/api/products", verifyToken_1.default, products_1.postNewProduct);
+    app.post("/dealit/api/products", products_1.postNewProduct);
 };
 exports.endpointPostProduct = endpointPostProduct;
 const endpointgetProductsByCategoryPaginated = (app) => {

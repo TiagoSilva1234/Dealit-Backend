@@ -59,19 +59,6 @@ const getProductById = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getProductById = getProductById;
-/*
- const imageUploadPath = `../../images/`;
-const storage = multer.diskStorage({
-  destination: function(req:any,file:any,cb:any){
-  cb(null,)
-  },
-  filename: function(req:any,file:any,cb:any){
- cb(null,`${file.fieldname}_dateVal_${Date.now()}_${file.originalname}`)
-  }
-}
-)
-const imageUpload = multer({storage: storage})
- */
 const postNewProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const name = req.body.name;
@@ -80,7 +67,6 @@ const postNewProduct = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const price = req.body.price;
         const userId = req.body.userId;
         const category = req.body.category;
-        //   imageUpload.array("my-image-file")
         if (!(name && description && photos && price && category) ||
             userId === undefined) {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).send({

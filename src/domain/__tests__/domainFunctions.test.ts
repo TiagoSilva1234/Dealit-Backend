@@ -84,7 +84,7 @@ jest.mock("../../infrastructure/users-repository", () => ({
 }));
 
 describe("Domain tests", () => {
- /* describe("addresses domain", () => {
+  describe("addresses domain", () => {
     it("get address autocomplete - should return infrastructure response", async () => {
       const x = await getAddAuto("xxx");
       expect(x).toEqual("test");
@@ -302,5 +302,5 @@ describe("Domain tests", () => {
       expect(x).toEqual("test");
     });
   });
-  */
+  
 });

@@ -7,11 +7,6 @@ import getProductsByCat from "../domain/products/get-productsByCategoryPaginated
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import patchProd from "../domain/products/patch-product";
 const multer = require("multer");
-const fs = require("fs")
-const path = require("path")
-var multiparty = require('multiparty');
-
-;
 //Product endpoints logic
 export const getProductById = async (
   req: Request,
@@ -53,39 +48,23 @@ export const getProductById = async (
     });
   }
 };
-const teste =async (req:any):Promise<any> => {
-  var form = new multiparty.Form();
-  var formfields = await new Promise(function (resolve, reject) {
-    form.parse(req, function (err:Error, fields:any, files:any) {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve({fields,files});
-    }); // form.parse
-});
-return formfields
-}
+
 export const postNewProduct = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-
-
-const obj = await teste(req)
-
-const name = obj.fields.name[0]
-const description = obj.fields.description[0]
-const price:number = Number(obj.fields.price[0])
-const userId:number = Number(obj.fields.userId[0])
-const category = obj.fields.category[0]
+    const name = req.body.name;
+    const description = req.body.description;
+    const photos = req.body.photos;
+    const price = req.body.price;
+    const userId = req.body.userId;
+    const category = req.body.category;
 
     if (
-      !(name && description  && price && category) ||
+      !(name && description && photos && price && category) ||
       userId === undefined
     ) {
-    
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required data missing",
@@ -93,24 +72,22 @@ const category = obj.fields.category[0]
           date: new Date().toLocaleString(),
         },
       });
-    } 
+    }
 
     const data = {
-    name,
-  description,
-     price,
-     photos: [],
+      name,
+      description,
+      photos,
+      price,
       userId,
       category,
     };
 
-    const result = await postProduct(req,res);
-
+    const result = await postProduct(data);
     return res.status(StatusCodes.CREATED).send({
       message: "Product successfully saved to database!",
       product: result,
     });
-    
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
@@ -119,9 +96,7 @@ const category = obj.fields.category[0]
         date: new Date().toLocaleString(),
       },
     });
-    
   }
-
 };
 
 export const getProductsByCategory = async (
