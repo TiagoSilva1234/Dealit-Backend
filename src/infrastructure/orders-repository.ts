@@ -62,13 +62,13 @@ export const postOrder = async (
   arr.map(async (e) => {
     await prisma.productInOrder.create({
       data: {
-        product: { connect: { id: e.productId } },
-        order: { connect: { id: order.id } },
+        product: { connect: { id: Number(e.productId) } },
+        order: { connect: { id: Number(order.id) } },
         quantity: e.quantity,
         price: e.price,
       },
     });
-    
+
   });
   return order;
 };
