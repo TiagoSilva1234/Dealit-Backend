@@ -92,7 +92,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(3330,"0.0.0.0", () =>
+app.listen(port,"0.0.0.0", () =>
   console.log(`listening on port ${port} :)`)
 );
 
