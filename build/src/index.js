@@ -8,7 +8,6 @@ const cors_1 = __importDefault(require("cors"));
 const application_1 = require("./application");
 var bodyParser = require('body-parser');
 const app = (0, express_1.default)();
-// Put these statements before you define any routes.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use((0, cors_1.default)());
@@ -55,5 +54,5 @@ const port = Number(process.env.API_PORT) || 8080;
 app.get("/", (req, res) => {
     res.send("hello!");
 });
-app.listen(3330, "0.0.0.0", () => console.log(`listening on port ${port} :)`));
+app.listen(process.env.PORT || 8080, () => console.log(`listening on port ${port} :)`));
 exports.default = app;
