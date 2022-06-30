@@ -8,7 +8,7 @@ export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
     include: { orders: true },
   });
   if (user) {
-    const orders = Promise.all(
+    const getOrds = Promise.all(
       user.orders.map(
         async (order: any) =>
           await prisma.order.findUnique({
@@ -17,7 +17,31 @@ export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
           })
       )
     );
-    console.log(orders);
+    const orders = (await getOrds).map(async (order: any) => {
+      const preProds = await prisma.productInOrder.findMany({
+        where: { orderId: order.id },
+        include: { product: true },
+      });
+      const prods = preProds.map((prod: any) => {
+        return {
+          name: prod.product.name,
+          photo: prod.product.photos[0],
+          quantity: prod.quantity,
+          price: prod.price,
+        };
+      });
+
+      return {
+        id: order.id,
+        buyDate: order.buyDate,
+        sendDate: order.sendDate,
+        deliveryDate: order.deliveryDate,
+        userId: order.userId,
+        creditCardId: order.creditCardId,
+        total: order.total,
+        products: prods,
+      };
+    });
     return orders;
   }
   throw new Error("User does not exist");
