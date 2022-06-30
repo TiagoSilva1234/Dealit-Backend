@@ -106,7 +106,7 @@ const users = [
 const products = [
     {
         "id": 1,
-        "name": "pao",
+        "name": "Roku TV",
         "userId": 3,
         "description": "Smart Functionality offers access to over 5,000 streaming channels featuring more than 500,000 movies and TV episodes via Roku TV. \\n Specs: 1080p Full HD Resolution excellent detail, color, and contrast. \\n Wireless Connection: 802.11 2x2 Dual Band Direct-lit LED produces great picture quality with 60Hz refresh rate for fast moving action scenes with virtually no motion blur.",
         "categoryName": "TV & Video",
