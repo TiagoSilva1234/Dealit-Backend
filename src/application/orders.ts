@@ -66,6 +66,7 @@ export const postOrder = async (
           cause: "Bad request",
           date: new Date().toLocaleString(),
         },
+        
       });
     }
     const result  = await postOrders(data, prods)
