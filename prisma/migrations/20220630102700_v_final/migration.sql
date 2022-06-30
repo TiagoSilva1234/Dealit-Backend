@@ -7,6 +7,7 @@ CREATE TABLE "User" (
     "phone" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "photo" TEXT NOT NULL DEFAULT E'https://toppng.com/uploads/preview/file-svg-profile-icon-vector-11562942678pprjdh47a8.png',
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -19,8 +20,9 @@ CREATE TABLE "Product" (
     "description" TEXT NOT NULL,
     "categoryName" TEXT NOT NULL,
     "photos" TEXT[],
-    "price" DECIMAL(4,2) NOT NULL,
+    "price" DECIMAL(65,30) NOT NULL,
     "uploadDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -40,11 +42,11 @@ CREATE TABLE "Category" (
 CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "buyDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "sendDate" TIMESTAMP(3) NOT NULL,
-    "deliveryDate" TIMESTAMP(3) NOT NULL,
+    "sendDate" TIMESTAMP(3),
+    "deliveryDate" TIMESTAMP(3),
     "userId" INTEGER NOT NULL,
-    "sellerName" TEXT NOT NULL,
     "creditCardId" INTEGER NOT NULL,
+    "total" INTEGER NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
@@ -59,6 +61,7 @@ CREATE TABLE "Address" (
     "houseNumber" TEXT NOT NULL,
     "isFavorite" BOOLEAN NOT NULL,
     "userId" INTEGER NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
@@ -71,6 +74,7 @@ CREATE TABLE "CreditCard" (
     "cvc" INTEGER NOT NULL,
     "expiryDate" TEXT NOT NULL,
     "isFavorite" BOOLEAN NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "CreditCard_pkey" PRIMARY KEY ("id")
 );
@@ -84,16 +88,20 @@ CREATE TABLE "Review" (
     "photo" TEXT NOT NULL DEFAULT E'',
     "rating" INTEGER NOT NULL,
     "reviewer" TEXT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Review_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "ProductsOrders" (
-    "productId" INTEGER NOT NULL,
+CREATE TABLE "ProductInOrder" (
+    "id" SERIAL NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "price" INTEGER NOT NULL,
     "orderId" INTEGER NOT NULL,
+    "productId" INTEGER NOT NULL,
 
-    CONSTRAINT "ProductsOrders_pkey" PRIMARY KEY ("productId","orderId")
+    CONSTRAINT "ProductInOrder_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -133,7 +141,7 @@ ALTER TABLE "Review" ADD CONSTRAINT "Review_userId_fkey" FOREIGN KEY ("userId") 
 ALTER TABLE "Review" ADD CONSTRAINT "Review_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ProductsOrders" ADD CONSTRAINT "ProductsOrders_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProductInOrder" ADD CONSTRAINT "ProductInOrder_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ProductsOrders" ADD CONSTRAINT "ProductsOrders_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProductInOrder" ADD CONSTRAINT "ProductInOrder_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
