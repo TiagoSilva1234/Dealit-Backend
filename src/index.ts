@@ -40,7 +40,7 @@ const app: Express = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors())
-
+app.use('/static',express.static('public'));
 const port = Number(process.env.API_PORT) || 8080;
 
 //Endpoints user

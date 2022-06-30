@@ -45,7 +45,7 @@ export const getProductById = async (
         message: e.message,
         cause: "Unexpected error",
         date: new Date().toLocaleString(),
-        
+
       },
     });
   }
@@ -72,6 +72,7 @@ export const postNewProduct = async (
           message: "Required data missing",
           cause: "Bad Request",
           date: new Date().toLocaleString(),
+          
         },
       });
     }
