@@ -1,4 +1,16 @@
-/* const {
+const aFindUnique = jest.fn();
+const aUpdateMany = jest.fn();
+const pCreate = jest.fn();
+const pUpdate = jest.fn()
+const cFindUnique = jest.fn();
+const cFindMany = jest.fn();
+const uFindUnique = jest.fn();
+
+ 
+ 
+ 
+ 
+ const {
     getProductById,
     saveProduct,
     getProductsByCategoryPaginated,
@@ -13,11 +25,11 @@
     return {
       PrismaClient: function () {
         return {
-          product: {
-            findUnique: pFindUnique,
+          address: {
+            findUnique: aFindUnique,
             findMany: pFindMany,
             create: pCreate,
-            update: pUpdate,
+            updateMany: aUpdateMany,
           },
           category: {
             findUnique: cFindUnique,
@@ -97,106 +109,6 @@
         expect(prisma.product.findUnique).toHaveBeenCalledTimes(1);
       });
     });
-    describe("post Product ", () => {
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
-      it("should return created with success", async () => {
-        pCreate.mockResolvedValueOnce("created with success");
-        const res = await saveProduct({});
   
-        expect(res).toStrictEqual("created with success");
-        expect(prisma.product.create).toHaveBeenCalledTimes(1);
-      });
-    });
-    describe("get Products by Category Paginated ", () => {
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
-      it("should return products paginaged if level 2", async () => {
-        cFindUnique.mockResolvedValueOnce({ name: "pao", level: 2 });
-        pFindMany.mockResolvedValueOnce("cool");
-        const res = await getProductsByCategoryPaginated("pao", 2);
-  
-        expect(res).toStrictEqual("cool");
-        expect(prisma.product.findMany).toHaveBeenCalledTimes(1);
-      });
-      it("should return products paginaged if level 1", async () => {
-        cFindUnique.mockResolvedValueOnce({ name: "pao", level: 1 });
-        cFindMany.mockResolvedValueOnce([
-          { products: ["teste", "teste1", "teste2"] },
-        ]);
-        const res = await getProductsByCategoryPaginated("pao", 1);
-  
-        expect(res).toStrictEqual(["teste1", "teste2"]);
-        expect(prisma.category.findMany).toHaveBeenCalledTimes(1);
-      });
-      it("should return category not found", async () => {
-        cFindUnique.mockResolvedValueOnce(null);
-  
-        expect(async () => { await getProductsByCategoryPaginated("pao", 1) }).rejects.toThrow(new Error("category not found"));
-  
-        expect(prisma.category.findUnique).toHaveBeenCalledTimes(1);
-      });
-    });
-    describe("get all products paginated ", () => {
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
-      it("should return prods paginated", async () => {
-  
-        pFindMany.mockResolvedValueOnce(["1","2"]);
-        const res = await getAllProductsPaginated(1,2);
-  
-        expect(res).toStrictEqual(["1","2"]);
-        expect(prisma.product.findMany).toHaveBeenCalledTimes(1);
-      });
-  
-    });
-    
-    describe("get products by user Id", () => {
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
-      it("should return prods paginated", async () => {
-  
-        uFindUnique.mockResolvedValueOnce({products:"cool"});
-        const res = await getProductsByUserId(1)
-  
-        expect(res).toStrictEqual("cool");
-        expect(prisma.user.findUnique).toHaveBeenCalledTimes(1);
-      });
-      it("should return error", async () => {
-  
-        uFindUnique.mockResolvedValueOnce(null);
-  
-        expect(async () => { await getProductsByUserId(1) }).rejects.toThrow(new Error("User does not exist"))
-        expect(prisma.user.findUnique).toHaveBeenCalledTimes(1);
-      });
-  
-    });
-      
-    describe("patch products", () => {
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
-      it("should return prods paginated", async () => {
-  
-        pFindUnique.mockResolvedValueOnce("prod");
-        pUpdate.mockResolvedValueOnce("updated")
-        const res = await patchProduct(1,{name:"pao"})
-  
-        expect(res).toStrictEqual("updated");
-        expect(prisma.product.findUnique).toHaveBeenCalledTimes(1);
-        expect(prisma.product.update).toHaveBeenCalledTimes(1);
-      });
-      it("should return error", async () => {
-        pFindUnique.mockResolvedValueOnce(null);
-  
-        expect(async () => { await patchProduct(1) }).rejects.toThrow(new Error("Product not found"))
-        expect(prisma.product.findUnique).toHaveBeenCalledTimes(1);
-      });
-  
-    });
   });
-   */
+   
