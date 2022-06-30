@@ -1,4 +1,4 @@
-const aFindUnique = jest.fn();
+/*const aFindUnique = jest.fn();
 const aUpdateMany = jest.fn();
 const pCreate = jest.fn();
 const pUpdate = jest.fn()
@@ -111,4 +111,4 @@ const uFindUnique = jest.fn();
     });
   
   });
-   
+   */
