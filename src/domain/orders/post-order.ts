@@ -8,7 +8,7 @@ export default async (
 ): Promise<Order> => {
   let total: number = 0;
   prods.forEach((e: ProductInOrderData) => {
-    total += e.quantity * e.price;
+    total += Number(e.quantity) * Number(e.price);
   });
   return await postOrder(data, prods, total);
 };
