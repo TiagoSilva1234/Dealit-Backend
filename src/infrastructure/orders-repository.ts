@@ -24,7 +24,8 @@ export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
       });
       const prods = preProds.map((prod: any) => {
         return {
-          product: prod.product,
+          name: prod.product.name,
+          photo: prod.product.photos[0],
           quantity: prod.quantity,
           price: prod.price,
         };
