@@ -58,7 +58,7 @@ model Order {
   creditCard     CreditCard       @relation(fields: [creditCardId], references: [id])
   user           User             @relation(fields: [userId], references: [id])
   productInOrder ProductInOrder[]
-  total          Int
+  total          Decimal
 }
 
 model Address {
