@@ -92,7 +92,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(process.env.port|| 8080, () =>
+app.listen(process.env.PORT|| 8080, () =>
   console.log(`listening on port ${port} :)`)
 );
 
