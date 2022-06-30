@@ -106,39 +106,45 @@ exports.getProductsByUserId = getProductsByUserId;
 //////////////////////////////////////////////////////////
 //called in get product by id
 const getRandomProduct = (num) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield client_1.default.product.findMany({
-        orderBy: { id: "desc" },
-        take: 1,
-    });
-    if (num === 1) {
-        const randomId = Math.floor(Math.random() * product[0].id) + 1;
-        const randomProduct = yield client_1.default.product.findUnique({
-            where: { id: randomId },
+    try {
+        const product = yield client_1.default.product.findMany({
+            orderBy: { id: "desc" },
+            take: 1,
         });
-        if (randomProduct) {
-            return randomProduct;
-        }
-    }
-    const ar = [];
-    while (ar.length !== num) {
-        let rep = false;
-        const randomId = Math.floor(Math.random() * product[0].id) + 1;
-        for (let i = 0; i < ar.length; i++) {
-            if (randomId === ar[i].id) {
-                rep = true;
+        if (num === 1) {
+            const randomId = Math.floor(Math.random() * product[0].id) + 1;
+            const randomProduct = yield client_1.default.product.findUnique({
+                where: { id: randomId },
+            });
+            if (randomProduct) {
+                return randomProduct;
             }
         }
-        if (rep === true) {
-            continue;
+        const ar = [];
+        while (ar.length !== num) {
+            let rep = false;
+            const randomId = Math.floor(Math.random() * product[0].id) + 1;
+            for (let i = 0; i < ar.length; i++) {
+                if (randomId === ar[i].id) {
+                    rep = true;
+                }
+            }
+            if (rep === true) {
+                continue;
+            }
+            const randomProduct = yield client_1.default.product.findUnique({
+                where: { id: randomId },
+            });
+            if (randomProduct) {
+                ar.push(randomProduct);
+            }
         }
-        const randomProduct = yield client_1.default.product.findUnique({
-            where: { id: randomId },
-        });
-        if (randomProduct) {
-            ar.push(randomProduct);
-        }
+        return ar;
     }
-    return ar;
+    catch (e) {
+        throw Error("unexpected error");
+        console.log(e);
+    }
 });
 const getLatestProducts = (skip, take) => __awaiter(void 0, void 0, void 0, function* () {
     const prodList = yield client_1.default.product.findMany({

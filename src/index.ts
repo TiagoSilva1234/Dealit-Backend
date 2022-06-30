@@ -34,8 +34,9 @@ import {
 } from "./application";
 
 var bodyParser = require('body-parser');
-const app: Express = express();
 
+const app: Express = express();
+// Put these statements before you define any routes.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors())
@@ -91,7 +92,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(process.env.PORT|| 8080, () =>
+app.listen(process.env.port|| 8080, () =>
   console.log(`listening on port ${port} :)`)
 );
 

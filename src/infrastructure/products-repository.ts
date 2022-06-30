@@ -115,6 +115,7 @@ export const getProductsByUserId = async (
 //////////////////////////////////////////////////////////
 //called in get product by id
 const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
+  try{
   const product = await prisma.product.findMany({
     orderBy: { id: "desc" },
     take: 1,
@@ -150,6 +151,10 @@ const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
   }
 
   return ar;
+}catch(e){
+  throw Error("unexpected error")
+  console.log(e)
+}
 };
 
 const getLatestProducts = async (

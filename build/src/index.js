@@ -54,5 +54,5 @@ const port = Number(process.env.API_PORT) || 8080;
 app.get("/", (req, res) => {
     res.send("hello!");
 });
-app.listen(process.env.PORT || 8080, () => console.log(`listening on port ${port} :)`));
+app.listen(3330, "0.0.0.0", () => console.log(`listening on port ${port} :)`));
 exports.default = app;
