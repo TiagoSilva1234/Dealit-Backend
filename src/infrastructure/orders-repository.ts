@@ -1,5 +1,6 @@
 import prisma from "../../client";
 import { Order, Product } from "@prisma/client";
+import { ProductInOrderData } from "../utils/types";
 
 export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
   const user = await prisma.user.findUnique({
@@ -8,18 +9,13 @@ export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
   });
   if (user) {
     const orders = Promise.all(
-      user.orders.map(async (order: any) => {
-        const prods = await prisma.productsOrders.findMany({
-          where: { orderId: order.id },
-          include: { product: true },
-        });
-        console.log(prods);
-        const pro = prods.map((p: any) => p.product);
-        return {
-          order,
-          products: pro,
-        };
-      })
+      user.orders.map(
+        async (order: any) =>
+          await prisma.order.findUnique({
+            where: { id: order.id },
+            include: { productInOrder: true },
+          })
+      )
     );
     console.log(orders);
     return orders;
@@ -27,26 +23,29 @@ export const getOrdersByUserId = async (userId: number): Promise<any[]> => {
   throw new Error("User does not exist");
 };
 
-export const postOrder = async (data: Order, arr: number[]): Promise<Order> => {
+export const postOrder = async (
+  data: Order,
+  arr: ProductInOrderData[],
+  total: number
+): Promise<Order> => {
   const order = await prisma.order.create({
     data: {
       buyDate: data.buyDate,
-      sendDate: data.sendDate,
-      deliveryDate: data.deliveryDate,
       user: { connect: { id: data.userId } },
-      sellerName: data.sellerName,
       creditCard: { connect: { id: data.creditCardId } },
+      total,
     },
   });
   arr.map(async (e) => {
-    await prisma.productsOrders.create({
+    await prisma.productInOrder.create({
       data: {
-        productId: e,
-        orderId: order.id,
+        product: { connect: { id: e.productId } },
+        order: { connect: { id: order.id } },
+        quantity: e.quantity,
+        price: e.price,
       },
     });
   });
-
   return order;
 };
 

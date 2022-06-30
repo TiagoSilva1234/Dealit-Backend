@@ -20,6 +20,7 @@ model User {
   orders      Order[]
   products    Product[]
   reviews     Review[]
+  isActive    Boolean      @default(true)
 }
 
 model Product {
@@ -33,8 +34,9 @@ model Product {
   uploadDate     DateTime         @default(now())
   category       Category         @relation(fields: [categoryName], references: [name])
   user           User             @relation(fields: [userId], references: [id])
-  ProductsOrders ProductsOrders[]
   reviews        Review[]
+  ProductInOrder ProductInOrder[]
+  isActive       Boolean          @default(true)
 }
 
 model Category {
@@ -49,14 +51,14 @@ model Category {
 model Order {
   id             Int              @id @default(autoincrement())
   buyDate        DateTime         @default(now())
-  sendDate       DateTime
-  deliveryDate   DateTime
+  sendDate       DateTime?
+  deliveryDate   DateTime?
   userId         Int
-  sellerName     String
   creditCardId   Int
   creditCard     CreditCard       @relation(fields: [creditCardId], references: [id])
   user           User             @relation(fields: [userId], references: [id])
-  ProductsOrders ProductsOrders[]
+  productInOrder ProductInOrder[]
+  total          Int
 }
 
 model Address {
@@ -69,7 +71,7 @@ model Address {
   isFavorite  Boolean
   userId      Int
   user        User    @relation(fields: [userId], references: [id])
-
+  isActive    Boolean @default(true)
 }
 
 model CreditCard {
@@ -81,7 +83,7 @@ model CreditCard {
   isFavorite Boolean
   user       User    @relation(fields: [userId], references: [id])
   Order      Order[]
-
+  isActive   Boolean @default(true)
 }
 
 model Review {
@@ -94,13 +96,15 @@ model Review {
   reviewer  String
   product   Product? @relation(fields: [productId], references: [id])
   user      User?    @relation(fields: [userId], references: [id])
+  isActive  Boolean  @default(true)
 }
 
-model ProductsOrders {
-  productId Int
-  orderId   Int
+model ProductInOrder {
+  id        Int     @id @default(autoincrement())
   order     Order   @relation(fields: [orderId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
-
-  @@id([productId, orderId])
+  quantity  Int
+  price     Int
+  orderId   Int
+  productId Int
 }

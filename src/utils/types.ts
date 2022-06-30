@@ -34,12 +34,15 @@ export type ProductData = {
 
 export type OrderData = {
   buyDate: Date;
-  sendDate: Date;
-  deliveryDate: Date;
   userId: number;
-  sellerName: string;
   creditCardId: number;
 };
+
+export type ProductInOrderData = {
+  productId: number;
+  quantity: number;
+  price: number;
+}
 
 export type ReviewData = {
   userId?: number;

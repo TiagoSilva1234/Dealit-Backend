@@ -99,7 +99,7 @@ export const endpointGetAllMainCategories = (app: Express): void => {
 
 //EndpointsOrders
 export const endpointGetOrdersByUserId = (app: Express): void => {
-  app.get("/dealit/api/orders/user/:userId", getOrdersByUserId);
+  app.get("/dealit/api/orders/user/:userId",verifyToken, getOrdersByUserId);
 };
 
 export const endpointPostOrders = (app: Express): void => {
@@ -140,7 +140,7 @@ export const endpointSetFavoriteCreditCard = (app: Express): void => {
   app.patch("/dealit/api/credit-cards/:id", verifyToken, setFavoriteCreditCard);
 };
 export const endpointGetCreditCardsByUserId = (app: Express): void => {
-  app.get("/dealit/api/credit-cards/user/:userId", getCreditCardsByUserId);
+  app.get("/dealit/api/credit-cards/user/:userId",verifyToken, getCreditCardsByUserId);
 };
 export const endpointPostCreditCard = (app: Express): void => {
   app.post("/dealit/api/credit-cards", verifyToken, postCreditCard);
@@ -152,7 +152,7 @@ export const endpointPostAddress = (app: Express): void => {
 };
 
 export const endpointGetAddressesByUserId = (app: Express): void => {
-  app.get("/dealit/api/addresses/user/:userId", getAddressesByUserId);
+  app.get("/dealit/api/addresses/user/:userId",verifyToken, getAddressesByUserId);
 };
 
 export const endpointPatchAddressFavorite = (app: Express): void => {
