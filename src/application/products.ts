@@ -45,6 +45,7 @@ export const getProductById = async (
         message: e.message,
         cause: "Unexpected error",
         date: new Date().toLocaleString(),
+        
       },
     });
   }
