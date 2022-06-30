@@ -135,7 +135,7 @@ counter = 0
       const result = await saveProduct(data,upload,req,res);
       const urls= []
   for(let i = 1;i<length+1;i++){
-urls.push(`http://10.10.255.145:3330/static/${data.userId}/${result.id}/${i}.png`)
+urls.push(`https://dealit-backend.herokuapp.com/static/${data.userId}/${result.id}/${i}.png`)
   }
 const updated= await prisma.product.update({
     where:{
