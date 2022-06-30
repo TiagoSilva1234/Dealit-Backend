@@ -7,6 +7,11 @@ import getProductsByCat from "../domain/products/get-productsByCategoryPaginated
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import patchProd from "../domain/products/patch-product";
 const multer = require("multer");
+const fs = require("fs")
+const path = require("path")
+var multiparty = require('multiparty');
+
+;
 //Product endpoints logic
 export const getProductById = async (
   req: Request,
@@ -48,36 +53,39 @@ export const getProductById = async (
     });
   }
 };
-/* 
- const imageUploadPath = `../../images/`;
-const storage = multer.diskStorage({
-  destination: function(req:any,file:any,cb:any){
-  cb(null,)
-  },
-  filename: function(req:any,file:any,cb:any){
- cb(null,`${file.fieldname}_dateVal_${Date.now()}_${file.originalname}`)
-  }
+const teste =async (req:any):Promise<any> => {
+  var form = new multiparty.Form();
+  var formfields = await new Promise(function (resolve, reject) {
+    form.parse(req, function (err:Error, fields:any, files:any) {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve({fields,files});
+    }); // form.parse
+});
+return formfields
 }
-)
-const imageUpload = multer({storage: storage})
- */
 export const postNewProduct = async (
   req: Request,
   res: Response
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const name = req.body.name;
-    const description = req.body.description;
-    const photos = req.body.photos;
-    const price = req.body.price;
-    const userId = req.body.userId;
-    const category = req.body.category;
- //   imageUpload.array("my-image-file")
+
+
+const obj = await teste(req)
+
+const name = obj.fields.name[0]
+const description = obj.fields.description[0]
+const price:number = Number(obj.fields.price[0])
+const userId:number = Number(obj.fields.userId[0])
+const category = obj.fields.category[0]
 
     if (
-      !(name && description && photos && price && category) ||
+      !(name && description  && price && category) ||
       userId === undefined
     ) {
+    
       return res.status(StatusCodes.BAD_REQUEST).send({
         error: {
           message: "Required data missing",
@@ -85,22 +93,24 @@ export const postNewProduct = async (
           date: new Date().toLocaleString(),
         },
       });
-    }
+    } 
 
     const data = {
-      name,
-      description,
-      photos,
-      price,
+    name,
+  description,
+     price,
+     photos: [],
       userId,
       category,
     };
 
-    const result = await postProduct(data);
+    const result = await postProduct(req,res);
+
     return res.status(StatusCodes.CREATED).send({
       message: "Product successfully saved to database!",
       product: result,
     });
+    
   } catch (e: any) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       error: {
@@ -109,7 +119,9 @@ export const postNewProduct = async (
         date: new Date().toLocaleString(),
       },
     });
+    
   }
+
 };
 
 export const getProductsByCategory = async (

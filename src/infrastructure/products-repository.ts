@@ -1,8 +1,9 @@
 import  prisma  from "../../client";
 import {Product} from '@prisma/client'
 import { ProductData, ProdUpdateData } from "../utils/types";
-
-
+const multer = require("multer");
+const fs = require("fs")
+const path = require("path")
 ;
 export const getProductById = async (
   id: string,
@@ -29,18 +30,61 @@ export const getProductById = async (
   return product;
 };
 
-export const saveProduct = async (data: ProductData): Promise<Product> => {
+export const saveProduct = async (req:any,res:any,data: ProductData,files:any): Promise<Product> => {
 
-  return await prisma.product.create({
+  const result = await prisma.product.create({
     data: {
       user: { connect: { id: data.userId } },
       name: data.name,
       description: data.description,
       category: { connect: { name: data.category } },
-      photos: data.photos,
+      photos: [],
       price: data.price,
     },
   });
+  let counter = 0;
+  var storage = await multer.diskStorage({
+        destination: function (req:any, file:any, cb:any) {
+      console.log("testing")
+     fs.mkdirSync(path.join(__dirname, 'public')+`/${data.userId}`,{recursive:true})
+     fs.mkdirSync(path.join(__dirname, 'public')+`/${data.userId}/${result.id}`,{recursive:true})
+          cb(null, path.join(__dirname, 'public')+`/${req.body.userId}/${result.id}`)
+        },
+        filename: function (req:any, file:any, cb:any) {
+          console.log("why am i here")
+          counter = counter+1;
+          cb(null, counter + ".png")
+        }
+      })
+
+  var upload = multer({ storage:storage }).array("photos")
+ await upload(req,res,function(err:any) {
+  console.log("heyo")
+    if(err) {
+      console.log(err)
+        return "teste"
+    }
+    console.log("done upload---")
+    res.json({"status":"completed"});
+}); 
+
+  counter = 0;
+
+/*   let length = 0;
+  fs.readdir(path.join(__dirname, 'public'),(err:Error,files:any)=>{
+length = files.length;
+  })
+  const idk = []
+  for(let i = 1;i<length;i++){
+    idk.push(`https://dealit-backend.herokuapp.com/dealit/api/static/${result.userId}/${i}.png`)
+  }
+  const update = await prisma.product.update({
+    where:{ id:result.id},
+    data:{
+      photos:idk
+    }
+  }) */
+  return result
 };
 
 export const getProductsByCategoryPaginated = async (

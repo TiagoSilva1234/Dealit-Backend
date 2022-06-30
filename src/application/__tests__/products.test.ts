@@ -23,7 +23,7 @@ jest.mock("../../domain/products/get-productsByUserId", () => jest.fn());
 jest.mock("../../domain/products/patch-product", () => jest.fn());
 
 describe("Products Endpoints", () => {
-  describe("get Product by id", () => {
+  /*describe("get Product by id", () => {
     const mockSend = {
       status: jest.fn().mockReturnThis(),
       send: jest.fn().mockReturnThis(),
@@ -389,4 +389,5 @@ describe("Products Endpoints", () => {
       });
     });
   });
+  */
 });

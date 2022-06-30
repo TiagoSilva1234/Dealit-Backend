@@ -32,11 +32,15 @@ import {
   endpointCompletion,
   endpointGetAddressAutocomplete
 } from "./application";
+
+var bodyParser = require('body-parser');
+
 const app: Express = express();
-
-app.use(express.json());
-app.use(cors());
-
+// Put these statements before you define any routes.
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors())
+app.use('/static',express.static('public'));
 const port = Number(process.env.API_PORT) || 8080;
 
 //Endpoints user
@@ -88,7 +92,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-app.listen(process.env.PORT || port, () =>
+app.listen(3330,"0.0.0.0", () =>
   console.log(`listening on port ${port} :)`)
 );
 
