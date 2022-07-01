@@ -18,7 +18,6 @@ import {
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
-  postNewProduct,
   getProductsByCategory,
   getAllProductsPaginated,
   getProductsByUserId,

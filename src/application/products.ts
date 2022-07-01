@@ -52,7 +52,6 @@ export const getProductById = async (
 };
 
 
-
 export const getProductsByCategory = async (
   req: Request,
   res: Response
