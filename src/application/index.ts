@@ -1,9 +1,9 @@
-import verifyToken  from "../utils/verifyToken";
+import verifyToken from "../utils/verifyToken";
 import { Express } from "express";
-const path = require("path")
-const multer = require('multer');
-import  prisma  from "../../client";
-const fs = require("fs")
+const path = require("path");
+const multer = require("multer");
+import prisma from "../../client";
+const fs = require("fs");
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { getUserById, patchUser, getEveryUser, getUserByToken } from "./users";
@@ -23,6 +23,7 @@ import {
   getAllProductsPaginated,
   getProductsByUserId,
   patchProduct,
+  getProductsStatsByUserId,
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
 import {
@@ -35,7 +36,7 @@ import {
   postAddress,
   setFavoriteAddress,
   getAddressesByUserId,
-  getAddressAutocomplete
+  getAddressAutocomplete,
 } from "./addresses";
 import {
   postCreditCard,
@@ -58,6 +59,7 @@ export const endpointPatchUser = (app: Express): void => {
 export const endpointGetAllUsers = (app: Express): void => {
   app.get("/dealit/api/all-users/", getEveryUser);
 };
+
 //EndpointsAuth
 export const endpointPostUser = (app: Express): void => {
   app.post("/dealit/api/register", registerUser);
@@ -65,55 +67,50 @@ export const endpointPostUser = (app: Express): void => {
 export const endpointPostLogin = (app: Express): void => {
   app.post("/dealit/api/login", userLogin);
 };
+
 //EndpointsProduct
-
-
-
 export const endpointGetProductById = (app: Express): void => {
   app.get("/dealit/api/products/:id", getProductById);
 };
 
 let counter = 0;
 var storage = multer.diskStorage({
-  destination: async function (req:any, file:any, cb:any) {
+  destination: async function (req: any, file: any, cb: any) {
     const product = await prisma.product.findMany({
       orderBy: { id: "desc" },
       take: 1,
     });
-fs.mkdirSync(`./public/${req.body.userId}`,{recursive:true})
-fs.mkdirSync(`./public/${req.body.userId}/${product[0].id +1}`,{recursive:true})
-    cb(null, `./public/${req.body.userId}/${product[0].id +1}`)
+    fs.mkdirSync(`./public/${req.body.userId}`, { recursive: true });
+    fs.mkdirSync(`./public/${req.body.userId}/${product[0].id + 1}`, {
+      recursive: true,
+    });
+    cb(null, `./public/${req.body.userId}/${product[0].id + 1}`);
   },
-  filename: function (req:any, file:any, cb:any) {
+  filename: function (req: any, file: any, cb: any) {
+    counter = counter + 1;
+    cb(null, counter + ".png");
+  },
+});
 
-    counter = counter+1;
-    cb(null, counter + ".png")
-  }
-})
-
-var upload = multer({ storage:storage }).array('photos')
+var upload = multer({ storage: storage }).array("photos");
 
 export const endpointPostProduct = (app: Express): void => {
-
-  app.post("/dealit/api/products",upload,async(req:any, res:any) => {
-counter = 0
+  app.post("/dealit/api/products", upload, async (req: any, res: any) => {
+    counter = 0;
     try {
-      console.log(req.body)
+      console.log(req.body);
       const name = req.body.name;
       const description = req.body.description;
-     
+
       const price = Number(req.body.price);
       const userId = Number(req.body.userId);
       const category = req.body.category;
-      let length = 0
-      fs.readdir('./public', (err:Error, files:any) => {
-        length= files.length;
+      let length = 0;
+      fs.readdir("./public", (err: Error, files: any) => {
+        length = files.length;
       });
-    
-      if (
-        !(name && description && price && category) ||
-        userId === undefined
-      ) {
+
+      if (!(name && description && price && category) || userId === undefined) {
         return res.status(StatusCodes.BAD_REQUEST).send({
           error: {
             message: "Required data missing",
@@ -122,29 +119,31 @@ counter = 0
           },
         });
       }
-  
+
       const data = {
         name,
         description,
-        photos:[],
+        photos: [],
         price,
         userId,
         category,
       };
-  
-      const result = await saveProduct(data,upload,req,res);
-      const urls= []
-  for(let i = 1;i<length+1;i++){
-urls.push(`https://dealit-backend.herokuapp.com/static/${data.userId}/${result.id}/${i}.png`)
-  }
-const updated= await prisma.product.update({
-    where:{
-      id:result.id
-    },
-    data:{
-      photos: urls
-    }
-  })
+
+      const result = await saveProduct(data, upload, req, res);
+      const urls = [];
+      for (let i = 1; i < length + 1; i++) {
+        urls.push(
+          `https://dealit-backend.herokuapp.com/static/${data.userId}/${result.id}/${i}.png`
+        );
+      }
+      const updated = await prisma.product.update({
+        where: {
+          id: result.id,
+        },
+        data: {
+          photos: urls,
+        },
+      });
       return res.status(StatusCodes.CREATED).send({
         message: "Product successfully saved to database!",
         product: updated,
@@ -157,11 +156,9 @@ const updated= await prisma.product.update({
           date: new Date().toLocaleString(),
         },
       });
-    }    
+    }
   });
-
 };
-
 
 export const endpointgetProductsByCategoryPaginated = (app: Express): void => {
   app.get("/dealit/api/products/category/:category", getProductsByCategory);
@@ -170,8 +167,15 @@ export const endpointgetAllProductsPaginated = (app: Express): void => {
   app.get("/dealit/api/products", getAllProductsPaginated);
 };
 export const endpointgetProductsByUserId = (app: Express): void => {
-
   app.get("/dealit/api/products/user/:userId", getProductsByUserId);
+};
+
+export const EndpointGetProductsStatsByUserId = (app: Express): void => {
+  app.get(
+    "/dealit/api/products/user/:userId",
+    verifyToken,
+    getProductsByUserId
+  );
 };
 export const endpointPatchProducts = (app: Express): void => {
   app.patch("/dealit/api/products/:id", verifyToken, patchProduct);
@@ -187,7 +191,7 @@ export const endpointGetAllMainCategories = (app: Express): void => {
 
 //EndpointsOrders
 export const endpointGetOrdersByUserId = (app: Express): void => {
-  app.get("/dealit/api/orders/user/:userId",verifyToken, getOrdersByUserId);
+  app.get("/dealit/api/orders/user/:userId", verifyToken, getOrdersByUserId);
 };
 
 export const endpointPostOrders = (app: Express): void => {
@@ -228,7 +232,11 @@ export const endpointSetFavoriteCreditCard = (app: Express): void => {
   app.patch("/dealit/api/credit-cards/:id", verifyToken, setFavoriteCreditCard);
 };
 export const endpointGetCreditCardsByUserId = (app: Express): void => {
-  app.get("/dealit/api/credit-cards/user/:userId",verifyToken, getCreditCardsByUserId);
+  app.get(
+    "/dealit/api/credit-cards/user/:userId",
+    verifyToken,
+    getCreditCardsByUserId
+  );
 };
 export const endpointPostCreditCard = (app: Express): void => {
   app.post("/dealit/api/credit-cards", verifyToken, postCreditCard);
@@ -240,15 +248,19 @@ export const endpointPostAddress = (app: Express): void => {
 };
 
 export const endpointGetAddressesByUserId = (app: Express): void => {
-  app.get("/dealit/api/addresses/user/:userId",verifyToken, getAddressesByUserId);
+  app.get(
+    "/dealit/api/addresses/user/:userId",
+    verifyToken,
+    getAddressesByUserId
+  );
 };
 
 export const endpointPatchAddressFavorite = (app: Express): void => {
   app.patch("/dealit/api/addresses/:id", verifyToken, setFavoriteAddress);
 };
-export const endpointGetAddressAutocomplete= (app:Express):void=>{
-  app.get("/dealit/api/addresses/autocomplete", getAddressAutocomplete)
-}
+export const endpointGetAddressAutocomplete = (app: Express): void => {
+  app.get("/dealit/api/addresses/autocomplete", getAddressAutocomplete);
+};
 
 //Endpoint Completion
 export const endpointCompletion = (app: Express): void => {

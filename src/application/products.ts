@@ -6,7 +6,8 @@ import getProducts from "../domain/products/get-allProductsPaginated";
 import getProductsByCat from "../domain/products/get-productsByCategoryPaginated";
 import getProdsByUserId from "../domain/products/get-productsByUserId";
 import patchProd from "../domain/products/patch-product";
-import { saveProduct } from "../infrastructure/products-repository";
+import getProdStats from "../domain/products/get-soldProdStats";
+
 const multer = require("multer");
 //Product endpoints logic
 export const getProductById = async (
@@ -45,7 +46,6 @@ export const getProductById = async (
         message: e.message,
         cause: "Unexpected error",
         date: new Date().toLocaleString(),
-
       },
     });
   }
@@ -72,7 +72,6 @@ export const postNewProduct = async (
           message: "Required data missing",
           cause: "Bad Request",
           date: new Date().toLocaleString(),
-          
         },
       });
     }
@@ -161,6 +160,43 @@ export const getProductsByUserId = async (
       });
     }
     return res.send(await getProdsByUserId(Number(userId)));
+  } catch (e: any) {
+    if (e.message === "User does not exist") {
+      return res.status(StatusCodes.NOT_FOUND).send({
+        error: {
+          message: e.message,
+          cause: "Not found",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      error: {
+        message: e.message,
+        cause: "Unexpected error",
+        date: new Date().toLocaleString(),
+      },
+    });
+  }
+};
+
+export const getProductsStatsByUserId = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const userId = req.params.userId;
+
+    if (isNaN(Number(userId))) {
+      return res.status(StatusCodes.BAD_REQUEST).send({
+        error: {
+          message: "Invalid id format",
+          cause: "Bad Request",
+          date: new Date().toLocaleString(),
+        },
+      });
+    }
+    return res.send(await getProdStats(Number(userId)));
   } catch (e: any) {
     if (e.message === "User does not exist") {
       return res.status(StatusCodes.NOT_FOUND).send({
