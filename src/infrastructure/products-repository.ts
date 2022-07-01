@@ -49,7 +49,6 @@ export const saveProduct = async (
       return "pao";
     }
     console.log("done upload---");
-    res.json({ status: "completed" });
   });
 
   return result;

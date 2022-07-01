@@ -54,7 +54,7 @@ export const postOrder = async (
 ): Promise<Order> => {
   const order = await prisma.order.create({
     data: {
-      user: { connect: { id: data.userId } },
+      user: { connect: { id: Number(data.userId) } },
       creditCard: { connect: { id: data.creditCardId } },
       total,
     },
@@ -62,12 +62,13 @@ export const postOrder = async (
   arr.forEach(async (e) => {
     await prisma.productInOrder.create({
       data: {
-        product: { connect: { id: e.productId } },
-        order: { connect: { id: order.id } },
-        quantity: e.quantity,
-        price: e.price,
+        product: { connect: { id: Number(e.productId) } },
+        order: { connect: { id: Number(order.id) } },
+        quantity: Number(e.quantity),
+        price: Number(e.price),
       },
     });
+
   });
   return order;
 };

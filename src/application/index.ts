@@ -18,7 +18,6 @@ import {
 import { registerUser, userLogin } from "./auth";
 import {
   getProductById,
-  postNewProduct,
   getProductsByCategory,
   getAllProductsPaginated,
   getProductsByUserId,
@@ -45,7 +44,7 @@ import {
 } from "./creditCards";
 import { GetTextCompletion } from "./completion";
 import { saveProduct } from "../infrastructure/products-repository";
-
+import postProd from "../domain/products/post-product"
 //EndpointsUser
 export const endpointGetUserById = (app: Express): void => {
   app.get("/dealit/api/users/:id", getUserById);
@@ -72,45 +71,47 @@ export const endpointPostLogin = (app: Express): void => {
 export const endpointGetProductById = (app: Express): void => {
   app.get("/dealit/api/products/:id", getProductById);
 };
-
 let counter = 0;
 var storage = multer.diskStorage({
-  destination: async function (req: any, file: any, cb: any) {
+  destination: async function (req:any, file:any, cb:any) {
     const product = await prisma.product.findMany({
       orderBy: { id: "desc" },
       take: 1,
     });
-    fs.mkdirSync(`./public/${req.body.userId}`, { recursive: true });
-    fs.mkdirSync(`./public/${req.body.userId}/${product[0].id + 1}`, {
-      recursive: true,
-    });
-    cb(null, `./public/${req.body.userId}/${product[0].id + 1}`);
+fs.mkdirSync(`./public/${req.body.userId}`,{recursive:true})
+fs.mkdirSync(`./public/${req.body.userId}/${product[0].id +1}`,{recursive:true})
+    cb(null, `./public/${req.body.userId}/${product[0].id +1}`)
   },
-  filename: function (req: any, file: any, cb: any) {
-    counter = counter + 1;
-    cb(null, counter + ".png");
-  },
-});
+  filename: function (req:any, file:any, cb:any) {
 
-var upload = multer({ storage: storage }).array("photos");
+    counter = counter+1;
+    cb(null, counter + ".png")
+  }
+})
+
+ var upload = multer({ storage:storage }).array('photos')
 
 export const endpointPostProduct = (app: Express): void => {
-  app.post("/dealit/api/products", upload, async (req: any, res: any) => {
-    counter = 0;
+app.post("/dealit/api/products",upload,async(req:any, res:any) => {
+
+counter = 0
     try {
-      console.log(req.body);
+      console.log(req.body)
       const name = req.body.name;
       const description = req.body.description;
-
+     
       const price = Number(req.body.price);
       const userId = Number(req.body.userId);
       const category = req.body.category;
-      let length = 0;
-      fs.readdir("./public", (err: Error, files: any) => {
-        length = files.length;
+      let length = 0
+      fs.readdir('./public', (err:Error, files:any) => {
+        length= files.length;
       });
-
-      if (!(name && description && price && category) || userId === undefined) {
+    
+      if (
+        !(name && description && price && category) ||
+        userId === undefined
+      ) {
         return res.status(StatusCodes.BAD_REQUEST).send({
           error: {
             message: "Required data missing",
@@ -119,31 +120,29 @@ export const endpointPostProduct = (app: Express): void => {
           },
         });
       }
-
+  
       const data = {
         name,
         description,
-        photos: [],
+        photos:[],
         price,
         userId,
         category,
       };
-
-      const result = await saveProduct(data, upload, req, res);
-      const urls = [];
-      for (let i = 1; i < length + 1; i++) {
-        urls.push(
-          `https://dealit-backend.herokuapp.com/static/${data.userId}/${result.id}/${i}.png`
-        );
-      }
-      const updated = await prisma.product.update({
-        where: {
-          id: result.id,
-        },
-        data: {
-          photos: urls,
-        },
-      });
+  
+      const result = await postProd(data,upload,req,res);
+      const urls= []
+  for(let i = 1;i<length+1;i++){
+urls.push(`https://dealit-backend.herokuapp.com/static/${data.userId}/${result.id}/${i}.png`)
+  }
+const updated= await prisma.product.update({
+    where:{
+      id:result.id
+    },
+    data:{
+      photos: urls
+    }
+  })
       return res.status(StatusCodes.CREATED).send({
         message: "Product successfully saved to database!",
         product: updated,
@@ -156,8 +155,9 @@ export const endpointPostProduct = (app: Express): void => {
           date: new Date().toLocaleString(),
         },
       });
-    }
+    }    
   });
+
 };
 
 export const endpointgetProductsByCategoryPaginated = (app: Express): void => {
@@ -266,3 +266,5 @@ export const endpointGetAddressAutocomplete = (app: Express): void => {
 export const endpointCompletion = (app: Express): void => {
   app.post("/dealit/api/completion", GetTextCompletion);
 };
+
+

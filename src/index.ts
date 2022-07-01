@@ -31,17 +31,17 @@ import {
   endpointGetAllUsers,
   endpointCompletion,
   endpointGetAddressAutocomplete,
-  EndpointGetProductsStatsByUserId
+  EndpointGetProductsStatsByUserId,
 } from "./application";
 
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 
 const app: Express = express();
 // Put these statements before you define any routes.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors())
-app.use('/static',express.static('public'));
+app.use(cors());
+app.use("/static", express.static("public"));
 const port = Number(process.env.API_PORT) || 8080;
 
 //Endpoints user
@@ -81,7 +81,7 @@ endpointPatchOrdersDeliveryDate(app);
 endpointPostAddress(app);
 endpointPatchAddressFavorite(app);
 endpointGetAddressesByUserId(app);
-endpointGetAddressAutocomplete(app)
+endpointGetAddressAutocomplete(app);
 //Endpoints credit cards
 endpointPostCreditCard(app);
 endpointSetFavoriteCreditCard(app);
@@ -94,9 +94,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("hello!");
 });
 
-
 app.listen(process.env.PORT || 8080, () =>
-
   console.log(`listening on port ${port} :)`)
 );
 

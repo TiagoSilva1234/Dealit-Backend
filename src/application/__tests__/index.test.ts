@@ -41,7 +41,6 @@ import {
 import { registerUser, userLogin } from "../auth";
 import {
   getProductById,
-  postNewProduct,
   getProductsByCategory,
   getAllProductsPaginated,
   getProductsByUserId,
@@ -67,6 +66,7 @@ import {
 } from "../creditCards";
 import { GetTextCompletion } from "../completion";
 import verifyToken  from "../../utils/verifyToken";
+
 const mockApp = {
   get: jest.fn().mockReturnThis(),
   patch: jest.fn().mockReturnThis(),
@@ -114,10 +114,7 @@ describe("Index endpoints", () => {
           expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/products/:id", getProductById)
         })
   
-        it("post Product should be called once",()=>{
-          endpointPostProduct(mockApp);
-          expect(mockApp.post).toHaveBeenCalledWith("/dealit/api/products", verifyToken, postNewProduct)
-        })
+  
         it("get products by category should be called once",()=>{
           endpointgetProductsByCategoryPaginated(mockApp);
         expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/products/category/:category", getProductsByCategory)
@@ -130,10 +127,7 @@ describe("Index endpoints", () => {
           endpointgetProductsByUserId(mockApp);
           expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/products/user/:userId", getProductsByUserId)
         })
-        it("patch product should be called once",()=>{
-          endpointPatchProducts(mockApp);
-          expect(mockApp.patch).toHaveBeenCalledWith("/dealit/api/products/:id", verifyToken, patchProduct)
-        })
+     
       });
 
         describe("Category endpoints", () => {
@@ -149,7 +143,7 @@ describe("Index endpoints", () => {
       describe("Order's endpoints", () => {
         it("get orders by user id should be called once",()=>{
           endpointGetOrdersByUserId(mockApp);
-          expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/orders/user/:userId", getOrdersByUserId)
+          expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/orders/user/:userId",verifyToken, getOrdersByUserId)
         })
         it("post orders should be called once",()=>{
           endpointPostOrders(mockApp);
@@ -193,7 +187,7 @@ describe("Index endpoints", () => {
     })
     it("get credit card by user id should be called once",()=>{
       endpointGetCreditCardsByUserId(mockApp);
-      expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/credit-cards/user/:userId", getCreditCardsByUserId)
+      expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/credit-cards/user/:userId",verifyToken, getCreditCardsByUserId)
 
     })
     it("post credit card should be called once",()=>{
@@ -215,7 +209,7 @@ describe("Address endpoints", () => {
   })
   it("get address by user id should be called once",()=>{
     endpointGetAddressesByUserId(mockApp);
-    expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/addresses/user/:userId", getAddressesByUserId)
+    expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/addresses/user/:userId",verifyToken, getAddressesByUserId)
 
   })
   it("get address autocomplete should be called once",()=>{
