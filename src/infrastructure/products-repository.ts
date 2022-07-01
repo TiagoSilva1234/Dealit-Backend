@@ -1,9 +1,7 @@
-import  prisma  from "../../client";
-import {Product} from '@prisma/client'
+import prisma from "../../client";
+import { Product } from "@prisma/client";
 import { ProductData, ProdUpdateData } from "../utils/types";
 
-
-;
 export const getProductById = async (
   id: string,
   skip: number,
@@ -29,9 +27,13 @@ export const getProductById = async (
   return product;
 };
 
-export const saveProduct = async (data: ProductData,upload:any,req:any,res:any): Promise<Product> => {
-
- const result = await prisma.product.create({
+export const saveProduct = async (
+  data: ProductData,
+  upload: any,
+  req: any,
+  res: any
+): Promise<Product> => {
+  const result = await prisma.product.create({
     data: {
       user: { connect: { id: data.userId } },
       name: data.name,
@@ -41,18 +43,16 @@ export const saveProduct = async (data: ProductData,upload:any,req:any,res:any):
       price: data.price,
     },
   });
-  upload(req,res,function(err:any) {
-    if(err) {
-      console.log(err)
-        return "pao"
+  upload(req, res, function (err: any) {
+    if (err) {
+      console.log(err);
+      return "pao";
     }
-    console.log("done upload---")
-    res.json({"status":"completed"});
-});
+    console.log("done upload---");
+    res.json({ status: "completed" });
+  });
 
-return result
-
-
+  return result;
 };
 
 export const getProductsByCategoryPaginated = async (
@@ -112,49 +112,78 @@ export const getProductsByUserId = async (
   throw new Error("User does not exist");
 };
 
+export const getSoldProductStatsByUserId = async (
+  userId: number
+): Promise<{ num: number; sum: number }> => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { products: true },
+  });
+  const orders = await prisma.order.findMany({
+    where: { id: userId },
+    include: { productInOrder: true },
+  });
+  if (orders && user) {
+    let num = 0;
+    let sum = 0;
+    orders.forEach((order: any) => {
+      order.productInOrder.forEach((prod: any) => {
+        user.products.forEach((p: any) => {
+          if (p.id === prod.productId) {
+            num++;
+            sum += prod.price;
+          }
+        });
+      });
+    });
+    return { num, sum };
+  }
+  throw new Error("User does not exist");
+};
+
 //////////////////////////////////////////////////////////
 //called in get product by id
 const getRandomProduct = async (num: number): Promise<Product | Product[]> => {
-  try{
-  const product = await prisma.product.findMany({
-    orderBy: { id: "desc" },
-    take: 1,
-  });
-
-  if (num === 1) {
-    const randomId = Math.floor(Math.random() * product[0].id) + 1;
-    const randomProduct = await prisma.product.findUnique({
-      where: { id: randomId },
+  try {
+    const product = await prisma.product.findMany({
+      orderBy: { id: "desc" },
+      take: 1,
     });
-    if (randomProduct) {
-      return randomProduct;
-    }
-  }
-  const ar: Product[] = [];
-  while (ar.length !== num) {
-    let rep = false;
-    const randomId = Math.floor(Math.random() * product[0].id) + 1;
-    for (let i = 0; i < ar.length; i++) {
-      if (randomId === ar[i].id) {
-        rep = true;
+
+    if (num === 1) {
+      const randomId = Math.floor(Math.random() * product[0].id) + 1;
+      const randomProduct = await prisma.product.findUnique({
+        where: { id: randomId },
+      });
+      if (randomProduct) {
+        return randomProduct;
       }
     }
-    if (rep === true) {
-      continue;
+    const ar: Product[] = [];
+    while (ar.length !== num) {
+      let rep = false;
+      const randomId = Math.floor(Math.random() * product[0].id) + 1;
+      for (let i = 0; i < ar.length; i++) {
+        if (randomId === ar[i].id) {
+          rep = true;
+        }
+      }
+      if (rep === true) {
+        continue;
+      }
+      const randomProduct = await prisma.product.findUnique({
+        where: { id: randomId },
+      });
+      if (randomProduct) {
+        ar.push(randomProduct);
+      }
     }
-    const randomProduct = await prisma.product.findUnique({
-      where: { id: randomId },
-    });
-    if (randomProduct) {
-      ar.push(randomProduct);
-    }
-  }
 
-  return ar;
-}catch(e){
-  throw Error("unexpected error")
-  console.log(e)
-}
+    return ar;
+  } catch (e) {
+    throw Error("unexpected error");
+    console.log(e);
+  }
 };
 
 const getLatestProducts = async (

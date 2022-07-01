@@ -59,7 +59,7 @@ export const postOrder = async (
       total,
     },
   });
-  arr.map(async (e) => {
+  arr.forEach(async (e) => {
     await prisma.productInOrder.create({
       data: {
         product: { connect: { id: Number(e.productId) } },

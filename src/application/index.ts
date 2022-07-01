@@ -1,9 +1,9 @@
-import verifyToken  from "../utils/verifyToken";
+import verifyToken from "../utils/verifyToken";
 import { Express } from "express";
-const path = require("path")
-const multer = require('multer');
-import  prisma  from "../../client";
-const fs = require("fs")
+const path = require("path");
+const multer = require("multer");
+import prisma from "../../client";
+const fs = require("fs");
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { getUserById, patchUser, getEveryUser, getUserByToken } from "./users";
@@ -23,6 +23,7 @@ import {
   getAllProductsPaginated,
   getProductsByUserId,
   patchProduct,
+  getProductsStatsByUserId,
 } from "./products";
 import { getCategoryByMainCat, getAllMainCategories } from "./categories";
 import {
@@ -35,7 +36,7 @@ import {
   postAddress,
   setFavoriteAddress,
   getAddressesByUserId,
-  getAddressAutocomplete
+  getAddressAutocomplete,
 } from "./addresses";
 import {
   postCreditCard,
@@ -58,6 +59,7 @@ export const endpointPatchUser = (app: Express): void => {
 export const endpointGetAllUsers = (app: Express): void => {
   app.get("/dealit/api/all-users/", getEveryUser);
 };
+
 //EndpointsAuth
 export const endpointPostUser = (app: Express): void => {
   app.post("/dealit/api/register", registerUser);
@@ -65,10 +67,8 @@ export const endpointPostUser = (app: Express): void => {
 export const endpointPostLogin = (app: Express): void => {
   app.post("/dealit/api/login", userLogin);
 };
+
 //EndpointsProduct
-
-
-
 export const endpointGetProductById = (app: Express): void => {
   app.get("/dealit/api/products/:id", getProductById);
 };
@@ -81,8 +81,15 @@ export const endpointgetAllProductsPaginated = (app: Express): void => {
   app.get("/dealit/api/products", getAllProductsPaginated);
 };
 export const endpointgetProductsByUserId = (app: Express): void => {
-
   app.get("/dealit/api/products/user/:userId", getProductsByUserId);
+};
+
+export const EndpointGetProductsStatsByUserId = (app: Express): void => {
+  app.get(
+    "/dealit/api/product-stats/user/:userId",
+    verifyToken,
+    getProductsByUserId
+  );
 };
 export const endpointPatchProducts = (app: Express): void => {
   app.patch("/dealit/api/products/:id", verifyToken, patchProduct);
@@ -98,7 +105,7 @@ export const endpointGetAllMainCategories = (app: Express): void => {
 
 //EndpointsOrders
 export const endpointGetOrdersByUserId = (app: Express): void => {
-  app.get("/dealit/api/orders/user/:userId",verifyToken, getOrdersByUserId);
+  app.get("/dealit/api/orders/user/:userId", verifyToken, getOrdersByUserId);
 };
 
 export const endpointPostOrders = (app: Express): void => {
@@ -139,7 +146,11 @@ export const endpointSetFavoriteCreditCard = (app: Express): void => {
   app.patch("/dealit/api/credit-cards/:id", verifyToken, setFavoriteCreditCard);
 };
 export const endpointGetCreditCardsByUserId = (app: Express): void => {
-  app.get("/dealit/api/credit-cards/user/:userId",verifyToken, getCreditCardsByUserId);
+  app.get(
+    "/dealit/api/credit-cards/user/:userId",
+    verifyToken,
+    getCreditCardsByUserId
+  );
 };
 export const endpointPostCreditCard = (app: Express): void => {
   app.post("/dealit/api/credit-cards", verifyToken, postCreditCard);
@@ -151,15 +162,19 @@ export const endpointPostAddress = (app: Express): void => {
 };
 
 export const endpointGetAddressesByUserId = (app: Express): void => {
-  app.get("/dealit/api/addresses/user/:userId",verifyToken, getAddressesByUserId);
+  app.get(
+    "/dealit/api/addresses/user/:userId",
+    verifyToken,
+    getAddressesByUserId
+  );
 };
 
 export const endpointPatchAddressFavorite = (app: Express): void => {
   app.patch("/dealit/api/addresses/:id", verifyToken, setFavoriteAddress);
 };
-export const endpointGetAddressAutocomplete= (app:Express):void=>{
-  app.get("/dealit/api/addresses/autocomplete", getAddressAutocomplete)
-}
+export const endpointGetAddressAutocomplete = (app: Express): void => {
+  app.get("/dealit/api/addresses/autocomplete", getAddressAutocomplete);
+};
 
 //Endpoint Completion
 export const endpointCompletion = (app: Express): void => {

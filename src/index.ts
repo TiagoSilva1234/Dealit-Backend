@@ -30,7 +30,8 @@ import {
   endpointGetCreditCardsByUserId,
   endpointGetAllUsers,
   endpointCompletion,
-  endpointGetAddressAutocomplete
+  endpointGetAddressAutocomplete,
+  EndpointGetProductsStatsByUserId
 } from "./application";
 
 var bodyParser = require('body-parser');
@@ -58,6 +59,7 @@ endpointgetProductsByCategoryPaginated(app);
 endpointgetAllProductsPaginated(app);
 endpointgetProductsByUserId(app);
 endpointPatchProducts(app);
+EndpointGetProductsStatsByUserId(app);
 
 //Endpoints categories
 endpointGetCategoryByMainCat(app);
