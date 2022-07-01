@@ -111,7 +111,7 @@ describe("Products infrastructure", () => {
     });
     it("should return created with success", async () => {
       pCreate.mockResolvedValueOnce("created with success");
-      const res = await saveProduct({});
+      const res = await saveProduct({},jest.fn(),jest.fn(),jest.fn());
 
       expect(res).toStrictEqual("created with success");
       expect(prisma.product.create).toHaveBeenCalledTimes(1);

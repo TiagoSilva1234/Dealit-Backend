@@ -67,6 +67,7 @@ import {
 } from "../creditCards";
 import { GetTextCompletion } from "../completion";
 import verifyToken  from "../../utils/verifyToken";
+
 const mockApp = {
   get: jest.fn().mockReturnThis(),
   patch: jest.fn().mockReturnThis(),
@@ -116,7 +117,7 @@ describe("Index endpoints", () => {
   
         it("post Product should be called once",()=>{
           endpointPostProduct(mockApp);
-          expect(mockApp.post).toHaveBeenCalledWith("/dealit/api/products", verifyToken, postNewProduct)
+          expect(mockApp.post).toHaveBeenCalledWith("/dealit/api/products",jest.fn() , ()=>{})
         })
         it("get products by category should be called once",()=>{
           endpointgetProductsByCategoryPaginated(mockApp);
@@ -130,10 +131,7 @@ describe("Index endpoints", () => {
           endpointgetProductsByUserId(mockApp);
           expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/products/user/:userId", getProductsByUserId)
         })
-        it("patch product should be called once",()=>{
-          endpointPatchProducts(mockApp);
-          expect(mockApp.patch).toHaveBeenCalledWith("/dealit/api/products/:id", verifyToken, patchProduct)
-        })
+     
       });
 
         describe("Category endpoints", () => {

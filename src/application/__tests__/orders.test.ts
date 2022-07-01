@@ -106,7 +106,7 @@ describe("Orders Endpoints", () => {
           });
       });
       it("should return Order requires products", async () => {
-        await postOrder({ params: { userId: "1" },body:{order:{},prods:[]} }, mockSend);
+        await postOrder({ params: { userId: "1" },body:{order:{},products:[]} }, mockSend);
   
         expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
         expect(mockSend.send).toHaveBeenNthCalledWith(1, {
@@ -119,7 +119,7 @@ describe("Orders Endpoints", () => {
       });
       it("should return Orders successfully saved", async () => {
           postOrders.mockResolvedValueOnce({})
-        await postOrder({ params: { userId: "1" },body:{order:{},prods:["",""]} }, mockSend);
+        await postOrder({ params: { userId: "1" },body:{order:{},products:["",""]} }, mockSend);
   
         expect(mockSend.status).toHaveBeenNthCalledWith(1, 201);
         expect(mockSend.send).toHaveBeenNthCalledWith(1,{
@@ -129,7 +129,7 @@ describe("Orders Endpoints", () => {
       });
       it("should return Unexpected Error", async () => {
         postOrders.mockRejectedValueOnce(new Error("test error"))
-      await postOrder({ params: { userId: "1" },body:{order:{},prods:["",""]} }, mockSend);
+      await postOrder({ params: { userId: "1" },body:{order:{},products:["",""]} }, mockSend);
 
       expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
       expect(mockSend.send).toHaveBeenNthCalledWith(1,{
