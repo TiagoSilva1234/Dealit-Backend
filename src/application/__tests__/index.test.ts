@@ -115,10 +115,7 @@ describe("Index endpoints", () => {
           expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/products/:id", getProductById)
         })
   
-        it("post Product should be called once",()=>{
-          endpointPostProduct(mockApp);
-          expect(mockApp.post).toHaveBeenCalledWith("/dealit/api/products",jest.fn() , ()=>{})
-        })
+  
         it("get products by category should be called once",()=>{
           endpointgetProductsByCategoryPaginated(mockApp);
         expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/products/category/:category", getProductsByCategory)
@@ -147,7 +144,7 @@ describe("Index endpoints", () => {
       describe("Order's endpoints", () => {
         it("get orders by user id should be called once",()=>{
           endpointGetOrdersByUserId(mockApp);
-          expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/orders/user/:userId", getOrdersByUserId)
+          expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/orders/user/:userId",verifyToken, getOrdersByUserId)
         })
         it("post orders should be called once",()=>{
           endpointPostOrders(mockApp);
@@ -191,7 +188,7 @@ describe("Index endpoints", () => {
     })
     it("get credit card by user id should be called once",()=>{
       endpointGetCreditCardsByUserId(mockApp);
-      expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/credit-cards/user/:userId", getCreditCardsByUserId)
+      expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/credit-cards/user/:userId",verifyToken, getCreditCardsByUserId)
 
     })
     it("post credit card should be called once",()=>{
@@ -213,7 +210,7 @@ describe("Address endpoints", () => {
   })
   it("get address by user id should be called once",()=>{
     endpointGetAddressesByUserId(mockApp);
-    expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/addresses/user/:userId", getAddressesByUserId)
+    expect(mockApp.get).toHaveBeenCalledWith("/dealit/api/addresses/user/:userId",verifyToken, getAddressesByUserId)
 
   })
   it("get address autocomplete should be called once",()=>{
