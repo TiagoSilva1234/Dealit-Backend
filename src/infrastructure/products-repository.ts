@@ -132,7 +132,7 @@ export const getSoldProductStatsByUserId = async (
           console.log(prod);
           if (p.id === prod.productId) {
             num++;
-            sum += prod.price;
+            sum += Number(prod.price);
           }
         });
       });
