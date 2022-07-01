@@ -172,7 +172,7 @@ export const endpointgetProductsByUserId = (app: Express): void => {
 
 export const EndpointGetProductsStatsByUserId = (app: Express): void => {
   app.get(
-    "/dealit/api/products/user/:userId",
+    "/dealit/api/product-stats/user/:userId",
     verifyToken,
     getProductsByUserId
   );
