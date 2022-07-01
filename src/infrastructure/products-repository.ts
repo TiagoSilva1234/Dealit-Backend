@@ -119,7 +119,6 @@ export const getSoldProductStatsByUserId = async (
     include: { products: true },
   });
   const orders = await prisma.order.findMany({
-    where: { id: userId },
     include: { productInOrder: true },
   });
   if (orders && user) {
@@ -128,6 +127,8 @@ export const getSoldProductStatsByUserId = async (
     orders.forEach((order: any) => {
       order.productInOrder.forEach((prod: any) => {
         user.products.forEach((p: any) => {
+          console.log(p);
+          console.log(prod);
           if (p.id === prod.productId) {
             num++;
             sum += prod.price;
