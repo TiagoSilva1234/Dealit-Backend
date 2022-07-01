@@ -51,55 +51,7 @@ export const getProductById = async (
   }
 };
 
-export const postNewProduct = async (
-  req: Request,
-  res: Response
-): Promise<Response<any, Record<string, any>>> => {
-  try {
-    const name = req.body.name;
-    const description = req.body.description;
-    const photos = req.body.photos;
-    const price = req.body.price;
-    const userId = req.body.userId;
-    const category = req.body.category;
 
-    if (
-      !(name && description && photos && price && category) ||
-      userId === undefined
-    ) {
-      return res.status(StatusCodes.BAD_REQUEST).send({
-        error: {
-          message: "Required data missing",
-          cause: "Bad Request",
-          date: new Date().toLocaleString(),
-        },
-      });
-    }
-
-    const data = {
-      name,
-      description,
-      photos,
-      price,
-      userId,
-      category,
-    };
-
-    //const result = await saveProduct(data,upload,req,res);
-    return res.status(StatusCodes.CREATED).send({
-      message: "Product successfully saved to database!",
-      product: "result",
-    });
-  } catch (e: any) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-      error: {
-        message: e.message,
-        cause: "Unexpected error",
-        date: new Date().toLocaleString(),
-      },
-    });
-  }
-};
 
 export const getProductsByCategory = async (
   req: Request,

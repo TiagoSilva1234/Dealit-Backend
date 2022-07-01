@@ -17,6 +17,7 @@ jest.mock("../../Domain/products/get-productById", () => jest.fn());
 jest.mock("../../Domain/products/get-productsByCategoryPaginated", () =>
   jest.fn()
 );
+jest.mock("../../Domain/products/post-product",()=>jest.fn())
 jest.mock("../../domain/products/get-allProductsPaginated", () => jest.fn());
 jest.mock("../../domain/products/get-productsByUserId", () => jest.fn());
 jest.mock("../../domain/products/patch-product", () => jest.fn());
@@ -55,72 +56,7 @@ describe("Products Endpoints", () => {
       send: jest.fn().mockReturnThis(),
     };
 
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
-    it("should return a custom error required data missing", async () => {
-      await postNewProduct({ body: {} }, mockSend);
-
-      expect(mockSend.status).toHaveBeenNthCalledWith(1, 400);
-      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
-        error: {
-          message: "Required data missing",
-          cause: "Bad Request",
-          date: new Date().toLocaleString(),
-        },
-      });
-    });
-    it("should return a unexpected error", async () => {
-      postProduct.mockRejectedValueOnce(new Error());
-      const mock = {
-        body: {
-          name: "claudio",
-          description: "idk",
-          photos: ["asd"],
-          price: 123.1,
-          userId: 1,
-          category: "pao",
-        },
-      };
-      await postNewProduct(mock, mockSend);
-
-      expect(mockSend.status).toHaveBeenNthCalledWith(1, 500);
-      expect(mockSend.send).toHaveBeenNthCalledWith(1, {
-        error: {
-          message: "",
-          cause: "Unexpected error",
-          date: new Date().toLocaleString(),
-        },
-      });
-    });
-    it("should return a successful response", async () => {
-      const response = {
-        message: "Product successfully saved to database!",
-        product: {
-          category: "pao",
-          description: "idk",
-          name: "claudio",
-          photos: ["asd"],
-          price: 123.1,
-          userId: 1,
-        },
-      };
-      const mock = {
-        body: {
-          name: "claudio",
-          description: "idk",
-          photos: ["asd"],
-          price: 123.1,
-          userId: 1,
-          category: "pao",
-        },
-      };
-      postProduct.mockResolvedValueOnce(mock.body);
-      await postNewProduct(mock, mockSend);
-
-      expect(mockSend.status).toHaveBeenNthCalledWith(1, 201);
-      expect(mockSend.send).toHaveBeenNthCalledWith(1, response);
-    });
+ 
   });
 
   describe("get product by category", () => {
